@@ -1,0 +1,23 @@
+# What cmd/ocsfgen generates Go types for (ocsf_gen.go). A class or object
+# not listed here has no type; an attribute whose object is not listed is
+# left out of its struct (the generated file lists every omission). Add an
+# object here to use it. A required attribute's object must be listed.
+classes:
+  - authentication
+  - account_change
+  - detection_finding
+  - entity_management
+objects:
+  - actor
+  - evidences
+  - finding_info
+  - http_request
+  - managed_entity
+  - metadata
+  - network_endpoint
+  - product
+  - service
+  - session
+  - user
+# Profiles whose attributes are generated (none: base classes only).
+profiles: []

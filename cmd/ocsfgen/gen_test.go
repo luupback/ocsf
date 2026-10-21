@@ -19,6 +19,7 @@ const fixture = `{
         "unmapped": {"caption": "Unmapped", "type": "object_t", "object_type": "object", "requirement": "optional"},
         "note": {"caption": "Note", "type": "string_t", "requirement": "optional"},
         "time": {"caption": "Time", "type": "timestamp_t", "requirement": "required"},
+        "type_uid": {"caption": "Type ID", "type": "long_t", "requirement": "required", "enum": {"900101": {"caption": "Thing Seen: Seen It"}}},
         "old": {"caption": "Old", "type": "string_t", "requirement": "optional", "@deprecated": {"message": "gone"}},
         "cloud": {"caption": "Cloud", "type": "string_t", "requirement": "required", "profiles": ["cloud"]},
         "tags": {"caption": "Tags", "type": "string_t", "is_array": true, "requirement": "optional"}
@@ -58,7 +59,8 @@ func TestGenerate(t *testing.T) {
 		"Unmapped   map[string]any `json:\"unmapped,omitempty\"`",
 		"Tags       []string `json:\"tags,omitempty\"`",
 		"ThingSeenActivityIDSeenIt  = 1  // Seen It",
-		"IP   string `json:\"ip,omitempty\"`", // ip_t resolves to string_t
+		"ThingSeenTypeUIDSeenIt = 900101 // Thing Seen: Seen It", // class caption prefix dropped
+		"IP   string `json:\"ip,omitempty\"`",                    // ip_t resolves to string_t
 		"Port int    `json:\"port,omitempty\"`",
 	} {
 		if !strings.Contains(strings.Join(strings.Fields(src), " "), strings.Join(strings.Fields(want), " ")) {

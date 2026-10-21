@@ -198,7 +198,7 @@ func (g *gen) entity(name string, e entity, isClass bool) error {
 		}
 		fmt.Fprintf(&fields, "\n\t%s %s `json:%q`\n", goName(an), goType, tag)
 		if len(a.Enum) > 0 && !a.IsArray {
-			writeEnum(&enums, typ+goName(an), a.Enum)
+			writeEnum(&enums, typ+goName(an), e.Caption, a.Enum)
 		}
 	}
 	if len(omitted) > 0 {
@@ -266,7 +266,10 @@ func (g *gen) goType(a attr) (t string, ok bool, err error) {
 	return t, true, nil
 }
 
-func writeEnum(b *bytes.Buffer, prefix string, enum map[string]enumValue) {
+// writeEnum writes the constants of an integer enum. A caption that
+// repeats the entity's ("Authentication: Logon", in type_uid) is named
+// without it.
+func writeEnum(b *bytes.Buffer, prefix, entityCaption string, enum map[string]enumValue) {
 	type kv struct {
 		v int
 		n string
@@ -283,7 +286,7 @@ func writeEnum(b *bytes.Buffer, prefix string, enum map[string]enumValue) {
 	slices.SortFunc(vals, func(a, b kv) int { return a.v - b.v })
 	fmt.Fprintf(b, "// %s values.\nconst (\n", prefix)
 	for _, e := range vals {
-		n := prefix + identifier(e.n)
+		n := prefix + identifier(strings.TrimPrefix(e.n, entityCaption+": "))
 		if seen[n] {
 			n += strconv.Itoa(e.v)
 		}

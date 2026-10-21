@@ -127,20 +127,20 @@ const (
 
 // AccountChangeTypeUID values.
 const (
-	AccountChangeTypeUIDAccountChangeUnknown          = 300100 // Account Change: Unknown
-	AccountChangeTypeUIDAccountChangeCreate           = 300101 // Account Change: Create
-	AccountChangeTypeUIDAccountChangeEnable           = 300102 // Account Change: Enable
-	AccountChangeTypeUIDAccountChangePasswordChange   = 300103 // Account Change: Password Change
-	AccountChangeTypeUIDAccountChangePasswordReset    = 300104 // Account Change: Password Reset
-	AccountChangeTypeUIDAccountChangeDisable          = 300105 // Account Change: Disable
-	AccountChangeTypeUIDAccountChangeDelete           = 300106 // Account Change: Delete
-	AccountChangeTypeUIDAccountChangeAttachPolicy     = 300107 // Account Change: Attach Policy
-	AccountChangeTypeUIDAccountChangeDetachPolicy     = 300108 // Account Change: Detach Policy
-	AccountChangeTypeUIDAccountChangeLock             = 300109 // Account Change: Lock
-	AccountChangeTypeUIDAccountChangeMFAFactorEnable  = 300110 // Account Change: MFA Factor Enable
-	AccountChangeTypeUIDAccountChangeMFAFactorDisable = 300111 // Account Change: MFA Factor Disable
-	AccountChangeTypeUIDAccountChangeUnlock           = 300112 // Account Change: Unlock
-	AccountChangeTypeUIDAccountChangeOther            = 300199 // Account Change: Other
+	AccountChangeTypeUIDUnknown          = 300100 // Account Change: Unknown
+	AccountChangeTypeUIDCreate           = 300101 // Account Change: Create
+	AccountChangeTypeUIDEnable           = 300102 // Account Change: Enable
+	AccountChangeTypeUIDPasswordChange   = 300103 // Account Change: Password Change
+	AccountChangeTypeUIDPasswordReset    = 300104 // Account Change: Password Reset
+	AccountChangeTypeUIDDisable          = 300105 // Account Change: Disable
+	AccountChangeTypeUIDDelete           = 300106 // Account Change: Delete
+	AccountChangeTypeUIDAttachPolicy     = 300107 // Account Change: Attach Policy
+	AccountChangeTypeUIDDetachPolicy     = 300108 // Account Change: Detach Policy
+	AccountChangeTypeUIDLock             = 300109 // Account Change: Lock
+	AccountChangeTypeUIDMFAFactorEnable  = 300110 // Account Change: MFA Factor Enable
+	AccountChangeTypeUIDMFAFactorDisable = 300111 // Account Change: MFA Factor Disable
+	AccountChangeTypeUIDUnlock           = 300112 // Account Change: Unlock
+	AccountChangeTypeUIDOther            = 300199 // Account Change: Other
 )
 
 // Authentication class constants.
@@ -317,14 +317,14 @@ const (
 
 // AuthenticationTypeUID values.
 const (
-	AuthenticationTypeUIDAuthenticationUnknown              = 300200 // Authentication: Unknown
-	AuthenticationTypeUIDAuthenticationLogon                = 300201 // Authentication: Logon
-	AuthenticationTypeUIDAuthenticationLogoff               = 300202 // Authentication: Logoff
-	AuthenticationTypeUIDAuthenticationAuthenticationTicket = 300203 // Authentication: Authentication Ticket
-	AuthenticationTypeUIDAuthenticationServiceTicketRequest = 300204 // Authentication: Service Ticket Request
-	AuthenticationTypeUIDAuthenticationServiceTicketRenew   = 300205 // Authentication: Service Ticket Renew
-	AuthenticationTypeUIDAuthenticationPreauth              = 300206 // Authentication: Preauth
-	AuthenticationTypeUIDAuthenticationOther                = 300299 // Authentication: Other
+	AuthenticationTypeUIDUnknown              = 300200 // Authentication: Unknown
+	AuthenticationTypeUIDLogon                = 300201 // Authentication: Logon
+	AuthenticationTypeUIDLogoff               = 300202 // Authentication: Logoff
+	AuthenticationTypeUIDAuthenticationTicket = 300203 // Authentication: Authentication Ticket
+	AuthenticationTypeUIDServiceTicketRequest = 300204 // Authentication: Service Ticket Request
+	AuthenticationTypeUIDServiceTicketRenew   = 300205 // Authentication: Service Ticket Renew
+	AuthenticationTypeUIDPreauth              = 300206 // Authentication: Preauth
+	AuthenticationTypeUIDOther                = 300299 // Authentication: Other
 )
 
 // DetectionFinding class constants.
@@ -490,11 +490,11 @@ const (
 
 // DetectionFindingTypeUID values.
 const (
-	DetectionFindingTypeUIDDetectionFindingUnknown = 200400 // Detection Finding: Unknown
-	DetectionFindingTypeUIDDetectionFindingCreate  = 200401 // Detection Finding: Create
-	DetectionFindingTypeUIDDetectionFindingUpdate  = 200402 // Detection Finding: Update
-	DetectionFindingTypeUIDDetectionFindingClose   = 200403 // Detection Finding: Close
-	DetectionFindingTypeUIDDetectionFindingOther   = 200499 // Detection Finding: Other
+	DetectionFindingTypeUIDUnknown = 200400 // Detection Finding: Unknown
+	DetectionFindingTypeUIDCreate  = 200401 // Detection Finding: Create
+	DetectionFindingTypeUIDUpdate  = 200402 // Detection Finding: Update
+	DetectionFindingTypeUIDClose   = 200403 // Detection Finding: Close
+	DetectionFindingTypeUIDOther   = 200499 // Detection Finding: Other
 )
 
 // EntityManagement class constants.
@@ -626,21 +626,21 @@ const (
 
 // EntityManagementTypeUID values.
 const (
-	EntityManagementTypeUIDEntityManagementUnknown    = 300400 // Entity Management: Unknown
-	EntityManagementTypeUIDEntityManagementCreate     = 300401 // Entity Management: Create
-	EntityManagementTypeUIDEntityManagementRead       = 300402 // Entity Management: Read
-	EntityManagementTypeUIDEntityManagementUpdate     = 300403 // Entity Management: Update
-	EntityManagementTypeUIDEntityManagementDelete     = 300404 // Entity Management: Delete
-	EntityManagementTypeUIDEntityManagementMove       = 300405 // Entity Management: Move
-	EntityManagementTypeUIDEntityManagementEnroll     = 300406 // Entity Management: Enroll
-	EntityManagementTypeUIDEntityManagementUnenroll   = 300407 // Entity Management: Unenroll
-	EntityManagementTypeUIDEntityManagementEnable     = 300408 // Entity Management: Enable
-	EntityManagementTypeUIDEntityManagementDisable    = 300409 // Entity Management: Disable
-	EntityManagementTypeUIDEntityManagementActivate   = 300410 // Entity Management: Activate
-	EntityManagementTypeUIDEntityManagementDeactivate = 300411 // Entity Management: Deactivate
-	EntityManagementTypeUIDEntityManagementSuspend    = 300412 // Entity Management: Suspend
-	EntityManagementTypeUIDEntityManagementResume     = 300413 // Entity Management: Resume
-	EntityManagementTypeUIDEntityManagementOther      = 300499 // Entity Management: Other
+	EntityManagementTypeUIDUnknown    = 300400 // Entity Management: Unknown
+	EntityManagementTypeUIDCreate     = 300401 // Entity Management: Create
+	EntityManagementTypeUIDRead       = 300402 // Entity Management: Read
+	EntityManagementTypeUIDUpdate     = 300403 // Entity Management: Update
+	EntityManagementTypeUIDDelete     = 300404 // Entity Management: Delete
+	EntityManagementTypeUIDMove       = 300405 // Entity Management: Move
+	EntityManagementTypeUIDEnroll     = 300406 // Entity Management: Enroll
+	EntityManagementTypeUIDUnenroll   = 300407 // Entity Management: Unenroll
+	EntityManagementTypeUIDEnable     = 300408 // Entity Management: Enable
+	EntityManagementTypeUIDDisable    = 300409 // Entity Management: Disable
+	EntityManagementTypeUIDActivate   = 300410 // Entity Management: Activate
+	EntityManagementTypeUIDDeactivate = 300411 // Entity Management: Deactivate
+	EntityManagementTypeUIDSuspend    = 300412 // Entity Management: Suspend
+	EntityManagementTypeUIDResume     = 300413 // Entity Management: Resume
+	EntityManagementTypeUIDOther      = 300499 // Entity Management: Other
 )
 
 // Actor is the OCSF 1.5.0 object "Actor". The Actor object contains details about the user, role, application, service, or process that initiated or performed a specific activity.

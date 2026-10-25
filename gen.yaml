@@ -7,8 +7,10 @@ classes:
   - account_change
   - detection_finding
   - entity_management
+  - api_activity
 objects:
   - actor
+  - api
   - evidences
   - finding_info
   - http_request

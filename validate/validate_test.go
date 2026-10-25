@@ -69,6 +69,16 @@ func TestValidEvents(t *testing.T) {
 			SeverityID: ocsf.EntityManagementSeverityIDInformational, Time: 1, Metadata: metadata(),
 			Entity: &ocsf.ManagedEntity{Name: "routes"},
 		},
+		// cloud and osint are required only with the cloud and osint
+		// profiles, which this event does not declare.
+		"api_activity": ocsf.APIActivity{
+			ClassUID: ocsf.APIActivityClassUID, CategoryUID: ocsf.APIActivityCategoryUID,
+			ActivityID: ocsf.APIActivityActivityIDRead, TypeUID: ocsf.APIActivityClassUID*100 + ocsf.APIActivityActivityIDRead,
+			SeverityID: ocsf.APIActivitySeverityIDInformational, Time: 1, Metadata: metadata(),
+			Actor:       &ocsf.Actor{User: &ocsf.User{UID: "svc:luup/api"}},
+			API:         &ocsf.API{Operation: "principals.search"},
+			SrcEndpoint: &ocsf.NetworkEndpoint{IP: "10.0.0.7"},
+		},
 	} {
 		t.Run(name, func(t *testing.T) {
 			if r := check(t, ev); len(r.Findings) > 0 {

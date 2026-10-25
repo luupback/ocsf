@@ -143,6 +143,128 @@ const (
 	AccountChangeTypeUIDOther            = 300199 // Account Change: Other
 )
 
+// APIActivity class constants.
+const (
+	APIActivityClassUID    = 6003
+	APIActivityCategoryUID = 6
+)
+
+// APIActivity is the OCSF 1.5.0 class "API Activity". API events describe general CRUD (Create, Read, Update, Delete) API activities, e.g.
+//
+// Not generated (object not in gen.yaml): enrichments (enrichment), http_response (http_response), observables (observable), resources (resource_details).
+type APIActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Actor (required): The actor object describes details about the user/role/process that was the source of the activity.
+	Actor *Actor `json:"actor,omitempty"`
+	// API Details (required): Describes details about a typical API (Application Programming Interface) call.
+	API *API `json:"api,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Application Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: API Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Destination Endpoint (recommended): The network destination endpoint.
+	DstEndpoint *NetworkEndpoint `json:"dst_endpoint,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// HTTP Request (recommended): Details about the underlying http request.
+	HTTPRequest *HTTPRequest `json:"http_request,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Source Endpoint (required): Details about the source of the activity.
+	SrcEndpoint *NetworkEndpoint `json:"src_endpoint,omitempty"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// APIActivityActivityID values.
+const (
+	APIActivityActivityIDUnknown = 0  // Unknown
+	APIActivityActivityIDCreate  = 1  // Create
+	APIActivityActivityIDRead    = 2  // Read
+	APIActivityActivityIDUpdate  = 3  // Update
+	APIActivityActivityIDDelete  = 4  // Delete
+	APIActivityActivityIDOther   = 99 // Other
+)
+
+// APIActivityCategoryUID values.
+const (
+	APIActivityCategoryUIDApplicationActivity = 6 // Application Activity
+)
+
+// APIActivityClassUID values.
+const (
+	APIActivityClassUIDAPIActivity = 6003 // API Activity
+)
+
+// APIActivitySeverityID values.
+const (
+	APIActivitySeverityIDUnknown       = 0  // Unknown
+	APIActivitySeverityIDInformational = 1  // Informational
+	APIActivitySeverityIDLow           = 2  // Low
+	APIActivitySeverityIDMedium        = 3  // Medium
+	APIActivitySeverityIDHigh          = 4  // High
+	APIActivitySeverityIDCritical      = 5  // Critical
+	APIActivitySeverityIDFatal         = 6  // Fatal
+	APIActivitySeverityIDOther         = 99 // Other
+)
+
+// APIActivityStatusID values.
+const (
+	APIActivityStatusIDUnknown = 0  // Unknown
+	APIActivityStatusIDSuccess = 1  // Success
+	APIActivityStatusIDFailure = 2  // Failure
+	APIActivityStatusIDOther   = 99 // Other
+)
+
+// APIActivityTypeUID values.
+const (
+	APIActivityTypeUIDUnknown = 600300 // API Activity: Unknown
+	APIActivityTypeUIDCreate  = 600301 // API Activity: Create
+	APIActivityTypeUIDRead    = 600302 // API Activity: Read
+	APIActivityTypeUIDUpdate  = 600303 // API Activity: Update
+	APIActivityTypeUIDDelete  = 600304 // API Activity: Delete
+	APIActivityTypeUIDOther   = 600399 // API Activity: Other
+)
+
 // Authentication class constants.
 const (
 	AuthenticationClassUID    = 3002
@@ -659,14 +781,28 @@ type Actor struct {
 	User *User `json:"user,omitempty"`
 }
 
+// API is the OCSF 1.5.0 object "API". The API, or Application Programming Interface, object represents information pertaining to an API request and response.
+//
+// Not generated (object not in gen.yaml): group (group), request (request), response (response).
+type API struct {
+	// Operation (required): Verb/Operation associated with the request
+	Operation string `json:"operation"`
+	// Service (optional): The information pertaining to the API service.
+	Service *Service `json:"service,omitempty"`
+	// Version (optional): The version of the API service.
+	Version string `json:"version,omitempty"`
+}
+
 // Evidences is the OCSF 1.5.0 object "Evidence Artifacts". A collection of evidence artifacts associated to the activity/activities that triggered a security detection.
 //
 // Constraint at_least_one: actor, api, connection_info, data, database, databucket, device, dst_endpoint, email, file, process, query, src_endpoint, url, user, job, script, reg_key, reg_value, win_service.
 //
-// Not generated (object not in gen.yaml): api (api), connection_info (network_connection_info), container (container), database (database), databucket (databucket), device (device), email (email), file (file), http_response (http_response), ja4_fingerprint_list (ja4_fingerprint), job (job), process (process), query (dns_query), reg_key (win/reg_key), reg_value (win/reg_value), resources (resource_details), script (script), tls (tls), url (url), win_service (win/win_service).
+// Not generated (object not in gen.yaml): connection_info (network_connection_info), container (container), database (database), databucket (databucket), device (device), email (email), file (file), http_response (http_response), ja4_fingerprint_list (ja4_fingerprint), job (job), process (process), query (dns_query), reg_key (win/reg_key), reg_value (win/reg_value), resources (resource_details), script (script), tls (tls), url (url), win_service (win/win_service).
 type Evidences struct {
 	// Actor (recommended): Describes details about the user/role/process that was the source of the activity that triggered the detection.
 	Actor *Actor `json:"actor,omitempty"`
+	// API Details (recommended): Describes details about the API call associated to the activity that triggered the detection.
+	API *API `json:"api,omitempty"`
 	// Data (optional): Additional evidence data that is not accounted for in the specific evidence attributes.
 	Data any `json:"data,omitempty"`
 	// Destination Endpoint (recommended): Describes details about the destination of the network activity that triggered the detection.

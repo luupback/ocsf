@@ -11,6 +11,7 @@ classes:
 objects:
   - actor
   - api
+  - auth_factor
   - evidences
   - finding_info
   - http_request

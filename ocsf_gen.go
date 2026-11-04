@@ -275,7 +275,7 @@ const (
 //
 // Constraint at_least_one: service, dst_endpoint.
 //
-// Not generated (object not in gen.yaml): auth_factors (auth_factor), authentication_token (authentication_token), certificate (certificate), enrichments (enrichment), http_response (http_response), logon_process (process), observables (observable).
+// Not generated (object not in gen.yaml): authentication_token (authentication_token), certificate (certificate), enrichments (enrichment), http_response (http_response), logon_process (process), observables (observable).
 type Authentication struct {
 	// Activity ID (required): The normalized identifier of the activity that triggered the event.
 	ActivityID int `json:"activity_id"`
@@ -283,6 +283,8 @@ type Authentication struct {
 	ActivityName string `json:"activity_name,omitempty"`
 	// Actor (recommended): The actor object describes details about the user/role/process that was the source of the activity.
 	Actor *Actor `json:"actor,omitempty"`
+	// Authentication Factors (optional): Describes a category of methods used for identity verification in an authentication attempt.
+	AuthFactors []AuthFactor `json:"auth_factors,omitempty"`
 	// Auth Protocol (recommended): The authentication protocol as defined by the caption of auth_protocol_id.
 	AuthProtocol string `json:"auth_protocol,omitempty"`
 	// Auth Protocol ID (recommended): The normalized identifier of the authentication protocol used to create the user session.
@@ -792,6 +794,45 @@ type API struct {
 	// Version (optional): The version of the API service.
 	Version string `json:"version,omitempty"`
 }
+
+// AuthFactor is the OCSF 1.5.0 object "Authentication Factor". An Authentication Factor object describes a category of methods used for identity verification in an authentication attempt.
+//
+// Not generated (object not in gen.yaml): device (device).
+type AuthFactor struct {
+	// Email Address (optional): The email address used in an email-based authentication factor.
+	EmailAddr string `json:"email_addr,omitempty"`
+	// Factor Type (recommended): The type of authentication factor used in an authentication attempt.
+	FactorType string `json:"factor_type,omitempty"`
+	// Factor Type ID (required): The normalized identifier for the authentication factor.
+	FactorTypeID int `json:"factor_type_id"`
+	// HMAC-based One-time Password (HOTP) (recommended): Whether the authentication factor is an HMAC-based One-time Password (HOTP).
+	IsHotp bool `json:"is_hotp,omitempty"`
+	// Time-based One-time Password (TOTP) (recommended): Whether the authentication factor is a Time-based One-time Password (TOTP).
+	IsTotp bool `json:"is_totp,omitempty"`
+	// Phone Number (optional): The phone number used for a telephony-based authentication request.
+	PhoneNumber string `json:"phone_number,omitempty"`
+	// Provider (recommended): The name of provider for an authentication factor.
+	Provider string `json:"provider,omitempty"`
+	// Security Questions (optional): The question(s) provided to user for a question-based authentication factor.
+	SecurityQuestions []string `json:"security_questions,omitempty"`
+}
+
+// AuthFactorFactorTypeID values.
+const (
+	AuthFactorFactorTypeIDUnknown          = 0  // Unknown
+	AuthFactorFactorTypeIDSMS              = 1  // SMS
+	AuthFactorFactorTypeIDSecurityQuestion = 2  // Security Question
+	AuthFactorFactorTypeIDPhoneCall        = 3  // Phone Call
+	AuthFactorFactorTypeIDBiometric        = 4  // Biometric
+	AuthFactorFactorTypeIDPushNotification = 5  // Push Notification
+	AuthFactorFactorTypeIDHardwareToken    = 6  // Hardware Token
+	AuthFactorFactorTypeIDOTP              = 7  // OTP
+	AuthFactorFactorTypeIDEmail            = 8  // Email
+	AuthFactorFactorTypeIDU2F              = 9  // U2F
+	AuthFactorFactorTypeIDWebAuthn         = 10 // WebAuthn
+	AuthFactorFactorTypeIDPassword         = 11 // Password
+	AuthFactorFactorTypeIDOther            = 99 // Other
+)
 
 // Evidences is the OCSF 1.5.0 object "Evidence Artifacts". A collection of evidence artifacts associated to the activity/activities that triggered a security detection.
 //

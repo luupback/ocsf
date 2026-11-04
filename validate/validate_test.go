@@ -120,3 +120,31 @@ func TestInvalidEvents(t *testing.T) {
 		t.Error("a JSON array was accepted as an event")
 	}
 }
+
+// A sign-in with a security key and a password carries both factors.
+func TestAuthFactors(t *testing.T) {
+	ev := logon()
+	ev.AuthFactors = []ocsf.AuthFactor{
+		{FactorTypeID: ocsf.AuthFactorFactorTypeIDWebAuthn, FactorType: "WebAuthn", Provider: "texas"},
+		{FactorTypeID: ocsf.AuthFactorFactorTypeIDPassword, FactorType: "Password", Provider: "texas"},
+	}
+	if r := check(t, ev); len(r.Findings) > 0 {
+		t.Errorf("findings: %v", r.Findings)
+	}
+	b, err := json.Marshal(ev)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var got struct {
+		AuthFactors []struct {
+			FactorTypeID *int `json:"factor_type_id"`
+		} `json:"auth_factors"`
+	}
+	if err := json.Unmarshal(b, &got); err != nil {
+		t.Fatal(err)
+	}
+	if len(got.AuthFactors) != 2 || got.AuthFactors[0].FactorTypeID == nil || *got.AuthFactors[0].FactorTypeID != 10 ||
+		got.AuthFactors[1].FactorTypeID == nil || *got.AuthFactors[1].FactorTypeID != 11 {
+		t.Errorf("auth_factors = %s", b)
+	}
+}

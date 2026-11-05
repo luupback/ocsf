@@ -14,13 +14,17 @@ lint:
 lint-ci:
 	$(ACTIONLINT)
 
-# Regenerate ocsf_gen.go from the embedded compiled schema and gen.yaml.
+GENERATED := ocsf_gen.go catalog/catalog_gen.go
+
+# Regenerate ocsf_gen.go (from the embedded compiled schema and gen.yaml)
+# and catalog/catalog_gen.go (from the schema).
 generate:
 	go generate ./...
 
-# Fails if ocsf_gen.go is stale (CI).
+# Fails if a generated file is stale or untracked (CI).
 check: generate
-	git diff --exit-code -- ocsf_gen.go
+	git diff --exit-code -- $(GENERATED)
+	@test -z "$$(git status --porcelain -- $(GENERATED))" || { git status --short -- $(GENERATED); exit 1; }
 
 # Compile an OCSF release into validate/schema (network and python3
 # required; not run in CI). Then update the //go:embed and //go:generate

@@ -2,7 +2,9 @@ package validate_test
 
 import (
 	"encoding/json"
+	"fmt"
 	"strings"
+	"sync"
 	"testing"
 
 	"github.com/luupback/ocsf"
@@ -147,4 +149,82 @@ func TestAuthFactors(t *testing.T) {
 		got.AuthFactors[1].FactorTypeID == nil || *got.AuthFactors[1].FactorTypeID != 11 {
 		t.Errorf("auth_factors = %s", b)
 	}
+}
+
+func logonJSON(tb testing.TB) []byte {
+	tb.Helper()
+	b, err := json.Marshal(logon())
+	if err != nil {
+		tb.Fatal(err)
+	}
+	return b
+}
+
+// Check is called at run time on every event, from many goroutines.
+func TestCheckConcurrent(t *testing.T) {
+	valid := logonJSON(t)
+	ev := logon()
+	ev.User = nil
+	invalid, err := json.Marshal(ev)
+	if err != nil {
+		t.Fatal(err)
+	}
+	const goroutines, each = 16, 20
+	errs := make(chan error, goroutines*each)
+	var wg sync.WaitGroup
+	for g := range goroutines {
+		wg.Go(func() {
+			for i := range each {
+				in, wantValid := valid, true
+				if (g+i)%2 == 1 {
+					in, wantValid = invalid, false
+				}
+				r, err := validate.Check(in)
+				switch {
+				case err != nil:
+					errs <- err
+				case (r.Err() == nil) != wantValid:
+					errs <- fmt.Errorf("goroutine %d event %d: valid=%v, want %v: %w", g, i, r.Err() == nil, wantValid, r.Err())
+				}
+			}
+		})
+	}
+	wg.Wait()
+	close(errs)
+	for err := range errs {
+		t.Error(err)
+	}
+}
+
+// BenchmarkCheck validates an Authentication logon event, as a service
+// does at run time on every event.
+func BenchmarkCheck(b *testing.B) {
+	ev := logonJSON(b)
+	if _, err := validate.Check(ev); err != nil { // load the schema first
+		b.Fatal(err)
+	}
+	b.ReportAllocs()
+	for b.Loop() {
+		r, err := validate.Check(ev)
+		if err != nil || r.Err() != nil {
+			b.Fatal(err, r.Err())
+		}
+	}
+}
+
+// BenchmarkCheckParallel is BenchmarkCheck from GOMAXPROCS goroutines.
+func BenchmarkCheckParallel(b *testing.B) {
+	ev := logonJSON(b)
+	if _, err := validate.Check(ev); err != nil {
+		b.Fatal(err)
+	}
+	b.ReportAllocs()
+	b.RunParallel(func(pb *testing.PB) {
+		for pb.Next() {
+			if _, err := validate.Check(ev); err != nil {
+				b.Error(err)
+				return
+			}
+		}
+	})
 }

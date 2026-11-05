@@ -1,26 +1,12 @@
-# What cmd/ocsfgen generates Go types for (ocsf_gen.go). A class or object
-# not listed here has no type; an attribute whose object is not listed is
-# left out of its struct (the generated file lists every omission). Add an
-# object here to use it. A required attribute's object must be listed.
-classes:
-  - authentication
-  - account_change
-  - detection_finding
-  - entity_management
-  - api_activity
-objects:
-  - actor
-  - api
-  - auth_factor
-  - evidences
-  - finding_info
-  - http_request
-  - managed_entity
-  - metadata
-  - network_endpoint
-  - product
-  - service
-  - session
-  - user
+# What cmd/ocsfgen generates Go types for (ocsf_gen.go). Each of classes
+# and objects is either a list of OCSF names or "all" (every one in the
+# schema). With a list, a class or object not listed has no type, and an
+# attribute whose object is not listed is left out of its struct (the
+# generated file lists every omission); a required attribute's object must
+# be listed. Extension classes and objects are named as in the schema
+# (win/registry_key_activity) and generated with their prefix
+# (WinRegistryKeyActivity).
+classes: all
+objects: all
 # Profiles whose attributes are generated (none: base classes only).
 profiles: []

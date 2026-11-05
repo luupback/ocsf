@@ -8,8 +8,9 @@ import (
 const fixture = `{
   "version": "9.9.9",
   "dictionary": {"types": {"attributes": {"ip_t": {"type": "string_t"}, "port_t": {"type": "integer_t"}}}},
+  "categories": {"attributes": {"things": {"uid": 9, "caption": "Things"}}},
   "classes": {
-    "thing_seen": {"name": "thing_seen", "caption": "Thing Seen", "description": "A thing was <b>seen</b>. More text.", "uid": 9001, "category_uid": 9,
+    "thing_seen": {"name": "thing_seen", "caption": "Thing Seen", "description": "A thing was <b>seen</b>. More text.", "uid": 9001, "category": "things", "category_uid": 9,
       "constraints": {"at_least_one": ["peer", "note"]},
       "attributes": {
         "activity_id": {"caption": "Activity ID", "type": "integer_t", "requirement": "required", "enum": {"0": {"caption": "Unknown"}, "1": {"caption": "Seen It"}, "99": {"caption": "Other"}}},
@@ -96,6 +97,7 @@ func TestGenerateErrors(t *testing.T) {
 func TestNames(t *testing.T) {
 	for in, want := range map[string]string{
 		"activity_id": "ActivityID", "type_uid": "TypeUID", "http_request": "HTTPRequest", "is_mfa": "IsMFA", "src_endpoint": "SrcEndpoint",
+		"win/registry_key_activity": "WinRegistryKeyActivity", "win/reg_key": "WinRegKey",
 	} {
 		if got := goName(in); got != want {
 			t.Errorf("goName(%q) = %q, want %q", in, got, want)
@@ -106,5 +108,69 @@ func TestNames(t *testing.T) {
 	}
 	if got := identifier("3rd party"); got != "V3rdParty" {
 		t.Errorf("identifier = %q", got)
+	}
+}
+
+func TestConfigAll(t *testing.T) {
+	for in, wantEndpoint := range map[string]bool{"classes: all\nobjects: all\n": true, "classes: \"*\"\nobjects: [device]\n": false} {
+		c, err := parseConfig([]byte(in))
+		if err != nil {
+			t.Fatal(err)
+		}
+		src := generate(t, c)
+		if !strings.Contains(src, "type ThingSeen struct") || !strings.Contains(src, "type Device struct") {
+			t.Errorf("%q: types missing", in)
+		}
+		if got := strings.Contains(src, "type NetworkEndpoint struct"); got != wantEndpoint {
+			t.Errorf("%q: NetworkEndpoint generated = %v", in, got)
+		}
+		if wantEndpoint && strings.Contains(src, "Not generated") {
+			t.Errorf("%q: an attribute was omitted with every object generated", in)
+		}
+	}
+	if _, err := parseConfig([]byte("classes: some\n")); err == nil {
+		t.Error("classes: some was accepted")
+	}
+}
+
+// An enum constant that collides with an identifier already reserved gets
+// its value appended; a colliding type name is an error.
+func TestCollisions(t *testing.T) {
+	everything := Config{Classes: names{all}, Objects: names{all}}
+	// thing_seen.activity_id "Seen It" is ThingSeenActivityIDSeenIt; an
+	// object named thing_seen_activity_id_seen_it claims that name first.
+	collide := strings.Replace(fixture, `"device": {"name": "device"`, `"thing_seen_activity_id_seen_it": {"name": "x", "caption": "X", "attributes": {}}, "device": {"name": "device"`, 1)
+	src, err := Generate([]byte(collide), everything, "ocsf")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(string(src), "ThingSeenActivityIDSeenIt1 = 1") {
+		t.Errorf("colliding enum constant not suffixed:\n%s", src)
+	}
+	dup := strings.Replace(fixture, `"device": {"name": "device"`, `"thing/seen": {"name": "thing/seen", "caption": "X", "attributes": {}}, "device": {"name": "device"`, 1)
+	if _, err := Generate([]byte(dup), everything, "ocsf"); err == nil || !strings.Contains(err.Error(), "Go identifier ThingSeen") {
+		t.Errorf("type collision: %v", err)
+	}
+}
+
+func TestGenerateCatalog(t *testing.T) {
+	src, err := GenerateCatalog([]byte(fixture), "catalog")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, want := range []string{
+		`const SchemaVersion = "9.9.9"`,
+		`{UID: 9, Name: "things", Caption: "Things"}`,
+		`UID: 9001, Name: "thing_seen", Caption: "Thing Seen"`,
+		`Category: Category{UID: 9, Name: "things", Caption: "Things"}`,
+		`{ID: 0, Caption: "Unknown"}, {ID: 1, Caption: "Seen It"}, {ID: 99, Caption: "Other"},`,
+	} {
+		if !strings.Contains(strings.Join(strings.Fields(string(src)), " "), want) {
+			t.Errorf("catalog lacks %q:\n%s", want, src)
+		}
+	}
+	bad := strings.Replace(fixture, `"category": "things"`, `"category": "nope"`, 1)
+	if _, err := GenerateCatalog([]byte(bad), "catalog"); err == nil {
+		t.Error("unknown category accepted")
 	}
 }

@@ -12,8 +12,6 @@ const (
 )
 
 // AccountChange is the OCSF 1.5.0 class "Account Change". Account Change events report when specific user account management tasks are performed, such as a user/role being created, changed, deleted, renamed, disabled, enabled, locked out or unlocked.
-//
-// Not generated (object not in gen.yaml): enrichments (enrichment), http_response (http_response), observables (observable), policies (policy).
 type AccountChange struct {
 	// Activity ID (required): The normalized identifier of the activity that triggered the event.
 	ActivityID int `json:"activity_id"`
@@ -35,12 +33,20 @@ type AccountChange struct {
 	Duration int64 `json:"duration,omitempty"`
 	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
 	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
 	// HTTP Request (optional): Details about the underlying HTTP request.
 	HTTPRequest *HTTPRequest `json:"http_request,omitempty"`
+	// HTTP Response (optional): Details about the underlying HTTP response.
+	HTTPResponse *HTTPResponse `json:"http_response,omitempty"`
 	// Message (recommended): The description of the event/finding, as defined by the source.
 	Message string `json:"message,omitempty"`
 	// Metadata (required): The metadata associated with the event or a finding.
 	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Policies (optional): Details about the IAM policies associated with the Attach/Detach Policy activities.
+	Policies []Policy `json:"policies,omitempty"`
 	// Raw Data (optional): The raw event/finding data as received from the source.
 	RawData string `json:"raw_data,omitempty"`
 	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
@@ -143,6 +149,273 @@ const (
 	AccountChangeTypeUIDOther            = 300199 // Account Change: Other
 )
 
+// AdminGroupQuery class constants.
+const (
+	AdminGroupQueryClassUID    = 5009
+	AdminGroupQueryCategoryUID = 5
+)
+
+// AdminGroupQuery is the OCSF 1.5.0 class "Admin Group Query". Admin Group Query events report information about administrative groups.
+//
+// Deprecated: since OCSF 1.5.0. Use the Live Evidence Info class.
+type AdminGroupQuery struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Discovery.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Admin Group Query.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Group (required): The administrative group.
+	Group *Group `json:"group,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Query Info (recommended): The search details associated with the query request.
+	QueryInfo *QueryInfo `json:"query_info,omitempty"`
+	// Query Result (recommended): The result of the query.
+	QueryResult string `json:"query_result,omitempty"`
+	// Query Result ID (required): The normalized identifier of the query result.
+	QueryResultID int `json:"query_result_id"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+	// Users (recommended): The users that belong to the administrative group.
+	Users []User `json:"users,omitempty"`
+}
+
+// AdminGroupQueryActivityID values.
+const (
+	AdminGroupQueryActivityIDUnknown = 0  // Unknown
+	AdminGroupQueryActivityIDQuery   = 1  // Query
+	AdminGroupQueryActivityIDOther   = 99 // Other
+)
+
+// AdminGroupQueryCategoryUID values.
+const (
+	AdminGroupQueryCategoryUIDDiscovery = 5 // Discovery
+)
+
+// AdminGroupQueryClassUID values.
+const (
+	AdminGroupQueryClassUIDAdminGroupQuery = 5009 // Admin Group Query
+)
+
+// AdminGroupQueryQueryResultID values.
+const (
+	AdminGroupQueryQueryResultIDUnknown      = 0  // Unknown
+	AdminGroupQueryQueryResultIDExists       = 1  // Exists
+	AdminGroupQueryQueryResultIDPartial      = 2  // Partial
+	AdminGroupQueryQueryResultIDDoesNotExist = 3  // Does not exist
+	AdminGroupQueryQueryResultIDError        = 4  // Error
+	AdminGroupQueryQueryResultIDUnsupported  = 5  // Unsupported
+	AdminGroupQueryQueryResultIDOther        = 99 // Other
+)
+
+// AdminGroupQuerySeverityID values.
+const (
+	AdminGroupQuerySeverityIDUnknown       = 0  // Unknown
+	AdminGroupQuerySeverityIDInformational = 1  // Informational
+	AdminGroupQuerySeverityIDLow           = 2  // Low
+	AdminGroupQuerySeverityIDMedium        = 3  // Medium
+	AdminGroupQuerySeverityIDHigh          = 4  // High
+	AdminGroupQuerySeverityIDCritical      = 5  // Critical
+	AdminGroupQuerySeverityIDFatal         = 6  // Fatal
+	AdminGroupQuerySeverityIDOther         = 99 // Other
+)
+
+// AdminGroupQueryStatusID values.
+const (
+	AdminGroupQueryStatusIDUnknown = 0  // Unknown
+	AdminGroupQueryStatusIDSuccess = 1  // Success
+	AdminGroupQueryStatusIDFailure = 2  // Failure
+	AdminGroupQueryStatusIDOther   = 99 // Other
+)
+
+// AdminGroupQueryTypeUID values.
+const (
+	AdminGroupQueryTypeUIDUnknown = 500900 // Admin Group Query: Unknown
+	AdminGroupQueryTypeUIDQuery   = 500901 // Admin Group Query: Query
+	AdminGroupQueryTypeUIDOther   = 500999 // Admin Group Query: Other
+)
+
+// AirborneBroadcastActivity class constants.
+const (
+	AirborneBroadcastActivityClassUID    = 8002
+	AirborneBroadcastActivityCategoryUID = 8
+)
+
+// AirborneBroadcastActivity is the OCSF 1.5.0 class "Airborne Broadcast Activity". Airborne Broadcast Activity events report the activity of any aircraft or unmanned system as reported and tracked by Automatic Dependent Surveillance - Broadcast (ADS-B) receivers.
+//
+// Constraint at_least_one: aircraft, unmanned_aerial_system, unmanned_system_operating_area.
+type AirborneBroadcastActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Aircraft (recommended): The Aircraft object represents any aircraft or otherwise airborne asset such as an unmanned system, airplane, balloon, spacecraft, or otherwise.
+	Aircraft *Aircraft `json:"aircraft,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Unmanned Systems.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Airborne Broadcast Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Connection Info (recommended): The network connection information.
+	ConnectionInfo *NetworkConnectionInfo `json:"connection_info,omitempty"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Destination Endpoint (optional): The destination network endpoint for the ADS-B system, if telemetry is being remotely broadcasted.
+	DstEndpoint *NetworkEndpoint `json:"dst_endpoint,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// ADS-B Protocol (recommended): The specific protocol associated with the ADS-B system.
+	ProtocolName string `json:"protocol_name,omitempty"`
+	// Proxy Endpoint (recommended): The proxy (server) in a network connection.
+	ProxyEndpoint *NetworkProxy `json:"proxy_endpoint,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// RSSI (optional): Recent average RSSI (signal power) measured in dbFS.
+	Rssi int `json:"rssi,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Source Endpoint (optional): The source network endpoint for the ADS-B system.
+	SrcEndpoint *NetworkEndpoint `json:"src_endpoint,omitempty"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// TLS (optional): The Transport Layer Security (TLS) attributes.
+	TLS *TLS `json:"tls,omitempty"`
+	// Traffic (optional): Traffic refers to the amount of data transmitted from a ADS-B remote monitoring system at a given point of time.
+	Traffic *NetworkTraffic `json:"traffic,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmanned Aerial System (required): The Unmanned Aerial System object describes the characteristics, Position Location Information (PLI), and other metadata of Unmanned Aerial Systems (UAS) and other unmanned and drone systems used in Remote ID.
+	UnmannedAerialSystem *UnmannedAerialSystem `json:"unmanned_aerial_system,omitempty"`
+	// UAS Operating Area (recommended): The UAS Operating Area object describes details about a precise area of operations for a UAS flight or mission.
+	UnmannedSystemOperatingArea *UnmannedSystemOperatingArea `json:"unmanned_system_operating_area,omitempty"`
+	// Unmanned Systems Operator (required): The human or machine operator of an Unmanned System.
+	UnmannedSystemOperator *User `json:"unmanned_system_operator,omitempty"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// AirborneBroadcastActivityActivityID values.
+const (
+	AirborneBroadcastActivityActivityIDUnknown = 0  // Unknown
+	AirborneBroadcastActivityActivityIDCapture = 1  // Capture
+	AirborneBroadcastActivityActivityIDRecord  = 2  // Record
+	AirborneBroadcastActivityActivityIDOther   = 99 // Other
+)
+
+// AirborneBroadcastActivityCategoryUID values.
+const (
+	AirborneBroadcastActivityCategoryUIDUnmannedSystems = 8 // Unmanned Systems
+)
+
+// AirborneBroadcastActivityClassUID values.
+const (
+	AirborneBroadcastActivityClassUIDAirborneBroadcastActivity = 8002 // Airborne Broadcast Activity
+)
+
+// AirborneBroadcastActivitySeverityID values.
+const (
+	AirborneBroadcastActivitySeverityIDUnknown       = 0  // Unknown
+	AirborneBroadcastActivitySeverityIDInformational = 1  // Informational
+	AirborneBroadcastActivitySeverityIDLow           = 2  // Low
+	AirborneBroadcastActivitySeverityIDMedium        = 3  // Medium
+	AirborneBroadcastActivitySeverityIDHigh          = 4  // High
+	AirborneBroadcastActivitySeverityIDCritical      = 5  // Critical
+	AirborneBroadcastActivitySeverityIDFatal         = 6  // Fatal
+	AirborneBroadcastActivitySeverityIDOther         = 99 // Other
+)
+
+// AirborneBroadcastActivityStatusID values.
+const (
+	AirborneBroadcastActivityStatusIDUnknown = 0  // Unknown
+	AirborneBroadcastActivityStatusIDSuccess = 1  // Success
+	AirborneBroadcastActivityStatusIDFailure = 2  // Failure
+	AirborneBroadcastActivityStatusIDOther   = 99 // Other
+)
+
+// AirborneBroadcastActivityTypeUID values.
+const (
+	AirborneBroadcastActivityTypeUIDUnknown = 800200 // Airborne Broadcast Activity: Unknown
+	AirborneBroadcastActivityTypeUIDCapture = 800201 // Airborne Broadcast Activity: Capture
+	AirborneBroadcastActivityTypeUIDRecord  = 800202 // Airborne Broadcast Activity: Record
+	AirborneBroadcastActivityTypeUIDOther   = 800299 // Airborne Broadcast Activity: Other
+)
+
 // APIActivity class constants.
 const (
 	APIActivityClassUID    = 6003
@@ -150,8 +423,6 @@ const (
 )
 
 // APIActivity is the OCSF 1.5.0 class "API Activity". API events describe general CRUD (Create, Read, Update, Delete) API activities, e.g.
-//
-// Not generated (object not in gen.yaml): enrichments (enrichment), http_response (http_response), observables (observable), resources (resource_details).
 type APIActivity struct {
 	// Activity ID (required): The normalized identifier of the activity that triggered the event.
 	ActivityID int `json:"activity_id"`
@@ -177,16 +448,24 @@ type APIActivity struct {
 	Duration int64 `json:"duration,omitempty"`
 	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
 	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
 	// HTTP Request (recommended): Details about the underlying http request.
 	HTTPRequest *HTTPRequest `json:"http_request,omitempty"`
+	// HTTP Response (recommended): Details about the underlying http response.
+	HTTPResponse *HTTPResponse `json:"http_response,omitempty"`
 	// Message (recommended): The description of the event/finding, as defined by the source.
 	Message string `json:"message,omitempty"`
 	// Metadata (required): The metadata associated with the event or a finding.
 	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
 	// Raw Data (optional): The raw event/finding data as received from the source.
 	RawData string `json:"raw_data,omitempty"`
 	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
 	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Resources Array (recommended): Details about resources that were affected by the activity/event.
+	Resources []ResourceDetails `json:"resources,omitempty"`
 	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
 	Severity string `json:"severity,omitempty"`
 	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
@@ -265,6 +544,390 @@ const (
 	APIActivityTypeUIDOther   = 600399 // API Activity: Other
 )
 
+// ApplicationError class constants.
+const (
+	ApplicationErrorClassUID    = 6008
+	ApplicationErrorCategoryUID = 6
+)
+
+// ApplicationError is the OCSF 1.5.0 class "Application Error". Application Error events describe issues with an applications.
+type ApplicationError struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Application Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Application Error.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The error message as reported by the application.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// ApplicationErrorActivityID values.
+const (
+	ApplicationErrorActivityIDUnknown          = 0  // Unknown
+	ApplicationErrorActivityIDGeneralError     = 1  // General Error
+	ApplicationErrorActivityIDTranslationError = 2  // Translation Error
+	ApplicationErrorActivityIDOther            = 99 // Other
+)
+
+// ApplicationErrorCategoryUID values.
+const (
+	ApplicationErrorCategoryUIDApplicationActivity = 6 // Application Activity
+)
+
+// ApplicationErrorClassUID values.
+const (
+	ApplicationErrorClassUIDApplicationError = 6008 // Application Error
+)
+
+// ApplicationErrorSeverityID values.
+const (
+	ApplicationErrorSeverityIDUnknown       = 0  // Unknown
+	ApplicationErrorSeverityIDInformational = 1  // Informational
+	ApplicationErrorSeverityIDLow           = 2  // Low
+	ApplicationErrorSeverityIDMedium        = 3  // Medium
+	ApplicationErrorSeverityIDHigh          = 4  // High
+	ApplicationErrorSeverityIDCritical      = 5  // Critical
+	ApplicationErrorSeverityIDFatal         = 6  // Fatal
+	ApplicationErrorSeverityIDOther         = 99 // Other
+)
+
+// ApplicationErrorStatusID values.
+const (
+	ApplicationErrorStatusIDUnknown = 0  // Unknown
+	ApplicationErrorStatusIDSuccess = 1  // Success
+	ApplicationErrorStatusIDFailure = 2  // Failure
+	ApplicationErrorStatusIDOther   = 99 // Other
+)
+
+// ApplicationErrorTypeUID values.
+const (
+	ApplicationErrorTypeUIDUnknown          = 600800 // Application Error: Unknown
+	ApplicationErrorTypeUIDGeneralError     = 600801 // Application Error: General Error
+	ApplicationErrorTypeUIDTranslationError = 600802 // Application Error: Translation Error
+	ApplicationErrorTypeUIDOther            = 600899 // Application Error: Other
+)
+
+// ApplicationLifecycle class constants.
+const (
+	ApplicationLifecycleClassUID    = 6002
+	ApplicationLifecycleCategoryUID = 6
+)
+
+// ApplicationLifecycle is the OCSF 1.5.0 class "Application Lifecycle". Application Lifecycle events report installation, removal, start, stop of an application or service.
+type ApplicationLifecycle struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Application (required): The application that was affected by the lifecycle event.
+	App *Product `json:"app,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Application Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Application Lifecycle.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// ApplicationLifecycleActivityID values.
+const (
+	ApplicationLifecycleActivityIDUnknown = 0  // Unknown
+	ApplicationLifecycleActivityIDInstall = 1  // Install
+	ApplicationLifecycleActivityIDRemove  = 2  // Remove
+	ApplicationLifecycleActivityIDStart   = 3  // Start
+	ApplicationLifecycleActivityIDStop    = 4  // Stop
+	ApplicationLifecycleActivityIDRestart = 5  // Restart
+	ApplicationLifecycleActivityIDEnable  = 6  // Enable
+	ApplicationLifecycleActivityIDDisable = 7  // Disable
+	ApplicationLifecycleActivityIDUpdate  = 8  // Update
+	ApplicationLifecycleActivityIDOther   = 99 // Other
+)
+
+// ApplicationLifecycleCategoryUID values.
+const (
+	ApplicationLifecycleCategoryUIDApplicationActivity = 6 // Application Activity
+)
+
+// ApplicationLifecycleClassUID values.
+const (
+	ApplicationLifecycleClassUIDApplicationLifecycle = 6002 // Application Lifecycle
+)
+
+// ApplicationLifecycleSeverityID values.
+const (
+	ApplicationLifecycleSeverityIDUnknown       = 0  // Unknown
+	ApplicationLifecycleSeverityIDInformational = 1  // Informational
+	ApplicationLifecycleSeverityIDLow           = 2  // Low
+	ApplicationLifecycleSeverityIDMedium        = 3  // Medium
+	ApplicationLifecycleSeverityIDHigh          = 4  // High
+	ApplicationLifecycleSeverityIDCritical      = 5  // Critical
+	ApplicationLifecycleSeverityIDFatal         = 6  // Fatal
+	ApplicationLifecycleSeverityIDOther         = 99 // Other
+)
+
+// ApplicationLifecycleStatusID values.
+const (
+	ApplicationLifecycleStatusIDUnknown = 0  // Unknown
+	ApplicationLifecycleStatusIDSuccess = 1  // Success
+	ApplicationLifecycleStatusIDFailure = 2  // Failure
+	ApplicationLifecycleStatusIDOther   = 99 // Other
+)
+
+// ApplicationLifecycleTypeUID values.
+const (
+	ApplicationLifecycleTypeUIDUnknown = 600200 // Application Lifecycle: Unknown
+	ApplicationLifecycleTypeUIDInstall = 600201 // Application Lifecycle: Install
+	ApplicationLifecycleTypeUIDRemove  = 600202 // Application Lifecycle: Remove
+	ApplicationLifecycleTypeUIDStart   = 600203 // Application Lifecycle: Start
+	ApplicationLifecycleTypeUIDStop    = 600204 // Application Lifecycle: Stop
+	ApplicationLifecycleTypeUIDRestart = 600205 // Application Lifecycle: Restart
+	ApplicationLifecycleTypeUIDEnable  = 600206 // Application Lifecycle: Enable
+	ApplicationLifecycleTypeUIDDisable = 600207 // Application Lifecycle: Disable
+	ApplicationLifecycleTypeUIDUpdate  = 600208 // Application Lifecycle: Update
+	ApplicationLifecycleTypeUIDOther   = 600299 // Application Lifecycle: Other
+)
+
+// ApplicationSecurityPostureFinding class constants.
+const (
+	ApplicationSecurityPostureFindingClassUID    = 2007
+	ApplicationSecurityPostureFindingCategoryUID = 2
+)
+
+// ApplicationSecurityPostureFinding is the OCSF 1.5.0 class "Application Security Posture Finding". The Application Security Posture Finding event is a notification about any bug, defect, deficiency, exploit, vulnerability, weakness or any other issue with software and related systems.
+//
+// Constraint at_least_one: application, compliance, remediation, vulnerabilities.
+type ApplicationSecurityPostureFinding struct {
+	// Activity ID (required): The normalized identifier of the finding activity.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The finding activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Related Application (recommended): An Application describes the details for an inventoried application as reported by an Application Security tool or other Developer-centric tooling.
+	Application *Application `json:"application,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Findings.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Application Security Posture Finding.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Comment (optional): A user provided comment about the finding.
+	Comment string `json:"comment,omitempty"`
+	// Related Compliance (recommended): Provides compliance context to vulnerabilities and other weaknesses that are reported as part of an Application Security or Vulnerability Management tool's built-in compliance framework mapping.
+	Compliance *Compliance `json:"compliance,omitempty"`
+	// Confidence (optional): The confidence, normalized to the caption of the confidence_id value.
+	Confidence string `json:"confidence,omitempty"`
+	// Confidence ID (recommended): The normalized confidence refers to the accuracy of the rule that created the finding.
+	ConfidenceID int `json:"confidence_id,omitempty"`
+	// Confidence Score (optional): The confidence score as reported by the event source.
+	ConfidenceScore int `json:"confidence_score,omitempty"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Device (recommended): Describes the affected device/host.
+	Device *Device `json:"device,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The time of the most recent event included in the finding.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Finding Information (required): Describes the supporting information about a generated finding.
+	FindingInfo *FindingInfo `json:"finding_info,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Remediation Guidance (recommended): Describes the recommended remediation steps to address identified vulnerabilities or weaknesses.
+	Remediation *Remediation `json:"remediation,omitempty"`
+	// Affected Resources (recommended): Describes details about the resource/resources that are affected by the vulnerability/vulnerabilities.
+	Resources []ResourceDetails `json:"resources,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The time of the least recent event included in the finding.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (optional): The normalized status of the Finding set by the consumer normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized status identifier of the Finding, set by the consumer.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+	// Vendor Attributes (optional): The Vendor Attributes object can be used to represent values of attributes populated by the Vendor/Finding Provider.
+	VendorAttributes *VendorAttributes `json:"vendor_attributes,omitempty"`
+	// Vulnerabilities (recommended): This object describes vulnerabilities reported in a security finding.
+	Vulnerabilities []Vulnerability `json:"vulnerabilities,omitempty"`
+}
+
+// ApplicationSecurityPostureFindingActivityID values.
+const (
+	ApplicationSecurityPostureFindingActivityIDUnknown = 0  // Unknown
+	ApplicationSecurityPostureFindingActivityIDCreate  = 1  // Create
+	ApplicationSecurityPostureFindingActivityIDUpdate  = 2  // Update
+	ApplicationSecurityPostureFindingActivityIDClose   = 3  // Close
+	ApplicationSecurityPostureFindingActivityIDOther   = 99 // Other
+)
+
+// ApplicationSecurityPostureFindingCategoryUID values.
+const (
+	ApplicationSecurityPostureFindingCategoryUIDFindings = 2 // Findings
+)
+
+// ApplicationSecurityPostureFindingClassUID values.
+const (
+	ApplicationSecurityPostureFindingClassUIDApplicationSecurityPostureFinding = 2007 // Application Security Posture Finding
+)
+
+// ApplicationSecurityPostureFindingConfidenceID values.
+const (
+	ApplicationSecurityPostureFindingConfidenceIDUnknown = 0  // Unknown
+	ApplicationSecurityPostureFindingConfidenceIDLow     = 1  // Low
+	ApplicationSecurityPostureFindingConfidenceIDMedium  = 2  // Medium
+	ApplicationSecurityPostureFindingConfidenceIDHigh    = 3  // High
+	ApplicationSecurityPostureFindingConfidenceIDOther   = 99 // Other
+)
+
+// ApplicationSecurityPostureFindingSeverityID values.
+const (
+	ApplicationSecurityPostureFindingSeverityIDUnknown       = 0  // Unknown
+	ApplicationSecurityPostureFindingSeverityIDInformational = 1  // Informational
+	ApplicationSecurityPostureFindingSeverityIDLow           = 2  // Low
+	ApplicationSecurityPostureFindingSeverityIDMedium        = 3  // Medium
+	ApplicationSecurityPostureFindingSeverityIDHigh          = 4  // High
+	ApplicationSecurityPostureFindingSeverityIDCritical      = 5  // Critical
+	ApplicationSecurityPostureFindingSeverityIDFatal         = 6  // Fatal
+	ApplicationSecurityPostureFindingSeverityIDOther         = 99 // Other
+)
+
+// ApplicationSecurityPostureFindingStatusID values.
+const (
+	ApplicationSecurityPostureFindingStatusIDUnknown    = 0  // Unknown
+	ApplicationSecurityPostureFindingStatusIDNew        = 1  // New
+	ApplicationSecurityPostureFindingStatusIDInProgress = 2  // In Progress
+	ApplicationSecurityPostureFindingStatusIDSuppressed = 3  // Suppressed
+	ApplicationSecurityPostureFindingStatusIDResolved   = 4  // Resolved
+	ApplicationSecurityPostureFindingStatusIDArchived   = 5  // Archived
+	ApplicationSecurityPostureFindingStatusIDOther      = 99 // Other
+)
+
+// ApplicationSecurityPostureFindingTypeUID values.
+const (
+	ApplicationSecurityPostureFindingTypeUIDUnknown = 200700 // Application Security Posture Finding: Unknown
+	ApplicationSecurityPostureFindingTypeUIDCreate  = 200701 // Application Security Posture Finding: Create
+	ApplicationSecurityPostureFindingTypeUIDUpdate  = 200702 // Application Security Posture Finding: Update
+	ApplicationSecurityPostureFindingTypeUIDClose   = 200703 // Application Security Posture Finding: Close
+	ApplicationSecurityPostureFindingTypeUIDOther   = 200799 // Application Security Posture Finding: Other
+)
+
 // Authentication class constants.
 const (
 	AuthenticationClassUID    = 3002
@@ -274,8 +937,6 @@ const (
 // Authentication is the OCSF 1.5.0 class "Authentication". Authentication events report authentication session activities, including user attempts to log on or log off, regardless of success, as well as other key stages within the authentication process.
 //
 // Constraint at_least_one: service, dst_endpoint.
-//
-// Not generated (object not in gen.yaml): authentication_token (authentication_token), certificate (certificate), enrichments (enrichment), http_response (http_response), logon_process (process), observables (observable).
 type Authentication struct {
 	// Activity ID (required): The normalized identifier of the activity that triggered the event.
 	ActivityID int `json:"activity_id"`
@@ -289,10 +950,14 @@ type Authentication struct {
 	AuthProtocol string `json:"auth_protocol,omitempty"`
 	// Auth Protocol ID (recommended): The normalized identifier of the authentication protocol used to create the user session.
 	AuthProtocolID int `json:"auth_protocol_id,omitempty"`
+	// Authentication Token (optional): The authentication token, ticket, or assertion, e.g.
+	AuthenticationToken *AuthenticationToken `json:"authentication_token,omitempty"`
 	// Category (optional): The event category name, as defined by category_uid value: Identity & Access Management.
 	CategoryName string `json:"category_name,omitempty"`
 	// Category ID (required): The category unique identifier of the event.
 	CategoryUID int `json:"category_uid"`
+	// Certificate (recommended): The certificate associated with the authentication or pre-authentication (Kerberos).
+	Certificate *Certificate `json:"certificate,omitempty"`
 	// Class (optional): The event class name, as defined by class_uid value: Authentication.
 	ClassName string `json:"class_name,omitempty"`
 	// Class ID (required): The unique identifier of a class.
@@ -305,8 +970,12 @@ type Authentication struct {
 	Duration int64 `json:"duration,omitempty"`
 	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
 	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
 	// HTTP Request (optional): Details about the underlying HTTP request.
 	HTTPRequest *HTTPRequest `json:"http_request,omitempty"`
+	// HTTP Response (optional): Details about the underlying HTTP response.
+	HTTPResponse *HTTPResponse `json:"http_response,omitempty"`
 	// Cleartext Credentials (optional): Indicates whether the credentials were passed in clear text.Note: True if the credentials were passed in a clear text protocol such as FTP or TELNET, or if Windows detected that a user's logon password was passed to the authentication package in clear text.
 	IsCleartext bool `json:"is_cleartext,omitempty"`
 	// Multi Factor Authentication (recommended): Indicates whether Multi Factor Authentication was used during authentication.
@@ -315,6 +984,8 @@ type Authentication struct {
 	IsNewLogon bool `json:"is_new_logon,omitempty"`
 	// Remote (recommended): The attempted authentication is over a remote connection.
 	IsRemote bool `json:"is_remote,omitempty"`
+	// Logon Process (optional): The trusted process that validated the authentication credentials.
+	LogonProcess *Process `json:"logon_process,omitempty"`
 	// Logon Type (recommended): The logon type, normalized to the caption of the logon_type_id value.
 	LogonType string `json:"logon_type,omitempty"`
 	// Logon Type ID (recommended): The normalized logon type identifier.
@@ -323,6 +994,8 @@ type Authentication struct {
 	Message string `json:"message,omitempty"`
 	// Metadata (required): The metadata associated with the event or a finding.
 	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
 	// Raw Data (optional): The raw event/finding data as received from the source.
 	RawData string `json:"raw_data,omitempty"`
 	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
@@ -451,6 +1124,987 @@ const (
 	AuthenticationTypeUIDOther                = 300299 // Authentication: Other
 )
 
+// AuthorizeSession class constants.
+const (
+	AuthorizeSessionClassUID    = 3003
+	AuthorizeSessionCategoryUID = 3
+)
+
+// AuthorizeSession is the OCSF 1.5.0 class "Authorize Session". Authorize Session events report privileges or groups assigned to a new user session, usually at login time.
+//
+// Constraint just_one: privileges, group.
+type AuthorizeSession struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Actor (recommended): The actor object describes details about the user/role/process that was the source of the activity.
+	Actor *Actor `json:"actor,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Identity & Access Management.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Authorize Session.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Destination Endpoint (optional): The Endpoint for which the user session was targeted.
+	DstEndpoint *NetworkEndpoint `json:"dst_endpoint,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Group (recommended): Group that was assigned to the new user session.
+	Group *Group `json:"group,omitempty"`
+	// HTTP Request (optional): Details about the underlying HTTP request.
+	HTTPRequest *HTTPRequest `json:"http_request,omitempty"`
+	// HTTP Response (optional): Details about the underlying HTTP response.
+	HTTPResponse *HTTPResponse `json:"http_response,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Privileges (recommended): The list of sensitive privileges, assigned to the new user session.
+	Privileges []string `json:"privileges,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Session (recommended): The user session with the assigned privileges.
+	Session *Session `json:"session,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Source Endpoint (recommended): Details about the source of the IAM activity.
+	SrcEndpoint *NetworkEndpoint `json:"src_endpoint,omitempty"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+	// User (required): The user to which new privileges were assigned.
+	User *User `json:"user,omitempty"`
+}
+
+// AuthorizeSessionActivityID values.
+const (
+	AuthorizeSessionActivityIDUnknown          = 0  // Unknown
+	AuthorizeSessionActivityIDAssignPrivileges = 1  // Assign Privileges
+	AuthorizeSessionActivityIDAssignGroups     = 2  // Assign Groups
+	AuthorizeSessionActivityIDOther            = 99 // Other
+)
+
+// AuthorizeSessionCategoryUID values.
+const (
+	AuthorizeSessionCategoryUIDIdentityAccessManagement = 3 // Identity & Access Management
+)
+
+// AuthorizeSessionClassUID values.
+const (
+	AuthorizeSessionClassUIDAuthorizeSession = 3003 // Authorize Session
+)
+
+// AuthorizeSessionSeverityID values.
+const (
+	AuthorizeSessionSeverityIDUnknown       = 0  // Unknown
+	AuthorizeSessionSeverityIDInformational = 1  // Informational
+	AuthorizeSessionSeverityIDLow           = 2  // Low
+	AuthorizeSessionSeverityIDMedium        = 3  // Medium
+	AuthorizeSessionSeverityIDHigh          = 4  // High
+	AuthorizeSessionSeverityIDCritical      = 5  // Critical
+	AuthorizeSessionSeverityIDFatal         = 6  // Fatal
+	AuthorizeSessionSeverityIDOther         = 99 // Other
+)
+
+// AuthorizeSessionStatusID values.
+const (
+	AuthorizeSessionStatusIDUnknown = 0  // Unknown
+	AuthorizeSessionStatusIDSuccess = 1  // Success
+	AuthorizeSessionStatusIDFailure = 2  // Failure
+	AuthorizeSessionStatusIDOther   = 99 // Other
+)
+
+// AuthorizeSessionTypeUID values.
+const (
+	AuthorizeSessionTypeUIDUnknown          = 300300 // Authorize Session: Unknown
+	AuthorizeSessionTypeUIDAssignPrivileges = 300301 // Authorize Session: Assign Privileges
+	AuthorizeSessionTypeUIDAssignGroups     = 300302 // Authorize Session: Assign Groups
+	AuthorizeSessionTypeUIDOther            = 300399 // Authorize Session: Other
+)
+
+// BaseEvent class constants.
+const (
+	BaseEventClassUID    = 0
+	BaseEventCategoryUID = 0
+)
+
+// BaseEvent is the OCSF 1.5.0 class "Base Event". The base event is a generic and concrete event.
+type BaseEvent struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Base Event.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// BaseEventActivityID values.
+const (
+	BaseEventActivityIDUnknown = 0  // Unknown
+	BaseEventActivityIDOther   = 99 // Other
+)
+
+// BaseEventCategoryUID values.
+const (
+	BaseEventCategoryUIDUncategorized = 0 // Uncategorized
+)
+
+// BaseEventClassUID values.
+const (
+	BaseEventClassUIDBaseEvent = 0 // Base Event
+)
+
+// BaseEventSeverityID values.
+const (
+	BaseEventSeverityIDUnknown       = 0  // Unknown
+	BaseEventSeverityIDInformational = 1  // Informational
+	BaseEventSeverityIDLow           = 2  // Low
+	BaseEventSeverityIDMedium        = 3  // Medium
+	BaseEventSeverityIDHigh          = 4  // High
+	BaseEventSeverityIDCritical      = 5  // Critical
+	BaseEventSeverityIDFatal         = 6  // Fatal
+	BaseEventSeverityIDOther         = 99 // Other
+)
+
+// BaseEventStatusID values.
+const (
+	BaseEventStatusIDUnknown = 0  // Unknown
+	BaseEventStatusIDSuccess = 1  // Success
+	BaseEventStatusIDFailure = 2  // Failure
+	BaseEventStatusIDOther   = 99 // Other
+)
+
+// BaseEventTypeUID values.
+const (
+	BaseEventTypeUIDUnknown = 0  // Base Event: Unknown
+	BaseEventTypeUIDOther   = 99 // Base Event: Other
+)
+
+// CloudResourcesInventoryInfo class constants.
+const (
+	CloudResourcesInventoryInfoClassUID    = 5023
+	CloudResourcesInventoryInfoCategoryUID = 5
+)
+
+// CloudResourcesInventoryInfo is the OCSF 1.5.0 class "Cloud Resources Inventory Info". Cloud Resources Inventory Info events report cloud asset inventory data.
+//
+// Constraint at_least_one: cloud, container, database, databucket, idp, resources, table.
+type CloudResourcesInventoryInfo struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Discovery.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Cloud Resources Inventory Info.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Cloud (recommended): Cloud service provider or SaaS platform metadata about the cloud resource(s) that are being discovered by an inventory process.
+	Cloud *Cloud `json:"cloud,omitempty"`
+	// Container (recommended): A cloud-based container image or running container discovered by an inventory process.
+	Container *Container `json:"container,omitempty"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Database (recommended): A cloud-based database discovered by an inventory process.
+	Database *Database `json:"database,omitempty"`
+	// Databucket (recommended): A cloud-based data bucket or other object storage discovered by an inventory process.
+	Databucket *Databucket `json:"databucket,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Identity Provider (recommended): The Identity Provider that is being discovered by an inventory process, or that is related to the cloud resource(s) being discovered by an inventory process.
+	Idp *Idp `json:"idp,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Region (recommended): The cloud region where the resource is located, e.g., us-isof-south-1, eastus2, us-central1, etc.
+	Region string `json:"region,omitempty"`
+	// Cloud Resources (recommended): The cloud resource(s) that are being discovered by an inventory process.
+	Resources []ResourceDetails `json:"resources,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Table (recommended): A cloud-based database table discovered by an inventory process.
+	Table *Table `json:"table,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// CloudResourcesInventoryInfoActivityID values.
+const (
+	CloudResourcesInventoryInfoActivityIDUnknown = 0  // Unknown
+	CloudResourcesInventoryInfoActivityIDLog     = 1  // Log
+	CloudResourcesInventoryInfoActivityIDCollect = 2  // Collect
+	CloudResourcesInventoryInfoActivityIDOther   = 99 // Other
+)
+
+// CloudResourcesInventoryInfoCategoryUID values.
+const (
+	CloudResourcesInventoryInfoCategoryUIDDiscovery = 5 // Discovery
+)
+
+// CloudResourcesInventoryInfoClassUID values.
+const (
+	CloudResourcesInventoryInfoClassUIDCloudResourcesInventoryInfo = 5023 // Cloud Resources Inventory Info
+)
+
+// CloudResourcesInventoryInfoSeverityID values.
+const (
+	CloudResourcesInventoryInfoSeverityIDUnknown       = 0  // Unknown
+	CloudResourcesInventoryInfoSeverityIDInformational = 1  // Informational
+	CloudResourcesInventoryInfoSeverityIDLow           = 2  // Low
+	CloudResourcesInventoryInfoSeverityIDMedium        = 3  // Medium
+	CloudResourcesInventoryInfoSeverityIDHigh          = 4  // High
+	CloudResourcesInventoryInfoSeverityIDCritical      = 5  // Critical
+	CloudResourcesInventoryInfoSeverityIDFatal         = 6  // Fatal
+	CloudResourcesInventoryInfoSeverityIDOther         = 99 // Other
+)
+
+// CloudResourcesInventoryInfoStatusID values.
+const (
+	CloudResourcesInventoryInfoStatusIDUnknown = 0  // Unknown
+	CloudResourcesInventoryInfoStatusIDSuccess = 1  // Success
+	CloudResourcesInventoryInfoStatusIDFailure = 2  // Failure
+	CloudResourcesInventoryInfoStatusIDOther   = 99 // Other
+)
+
+// CloudResourcesInventoryInfoTypeUID values.
+const (
+	CloudResourcesInventoryInfoTypeUIDUnknown = 502300 // Cloud Resources Inventory Info: Unknown
+	CloudResourcesInventoryInfoTypeUIDLog     = 502301 // Cloud Resources Inventory Info: Log
+	CloudResourcesInventoryInfoTypeUIDCollect = 502302 // Cloud Resources Inventory Info: Collect
+	CloudResourcesInventoryInfoTypeUIDOther   = 502399 // Cloud Resources Inventory Info: Other
+)
+
+// ComplianceFinding class constants.
+const (
+	ComplianceFindingClassUID    = 2003
+	ComplianceFindingCategoryUID = 2
+)
+
+// ComplianceFinding is the OCSF 1.5.0 class "Compliance Finding". Compliance Finding events describe results of evaluations performed against resources, to check compliance with various Industry Frameworks or Security Standards such as NIST SP 800-53, CIS AWS Foundations Benchmark v1.4.0, ISO/IEC 27001 etc.
+type ComplianceFinding struct {
+	// Activity ID (required): The normalized identifier of the finding activity.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The finding activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Findings.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Compliance Finding.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Comment (optional): A user provided comment about the finding.
+	Comment string `json:"comment,omitempty"`
+	// Compliance (required): The compliance object provides context to compliance findings (e.g., a check against a specific regulatory or best practice framework such as CIS, NIST etc.) and contains compliance related details.
+	Compliance *Compliance `json:"compliance,omitempty"`
+	// Confidence (optional): The confidence, normalized to the caption of the confidence_id value.
+	Confidence string `json:"confidence,omitempty"`
+	// Confidence ID (recommended): The normalized confidence refers to the accuracy of the rule that created the finding.
+	ConfidenceID int `json:"confidence_id,omitempty"`
+	// Confidence Score (optional): The confidence score as reported by the event source.
+	ConfidenceScore int `json:"confidence_score,omitempty"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Device (recommended): Describes the affected device/host.
+	Device *Device `json:"device,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The time of the most recent event included in the finding.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Evidence Artifacts (optional): Describes various evidence artifacts associated with the compliance finding.
+	Evidences []Evidences `json:"evidences,omitempty"`
+	// Finding Information (required): Describes the supporting information about a generated finding.
+	FindingInfo *FindingInfo `json:"finding_info,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Remediation Guidance (recommended): Describes the recommended remediation steps to address identified issue(s).
+	Remediation *Remediation `json:"remediation,omitempty"`
+	// Resources Array (recommended): Describes details about the resource/resouces that are the subject of the compliance check.
+	Resources []ResourceDetails `json:"resources,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The time of the least recent event included in the finding.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (optional): The normalized status of the Finding set by the consumer normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized status identifier of the Finding, set by the consumer.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+	// Vendor Attributes (optional): The Vendor Attributes object can be used to represent values of attributes populated by the Vendor/Finding Provider.
+	VendorAttributes *VendorAttributes `json:"vendor_attributes,omitempty"`
+}
+
+// ComplianceFindingActivityID values.
+const (
+	ComplianceFindingActivityIDUnknown = 0  // Unknown
+	ComplianceFindingActivityIDCreate  = 1  // Create
+	ComplianceFindingActivityIDUpdate  = 2  // Update
+	ComplianceFindingActivityIDClose   = 3  // Close
+	ComplianceFindingActivityIDOther   = 99 // Other
+)
+
+// ComplianceFindingCategoryUID values.
+const (
+	ComplianceFindingCategoryUIDFindings = 2 // Findings
+)
+
+// ComplianceFindingClassUID values.
+const (
+	ComplianceFindingClassUIDComplianceFinding = 2003 // Compliance Finding
+)
+
+// ComplianceFindingConfidenceID values.
+const (
+	ComplianceFindingConfidenceIDUnknown = 0  // Unknown
+	ComplianceFindingConfidenceIDLow     = 1  // Low
+	ComplianceFindingConfidenceIDMedium  = 2  // Medium
+	ComplianceFindingConfidenceIDHigh    = 3  // High
+	ComplianceFindingConfidenceIDOther   = 99 // Other
+)
+
+// ComplianceFindingSeverityID values.
+const (
+	ComplianceFindingSeverityIDUnknown       = 0  // Unknown
+	ComplianceFindingSeverityIDInformational = 1  // Informational
+	ComplianceFindingSeverityIDLow           = 2  // Low
+	ComplianceFindingSeverityIDMedium        = 3  // Medium
+	ComplianceFindingSeverityIDHigh          = 4  // High
+	ComplianceFindingSeverityIDCritical      = 5  // Critical
+	ComplianceFindingSeverityIDFatal         = 6  // Fatal
+	ComplianceFindingSeverityIDOther         = 99 // Other
+)
+
+// ComplianceFindingStatusID values.
+const (
+	ComplianceFindingStatusIDUnknown    = 0  // Unknown
+	ComplianceFindingStatusIDNew        = 1  // New
+	ComplianceFindingStatusIDInProgress = 2  // In Progress
+	ComplianceFindingStatusIDSuppressed = 3  // Suppressed
+	ComplianceFindingStatusIDResolved   = 4  // Resolved
+	ComplianceFindingStatusIDArchived   = 5  // Archived
+	ComplianceFindingStatusIDOther      = 99 // Other
+)
+
+// ComplianceFindingTypeUID values.
+const (
+	ComplianceFindingTypeUIDUnknown = 200300 // Compliance Finding: Unknown
+	ComplianceFindingTypeUIDCreate  = 200301 // Compliance Finding: Create
+	ComplianceFindingTypeUIDUpdate  = 200302 // Compliance Finding: Update
+	ComplianceFindingTypeUIDClose   = 200303 // Compliance Finding: Close
+	ComplianceFindingTypeUIDOther   = 200399 // Compliance Finding: Other
+)
+
+// ConfigState class constants.
+const (
+	ConfigStateClassUID    = 5002
+	ConfigStateCategoryUID = 5
+)
+
+// ConfigState is the OCSF 1.5.0 class "Device Config State". Device Config State events report device configuration data, device assessments, and/or CIS Benchmark results.
+//
+// Deprecated: since OCSF 1.5.0. Use Compliance Finding class.
+type ConfigState struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Actor (optional): The actor object describes details about the user/role/process that was the source of the activity.
+	Actor *Actor `json:"actor,omitempty"`
+	// Related Assessments (optional): A list of assessments associated with the device.
+	Assessments []Assessment `json:"assessments,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Discovery.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Device Config State.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Device (required): The device that is being discovered by an inventory process.
+	Device *Device `json:"device,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// ConfigStateActivityID values.
+const (
+	ConfigStateActivityIDUnknown = 0  // Unknown
+	ConfigStateActivityIDLog     = 1  // Log
+	ConfigStateActivityIDCollect = 2  // Collect
+	ConfigStateActivityIDOther   = 99 // Other
+)
+
+// ConfigStateCategoryUID values.
+const (
+	ConfigStateCategoryUIDDiscovery = 5 // Discovery
+)
+
+// ConfigStateClassUID values.
+const (
+	ConfigStateClassUIDDeviceConfigState = 5002 // Device Config State
+)
+
+// ConfigStateSeverityID values.
+const (
+	ConfigStateSeverityIDUnknown       = 0  // Unknown
+	ConfigStateSeverityIDInformational = 1  // Informational
+	ConfigStateSeverityIDLow           = 2  // Low
+	ConfigStateSeverityIDMedium        = 3  // Medium
+	ConfigStateSeverityIDHigh          = 4  // High
+	ConfigStateSeverityIDCritical      = 5  // Critical
+	ConfigStateSeverityIDFatal         = 6  // Fatal
+	ConfigStateSeverityIDOther         = 99 // Other
+)
+
+// ConfigStateStatusID values.
+const (
+	ConfigStateStatusIDUnknown = 0  // Unknown
+	ConfigStateStatusIDSuccess = 1  // Success
+	ConfigStateStatusIDFailure = 2  // Failure
+	ConfigStateStatusIDOther   = 99 // Other
+)
+
+// ConfigStateTypeUID values.
+const (
+	ConfigStateTypeUIDUnknown = 500200 // Device Config State: Unknown
+	ConfigStateTypeUIDLog     = 500201 // Device Config State: Log
+	ConfigStateTypeUIDCollect = 500202 // Device Config State: Collect
+	ConfigStateTypeUIDOther   = 500299 // Device Config State: Other
+)
+
+// DataSecurityFinding class constants.
+const (
+	DataSecurityFindingClassUID    = 2006
+	DataSecurityFindingCategoryUID = 2
+)
+
+// DataSecurityFinding is the OCSF 1.5.0 class "Data Security Finding". A Data Security Finding describes detections or alerts generated by various data security products such as Data Loss Prevention (DLP), Data Classification, Secrets Management, Digital Rights Management (DRM), Data Security Posture Management (DSPM), and similar tools.
+type DataSecurityFinding struct {
+	// Activity ID (required): The normalized identifier of the Data Security Finding activity.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The Data Security finding activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Actor (recommended): Describes details about the actor implicated in the data security finding.
+	Actor *Actor `json:"actor,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Findings.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Data Security Finding.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Comment (optional): A user provided comment about the finding.
+	Comment string `json:"comment,omitempty"`
+	// Confidence (optional): The confidence, normalized to the caption of the confidence_id value.
+	Confidence string `json:"confidence,omitempty"`
+	// Confidence ID (recommended): The normalized confidence refers to the accuracy of the rule that created the finding.
+	ConfidenceID int `json:"confidence_id,omitempty"`
+	// Confidence Score (optional): The confidence score as reported by the event source.
+	ConfidenceScore int `json:"confidence_score,omitempty"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Data Security (recommended): The Data Security object describes the characteristics, techniques and content of a Data Loss Prevention (DLP), Data Loss Detection (DLD), Data Classification, or similar tools' finding, alert, or detection mechanism(s).
+	DataSecurity *DataSecurity `json:"data_security,omitempty"`
+	// Database (recommended): Describes the database where classified or sensitive data is stored in, or was accessed from.
+	Database *Database `json:"database,omitempty"`
+	// Databucket (recommended): Describes the databucket where classified or sensitive data is stored in, or was accessed from.
+	Databucket *Databucket `json:"databucket,omitempty"`
+	// Device (recommended): Describes the device where classified or sensitive data is stored in, or was accessed from.
+	Device *Device `json:"device,omitempty"`
+	// Destination Endpoint (recommended): Describes the endpoint where classified or sensitive data is stored in, or was accessed from.
+	DstEndpoint *NetworkEndpoint `json:"dst_endpoint,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The time of the most recent event included in the finding.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// File (recommended): Describes a file that contains classified or sensitive data.
+	File *File `json:"file,omitempty"`
+	// Finding Information (required): Describes the supporting information about a generated finding.
+	FindingInfo *FindingInfo `json:"finding_info,omitempty"`
+	// Impact (optional): The impact , normalized to the caption of the impact_id value.
+	Impact string `json:"impact,omitempty"`
+	// Impact ID (optional): The normalized impact of the incident or finding.
+	ImpactID int `json:"impact_id,omitempty"`
+	// Impact Score (optional): The impact as an integer value of the finding, valid range 0-100.
+	ImpactScore int `json:"impact_score,omitempty"`
+	// Alert (recommended): Indicates that the event is considered to be an alertable signal.
+	IsAlert bool `json:"is_alert,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Additional Resources (recommended): Describes details about additional resources, where classified or sensitive data is stored in, or was accessed from.
+	Resources []ResourceDetails `json:"resources,omitempty"`
+	// Risk Details (optional): Describes the risk associated with the finding.
+	RiskDetails string `json:"risk_details,omitempty"`
+	// Risk Level (optional): The risk level, normalized to the caption of the risk_level_id value.
+	RiskLevel string `json:"risk_level,omitempty"`
+	// Risk Level ID (optional): The normalized risk level id.
+	RiskLevelID int `json:"risk_level_id,omitempty"`
+	// Risk Score (optional): The risk score as reported by the event source.
+	RiskScore int `json:"risk_score,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Source Endpoint (recommended): Details about the source endpoint where classified or sensitive data was accessed from.
+	SrcEndpoint *NetworkEndpoint `json:"src_endpoint,omitempty"`
+	// Start Time (optional): The time of the least recent event included in the finding.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (optional): The normalized status of the Finding set by the consumer normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized status identifier of the Finding, set by the consumer.
+	StatusID int `json:"status_id,omitempty"`
+	// Table (recommended): Describes the table where classified or sensitive data is stored in, or was accessed from.
+	Table *Table `json:"table,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+	// Vendor Attributes (optional): The Vendor Attributes object can be used to represent values of attributes populated by the Vendor/Finding Provider.
+	VendorAttributes *VendorAttributes `json:"vendor_attributes,omitempty"`
+}
+
+// DataSecurityFindingActivityID values.
+const (
+	DataSecurityFindingActivityIDUnknown    = 0  // Unknown
+	DataSecurityFindingActivityIDCreate     = 1  // Create
+	DataSecurityFindingActivityIDUpdate     = 2  // Update
+	DataSecurityFindingActivityIDClose      = 3  // Close
+	DataSecurityFindingActivityIDSuppressed = 4  // Suppressed
+	DataSecurityFindingActivityIDOther      = 99 // Other
+)
+
+// DataSecurityFindingCategoryUID values.
+const (
+	DataSecurityFindingCategoryUIDFindings = 2 // Findings
+)
+
+// DataSecurityFindingClassUID values.
+const (
+	DataSecurityFindingClassUIDDataSecurityFinding = 2006 // Data Security Finding
+)
+
+// DataSecurityFindingConfidenceID values.
+const (
+	DataSecurityFindingConfidenceIDUnknown = 0  // Unknown
+	DataSecurityFindingConfidenceIDLow     = 1  // Low
+	DataSecurityFindingConfidenceIDMedium  = 2  // Medium
+	DataSecurityFindingConfidenceIDHigh    = 3  // High
+	DataSecurityFindingConfidenceIDOther   = 99 // Other
+)
+
+// DataSecurityFindingImpactID values.
+const (
+	DataSecurityFindingImpactIDUnknown  = 0  // Unknown
+	DataSecurityFindingImpactIDLow      = 1  // Low
+	DataSecurityFindingImpactIDMedium   = 2  // Medium
+	DataSecurityFindingImpactIDHigh     = 3  // High
+	DataSecurityFindingImpactIDCritical = 4  // Critical
+	DataSecurityFindingImpactIDOther    = 99 // Other
+)
+
+// DataSecurityFindingRiskLevelID values.
+const (
+	DataSecurityFindingRiskLevelIDInfo     = 0  // Info
+	DataSecurityFindingRiskLevelIDLow      = 1  // Low
+	DataSecurityFindingRiskLevelIDMedium   = 2  // Medium
+	DataSecurityFindingRiskLevelIDHigh     = 3  // High
+	DataSecurityFindingRiskLevelIDCritical = 4  // Critical
+	DataSecurityFindingRiskLevelIDOther    = 99 // Other
+)
+
+// DataSecurityFindingSeverityID values.
+const (
+	DataSecurityFindingSeverityIDUnknown       = 0  // Unknown
+	DataSecurityFindingSeverityIDInformational = 1  // Informational
+	DataSecurityFindingSeverityIDLow           = 2  // Low
+	DataSecurityFindingSeverityIDMedium        = 3  // Medium
+	DataSecurityFindingSeverityIDHigh          = 4  // High
+	DataSecurityFindingSeverityIDCritical      = 5  // Critical
+	DataSecurityFindingSeverityIDFatal         = 6  // Fatal
+	DataSecurityFindingSeverityIDOther         = 99 // Other
+)
+
+// DataSecurityFindingStatusID values.
+const (
+	DataSecurityFindingStatusIDUnknown    = 0  // Unknown
+	DataSecurityFindingStatusIDNew        = 1  // New
+	DataSecurityFindingStatusIDInProgress = 2  // In Progress
+	DataSecurityFindingStatusIDSuppressed = 3  // Suppressed
+	DataSecurityFindingStatusIDResolved   = 4  // Resolved
+	DataSecurityFindingStatusIDArchived   = 5  // Archived
+	DataSecurityFindingStatusIDOther      = 99 // Other
+)
+
+// DataSecurityFindingTypeUID values.
+const (
+	DataSecurityFindingTypeUIDUnknown    = 200600 // Data Security Finding: Unknown
+	DataSecurityFindingTypeUIDCreate     = 200601 // Data Security Finding: Create
+	DataSecurityFindingTypeUIDUpdate     = 200602 // Data Security Finding: Update
+	DataSecurityFindingTypeUIDClose      = 200603 // Data Security Finding: Close
+	DataSecurityFindingTypeUIDSuppressed = 200604 // Data Security Finding: Suppressed
+	DataSecurityFindingTypeUIDOther      = 200699 // Data Security Finding: Other
+)
+
+// DatastoreActivity class constants.
+const (
+	DatastoreActivityClassUID    = 6005
+	DatastoreActivityCategoryUID = 6
+)
+
+// DatastoreActivity is the OCSF 1.5.0 class "Datastore Activity". Datastore events describe general activities (Read, Update, Query, Delete, etc.) which affect datastores or data within those datastores, e.g.
+//
+// Constraint at_least_one: database, databucket, table.
+type DatastoreActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Actor (required): The actor object describes details about the user/role/process that was the source of the activity.
+	Actor *Actor `json:"actor,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Application Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Datastore Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Database (recommended): The database object is used for databases which are typically datastore services that contain an organized collection of structured and unstructured data or a types of data.
+	Database *Database `json:"database,omitempty"`
+	// Databucket (recommended): The data bucket object is a basic container that holds data, typically organized through the use of data partitions.
+	Databucket *Databucket `json:"databucket,omitempty"`
+	// Destination Endpoint (recommended): Details about the endpoint hosting the datastore application or service.
+	DstEndpoint *NetworkEndpoint `json:"dst_endpoint,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// HTTP Request (recommended): Details about the underlying http request.
+	HTTPRequest *HTTPRequest `json:"http_request,omitempty"`
+	// HTTP Response (recommended): Details about the underlying http response.
+	HTTPResponse *HTTPResponse `json:"http_response,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Query Info (recommended): The query info object holds information related to data access within a datastore.
+	QueryInfo *QueryInfo `json:"query_info,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Source Endpoint (required): Details about the source of the activity.
+	SrcEndpoint *NetworkEndpoint `json:"src_endpoint,omitempty"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Table (recommended): The table object represents a table within a structured relational database or datastore, which contains columns and rows of data that are able to be create, updated, deleted and queried.
+	Table *Table `json:"table,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Datastore Type (optional): The datastore resource type (e.g.
+	Type string `json:"type,omitempty"`
+	// Datastore Type ID (recommended): The normalized datastore resource type identifier.
+	TypeID int `json:"type_id,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// DatastoreActivityActivityID values.
+const (
+	DatastoreActivityActivityIDUnknown = 0  // Unknown
+	DatastoreActivityActivityIDRead    = 1  // Read
+	DatastoreActivityActivityIDUpdate  = 2  // Update
+	DatastoreActivityActivityIDConnect = 3  // Connect
+	DatastoreActivityActivityIDQuery   = 4  // Query
+	DatastoreActivityActivityIDWrite   = 5  // Write
+	DatastoreActivityActivityIDCreate  = 6  // Create
+	DatastoreActivityActivityIDDelete  = 7  // Delete
+	DatastoreActivityActivityIDList    = 8  // List
+	DatastoreActivityActivityIDEncrypt = 9  // Encrypt
+	DatastoreActivityActivityIDDecrypt = 10 // Decrypt
+	DatastoreActivityActivityIDOther   = 99 // Other
+)
+
+// DatastoreActivityCategoryUID values.
+const (
+	DatastoreActivityCategoryUIDApplicationActivity = 6 // Application Activity
+)
+
+// DatastoreActivityClassUID values.
+const (
+	DatastoreActivityClassUIDDatastoreActivity = 6005 // Datastore Activity
+)
+
+// DatastoreActivitySeverityID values.
+const (
+	DatastoreActivitySeverityIDUnknown       = 0  // Unknown
+	DatastoreActivitySeverityIDInformational = 1  // Informational
+	DatastoreActivitySeverityIDLow           = 2  // Low
+	DatastoreActivitySeverityIDMedium        = 3  // Medium
+	DatastoreActivitySeverityIDHigh          = 4  // High
+	DatastoreActivitySeverityIDCritical      = 5  // Critical
+	DatastoreActivitySeverityIDFatal         = 6  // Fatal
+	DatastoreActivitySeverityIDOther         = 99 // Other
+)
+
+// DatastoreActivityStatusID values.
+const (
+	DatastoreActivityStatusIDUnknown = 0  // Unknown
+	DatastoreActivityStatusIDSuccess = 1  // Success
+	DatastoreActivityStatusIDFailure = 2  // Failure
+	DatastoreActivityStatusIDOther   = 99 // Other
+)
+
+// DatastoreActivityTypeID values.
+const (
+	DatastoreActivityTypeIDUnknown    = 0  // Unknown
+	DatastoreActivityTypeIDDatabase   = 1  // Database
+	DatastoreActivityTypeIDDatabucket = 2  // Databucket
+	DatastoreActivityTypeIDTable      = 3  // Table
+	DatastoreActivityTypeIDOther      = 99 // Other
+)
+
+// DatastoreActivityTypeUID values.
+const (
+	DatastoreActivityTypeUIDUnknown = 600500 // Datastore Activity: Unknown
+	DatastoreActivityTypeUIDRead    = 600501 // Datastore Activity: Read
+	DatastoreActivityTypeUIDUpdate  = 600502 // Datastore Activity: Update
+	DatastoreActivityTypeUIDConnect = 600503 // Datastore Activity: Connect
+	DatastoreActivityTypeUIDQuery   = 600504 // Datastore Activity: Query
+	DatastoreActivityTypeUIDWrite   = 600505 // Datastore Activity: Write
+	DatastoreActivityTypeUIDCreate  = 600506 // Datastore Activity: Create
+	DatastoreActivityTypeUIDDelete  = 600507 // Datastore Activity: Delete
+	DatastoreActivityTypeUIDList    = 600508 // Datastore Activity: List
+	DatastoreActivityTypeUIDEncrypt = 600509 // Datastore Activity: Encrypt
+	DatastoreActivityTypeUIDDecrypt = 600510 // Datastore Activity: Decrypt
+	DatastoreActivityTypeUIDOther   = 600599 // Datastore Activity: Other
+)
+
 // DetectionFinding class constants.
 const (
 	DetectionFindingClassUID    = 2004
@@ -458,13 +2112,13 @@ const (
 )
 
 // DetectionFinding is the OCSF 1.5.0 class "Detection Finding". A Detection Finding describes detections or alerts generated by security products using correlation engines, detection engines or other methodologies.
-//
-// Not generated (object not in gen.yaml): anomaly_analyses (anomaly_analysis), device (device), enrichments (enrichment), malware (malware), malware_scan_info (malware_scan_info), observables (observable), remediation (remediation), resources (resource_details), vendor_attributes (vendor_attributes), vulnerabilities (vulnerability).
 type DetectionFinding struct {
 	// Activity ID (required): The normalized identifier of the finding activity.
 	ActivityID int `json:"activity_id"`
 	// Activity (optional): The finding activity name, as defined by the activity_id.
 	ActivityName string `json:"activity_name,omitempty"`
+	// Anomaly Analyses (optional): Describes baseline information about normal activity patterns, along with any detected deviations or anomalies that triggered this finding.
+	AnomalyAnalyses []AnomalyAnalysis `json:"anomaly_analyses,omitempty"`
 	// Category (optional): The event category name, as defined by category_uid value: Findings.
 	CategoryName string `json:"category_name,omitempty"`
 	// Category ID (required): The category unique identifier of the event.
@@ -483,10 +2137,14 @@ type DetectionFinding struct {
 	ConfidenceScore int `json:"confidence_score,omitempty"`
 	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
 	Count int `json:"count,omitempty"`
+	// Device (recommended): Describes the affected device/host.
+	Device *Device `json:"device,omitempty"`
 	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
 	Duration int64 `json:"duration,omitempty"`
 	// End Time (optional): The time of the most recent event included in the finding.
 	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
 	// Evidence Artifacts (recommended): Describes various evidence artifacts associated to the activity/activities that triggered a security detection.
 	Evidences []Evidences `json:"evidences,omitempty"`
 	// Finding Information (required): Describes the supporting information about a generated finding.
@@ -499,14 +2157,24 @@ type DetectionFinding struct {
 	ImpactScore int `json:"impact_score,omitempty"`
 	// Alert (recommended): Indicates that the event is considered to be an alertable signal.
 	IsAlert bool `json:"is_alert,omitempty"`
+	// Malware (optional): Describes malware reported in a Detection Finding.
+	Malware []Malware `json:"malware,omitempty"`
+	// Malware Scan Info (optional): Describes details about malware scan job that triggered this Detection Finding.
+	MalwareScanInfo *MalwareScanInfo `json:"malware_scan_info,omitempty"`
 	// Message (recommended): The description of the event/finding, as defined by the source.
 	Message string `json:"message,omitempty"`
 	// Metadata (required): The metadata associated with the event or a finding.
 	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
 	// Raw Data (optional): The raw event/finding data as received from the source.
 	RawData string `json:"raw_data,omitempty"`
 	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
 	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Remediation Guidance (optional): Describes the recommended remediation steps to address identified issue(s).
+	Remediation *Remediation `json:"remediation,omitempty"`
+	// Affected Resources (recommended): Describes details about resources that were the target of the activity that triggered the finding.
+	Resources []ResourceDetails `json:"resources,omitempty"`
 	// Risk Details (optional): Describes the risk associated with the finding.
 	RiskDetails string `json:"risk_details,omitempty"`
 	// Risk Level (optional): The risk level, normalized to the caption of the risk_level_id value.
@@ -539,6 +2207,10 @@ type DetectionFinding struct {
 	TypeUID int64 `json:"type_uid"`
 	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
 	Unmapped map[string]any `json:"unmapped,omitempty"`
+	// Vendor Attributes (optional): The Vendor Attributes object can be used to represent values of attributes populated by the Vendor/Finding Provider.
+	VendorAttributes *VendorAttributes `json:"vendor_attributes,omitempty"`
+	// Vulnerabilities (optional): Describes vulnerabilities reported in a Detection Finding.
+	Vulnerabilities []Vulnerability `json:"vulnerabilities,omitempty"`
 }
 
 // DetectionFindingActivityID values.
@@ -621,6 +2293,1016 @@ const (
 	DetectionFindingTypeUIDOther   = 200499 // Detection Finding: Other
 )
 
+// DeviceConfigStateChange class constants.
+const (
+	DeviceConfigStateChangeClassUID    = 5019
+	DeviceConfigStateChangeCategoryUID = 5
+)
+
+// DeviceConfigStateChange is the OCSF 1.5.0 class "Device Config State Change". Device Config State Change events report state changes that impact the security of the device.
+type DeviceConfigStateChange struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Actor (optional): The actor object describes details about the user/role/process that was the source of the activity.
+	Actor *Actor `json:"actor,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Discovery.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Device Config State Change.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Device (required): The device that is impacted by the state change.
+	Device *Device `json:"device,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Previous Security Level (recommended): The previous security level of the entity
+	PrevSecurityLevel string `json:"prev_security_level,omitempty"`
+	// Previous Security Level ID (recommended): The previous security level of the entity
+	PrevSecurityLevelID int `json:"prev_security_level_id,omitempty"`
+	// Previous Security States (recommended): The previous security states of the device.
+	PrevSecurityStates []SecurityState `json:"prev_security_states,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Security Level (recommended): The current security level of the entity
+	SecurityLevel string `json:"security_level,omitempty"`
+	// Security Level ID (recommended): The current security level of the entity
+	SecurityLevelID int `json:"security_level_id,omitempty"`
+	// Security States (recommended): The current security states of the device.
+	SecurityStates []SecurityState `json:"security_states,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Config Change State (optional): The Config Change Stat, normalized to the caption of the state_id value.
+	State string `json:"state,omitempty"`
+	// Config Change State ID (recommended): The Config Change State of the managed entity.
+	StateID int `json:"state_id,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// DeviceConfigStateChangeActivityID values.
+const (
+	DeviceConfigStateChangeActivityIDUnknown = 0  // Unknown
+	DeviceConfigStateChangeActivityIDLog     = 1  // Log
+	DeviceConfigStateChangeActivityIDCollect = 2  // Collect
+	DeviceConfigStateChangeActivityIDOther   = 99 // Other
+)
+
+// DeviceConfigStateChangeCategoryUID values.
+const (
+	DeviceConfigStateChangeCategoryUIDDiscovery = 5 // Discovery
+)
+
+// DeviceConfigStateChangeClassUID values.
+const (
+	DeviceConfigStateChangeClassUIDDeviceConfigStateChange = 5019 // Device Config State Change
+)
+
+// DeviceConfigStateChangePrevSecurityLevelID values.
+const (
+	DeviceConfigStateChangePrevSecurityLevelIDUnknown     = 0  // Unknown
+	DeviceConfigStateChangePrevSecurityLevelIDSecure      = 1  // Secure
+	DeviceConfigStateChangePrevSecurityLevelIDAtRisk      = 2  // At Risk
+	DeviceConfigStateChangePrevSecurityLevelIDCompromised = 3  // Compromised
+	DeviceConfigStateChangePrevSecurityLevelIDOther       = 99 // Other
+)
+
+// DeviceConfigStateChangeSecurityLevelID values.
+const (
+	DeviceConfigStateChangeSecurityLevelIDUnknown     = 0  // Unknown
+	DeviceConfigStateChangeSecurityLevelIDSecure      = 1  // Secure
+	DeviceConfigStateChangeSecurityLevelIDAtRisk      = 2  // At Risk
+	DeviceConfigStateChangeSecurityLevelIDCompromised = 3  // Compromised
+	DeviceConfigStateChangeSecurityLevelIDOther       = 99 // Other
+)
+
+// DeviceConfigStateChangeSeverityID values.
+const (
+	DeviceConfigStateChangeSeverityIDUnknown       = 0  // Unknown
+	DeviceConfigStateChangeSeverityIDInformational = 1  // Informational
+	DeviceConfigStateChangeSeverityIDLow           = 2  // Low
+	DeviceConfigStateChangeSeverityIDMedium        = 3  // Medium
+	DeviceConfigStateChangeSeverityIDHigh          = 4  // High
+	DeviceConfigStateChangeSeverityIDCritical      = 5  // Critical
+	DeviceConfigStateChangeSeverityIDFatal         = 6  // Fatal
+	DeviceConfigStateChangeSeverityIDOther         = 99 // Other
+)
+
+// DeviceConfigStateChangeStateID values.
+const (
+	DeviceConfigStateChangeStateIDUnknown  = 0  // Unknown
+	DeviceConfigStateChangeStateIDDisabled = 1  // Disabled
+	DeviceConfigStateChangeStateIDEnabled  = 2  // Enabled
+	DeviceConfigStateChangeStateIDOther    = 99 // Other
+)
+
+// DeviceConfigStateChangeStatusID values.
+const (
+	DeviceConfigStateChangeStatusIDUnknown = 0  // Unknown
+	DeviceConfigStateChangeStatusIDSuccess = 1  // Success
+	DeviceConfigStateChangeStatusIDFailure = 2  // Failure
+	DeviceConfigStateChangeStatusIDOther   = 99 // Other
+)
+
+// DeviceConfigStateChangeTypeUID values.
+const (
+	DeviceConfigStateChangeTypeUIDUnknown = 501900 // Device Config State Change: Unknown
+	DeviceConfigStateChangeTypeUIDLog     = 501901 // Device Config State Change: Log
+	DeviceConfigStateChangeTypeUIDCollect = 501902 // Device Config State Change: Collect
+	DeviceConfigStateChangeTypeUIDOther   = 501999 // Device Config State Change: Other
+)
+
+// DhcpActivity class constants.
+const (
+	DhcpActivityClassUID    = 4004
+	DhcpActivityCategoryUID = 4
+)
+
+// DhcpActivity is the OCSF 1.5.0 class "DHCP Activity". DHCP Activity events report MAC to IP assignment via DHCP from a client or server.
+//
+// Constraint at_least_one: dst_endpoint, src_endpoint.
+type DhcpActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Application Name (optional): The name of the application associated with the event or object.
+	AppName string `json:"app_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Network Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: DHCP Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Connection Info (recommended): The network connection information.
+	ConnectionInfo *NetworkConnectionInfo `json:"connection_info,omitempty"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Destination Endpoint (recommended): The responder (server) of the DHCP connection.
+	DstEndpoint *NetworkEndpoint `json:"dst_endpoint,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Renewal (recommended): Indicates whether this is a lease/session renewal event.
+	IsRenewal bool `json:"is_renewal,omitempty"`
+	// JA4+ Fingerprints (optional): A list of the JA4+ network fingerprints.
+	JA4FingerprintList []JA4Fingerprint `json:"ja4_fingerprint_list,omitempty"`
+	// Lease Duration (recommended): This represents the length of the DHCP lease in seconds.
+	LeaseDur int `json:"lease_dur,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Relay (recommended): The network relay that is associated with the event.
+	Relay *NetworkInterface `json:"relay,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Source Endpoint (recommended): The initiator (client) of the DHCP connection.
+	SrcEndpoint *NetworkEndpoint `json:"src_endpoint,omitempty"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// TLS (optional): The Transport Layer Security (TLS) attributes.
+	TLS *TLS `json:"tls,omitempty"`
+	// Traffic (recommended): The network traffic refers to the amount of data moving across a network at a given point of time.
+	Traffic *NetworkTraffic `json:"traffic,omitempty"`
+	// Transaction UID (recommended): The unique identifier of the transaction.
+	TransactionUID string `json:"transaction_uid,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// DhcpActivityActivityID values.
+const (
+	DhcpActivityActivityIDUnknown  = 0  // Unknown
+	DhcpActivityActivityIDDiscover = 1  // Discover
+	DhcpActivityActivityIDOffer    = 2  // Offer
+	DhcpActivityActivityIDRequest  = 3  // Request
+	DhcpActivityActivityIDDecline  = 4  // Decline
+	DhcpActivityActivityIDAck      = 5  // Ack
+	DhcpActivityActivityIDNak      = 6  // Nak
+	DhcpActivityActivityIDRelease  = 7  // Release
+	DhcpActivityActivityIDInform   = 8  // Inform
+	DhcpActivityActivityIDExpire   = 9  // Expire
+	DhcpActivityActivityIDOther    = 99 // Other
+)
+
+// DhcpActivityCategoryUID values.
+const (
+	DhcpActivityCategoryUIDNetworkActivity = 4 // Network Activity
+)
+
+// DhcpActivityClassUID values.
+const (
+	DhcpActivityClassUIDDHCPActivity = 4004 // DHCP Activity
+)
+
+// DhcpActivitySeverityID values.
+const (
+	DhcpActivitySeverityIDUnknown       = 0  // Unknown
+	DhcpActivitySeverityIDInformational = 1  // Informational
+	DhcpActivitySeverityIDLow           = 2  // Low
+	DhcpActivitySeverityIDMedium        = 3  // Medium
+	DhcpActivitySeverityIDHigh          = 4  // High
+	DhcpActivitySeverityIDCritical      = 5  // Critical
+	DhcpActivitySeverityIDFatal         = 6  // Fatal
+	DhcpActivitySeverityIDOther         = 99 // Other
+)
+
+// DhcpActivityStatusID values.
+const (
+	DhcpActivityStatusIDUnknown = 0  // Unknown
+	DhcpActivityStatusIDSuccess = 1  // Success
+	DhcpActivityStatusIDFailure = 2  // Failure
+	DhcpActivityStatusIDOther   = 99 // Other
+)
+
+// DhcpActivityTypeUID values.
+const (
+	DhcpActivityTypeUIDUnknown  = 400400 // DHCP Activity: Unknown
+	DhcpActivityTypeUIDDiscover = 400401 // DHCP Activity: Discover
+	DhcpActivityTypeUIDOffer    = 400402 // DHCP Activity: Offer
+	DhcpActivityTypeUIDRequest  = 400403 // DHCP Activity: Request
+	DhcpActivityTypeUIDDecline  = 400404 // DHCP Activity: Decline
+	DhcpActivityTypeUIDAck      = 400405 // DHCP Activity: Ack
+	DhcpActivityTypeUIDNak      = 400406 // DHCP Activity: Nak
+	DhcpActivityTypeUIDRelease  = 400407 // DHCP Activity: Release
+	DhcpActivityTypeUIDInform   = 400408 // DHCP Activity: Inform
+	DhcpActivityTypeUIDExpire   = 400409 // DHCP Activity: Expire
+	DhcpActivityTypeUIDOther    = 400499 // DHCP Activity: Other
+)
+
+// DNSActivity class constants.
+const (
+	DNSActivityClassUID    = 4003
+	DNSActivityCategoryUID = 4
+)
+
+// DNSActivity is the OCSF 1.5.0 class "DNS Activity". DNS Activity events report DNS queries and answers as seen on the network.
+//
+// Constraint at_least_one: dst_endpoint, src_endpoint.
+type DNSActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// DNS Answer (recommended): The Domain Name System (DNS) answers.
+	Answers []DNSAnswer `json:"answers,omitempty"`
+	// Application Name (optional): The name of the application associated with the event or object.
+	AppName string `json:"app_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Network Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: DNS Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Connection Info (optional): The network connection information.
+	ConnectionInfo *NetworkConnectionInfo `json:"connection_info,omitempty"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Destination Endpoint (recommended): The responder (server) in a network connection.
+	DstEndpoint *NetworkEndpoint `json:"dst_endpoint,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// JA4+ Fingerprints (optional): A list of the JA4+ network fingerprints.
+	JA4FingerprintList []JA4Fingerprint `json:"ja4_fingerprint_list,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// DNS Query (recommended): The Domain Name System (DNS) query.
+	Query *DNSQuery `json:"query,omitempty"`
+	// Query Time (recommended): The Domain Name System (DNS) query time.
+	QueryTime int64 `json:"query_time,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Response Code (recommended): The DNS server response code, normalized to the caption of the rcode_id value.
+	Rcode string `json:"rcode,omitempty"`
+	// Response Code ID (recommended): The normalized identifier of the DNS server response code.
+	RcodeID int `json:"rcode_id,omitempty"`
+	// Response Time (recommended): The Domain Name System (DNS) response time.
+	ResponseTime int64 `json:"response_time,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Source Endpoint (recommended): The initiator (client) of the network connection.
+	SrcEndpoint *NetworkEndpoint `json:"src_endpoint,omitempty"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// TLS (optional): The Transport Layer Security (TLS) attributes.
+	TLS *TLS `json:"tls,omitempty"`
+	// Traffic (optional): The network traffic refers to the amount of data moving across a network at a given point of time.
+	Traffic *NetworkTraffic `json:"traffic,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// DNSActivityActivityID values.
+const (
+	DNSActivityActivityIDUnknown  = 0  // Unknown
+	DNSActivityActivityIDQuery    = 1  // Query
+	DNSActivityActivityIDResponse = 2  // Response
+	DNSActivityActivityIDTraffic  = 6  // Traffic
+	DNSActivityActivityIDOther    = 99 // Other
+)
+
+// DNSActivityCategoryUID values.
+const (
+	DNSActivityCategoryUIDNetworkActivity = 4 // Network Activity
+)
+
+// DNSActivityClassUID values.
+const (
+	DNSActivityClassUIDDNSActivity = 4003 // DNS Activity
+)
+
+// DNSActivityRcodeID values.
+const (
+	DNSActivityRcodeIDNoError    = 0  // NoError
+	DNSActivityRcodeIDFormError  = 1  // FormError
+	DNSActivityRcodeIDServError  = 2  // ServError
+	DNSActivityRcodeIDNXDomain   = 3  // NXDomain
+	DNSActivityRcodeIDNotImp     = 4  // NotImp
+	DNSActivityRcodeIDRefused    = 5  // Refused
+	DNSActivityRcodeIDYXDomain   = 6  // YXDomain
+	DNSActivityRcodeIDYXRRSet    = 7  // YXRRSet
+	DNSActivityRcodeIDNXRRSet    = 8  // NXRRSet
+	DNSActivityRcodeIDNotAuth    = 9  // NotAuth
+	DNSActivityRcodeIDNotZone    = 10 // NotZone
+	DNSActivityRcodeIDDSOTYPENI  = 11 // DSOTYPENI
+	DNSActivityRcodeIDBADSIGVERS = 16 // BADSIG_VERS
+	DNSActivityRcodeIDBADKEY     = 17 // BADKEY
+	DNSActivityRcodeIDBADTIME    = 18 // BADTIME
+	DNSActivityRcodeIDBADMODE    = 19 // BADMODE
+	DNSActivityRcodeIDBADNAME    = 20 // BADNAME
+	DNSActivityRcodeIDBADALG     = 21 // BADALG
+	DNSActivityRcodeIDBADTRUNC   = 22 // BADTRUNC
+	DNSActivityRcodeIDBADCOOKIE  = 23 // BADCOOKIE
+	DNSActivityRcodeIDUnassigned = 24 // Unassigned
+	DNSActivityRcodeIDReserved   = 25 // Reserved
+	DNSActivityRcodeIDOther      = 99 // Other
+)
+
+// DNSActivitySeverityID values.
+const (
+	DNSActivitySeverityIDUnknown       = 0  // Unknown
+	DNSActivitySeverityIDInformational = 1  // Informational
+	DNSActivitySeverityIDLow           = 2  // Low
+	DNSActivitySeverityIDMedium        = 3  // Medium
+	DNSActivitySeverityIDHigh          = 4  // High
+	DNSActivitySeverityIDCritical      = 5  // Critical
+	DNSActivitySeverityIDFatal         = 6  // Fatal
+	DNSActivitySeverityIDOther         = 99 // Other
+)
+
+// DNSActivityStatusID values.
+const (
+	DNSActivityStatusIDUnknown = 0  // Unknown
+	DNSActivityStatusIDSuccess = 1  // Success
+	DNSActivityStatusIDFailure = 2  // Failure
+	DNSActivityStatusIDOther   = 99 // Other
+)
+
+// DNSActivityTypeUID values.
+const (
+	DNSActivityTypeUIDUnknown  = 400300 // DNS Activity: Unknown
+	DNSActivityTypeUIDQuery    = 400301 // DNS Activity: Query
+	DNSActivityTypeUIDResponse = 400302 // DNS Activity: Response
+	DNSActivityTypeUIDTraffic  = 400306 // DNS Activity: Traffic
+	DNSActivityTypeUIDOther    = 400399 // DNS Activity: Other
+)
+
+// DroneFlightsActivity class constants.
+const (
+	DroneFlightsActivityClassUID    = 8001
+	DroneFlightsActivityCategoryUID = 8
+)
+
+// DroneFlightsActivity is the OCSF 1.5.0 class "Drone Flights Activity". Drone Flights Activity events report the activity of Unmanned Aerial Systems (UAS), their Operators, and mission-planning and authorization metadata as reported by the UAS platforms themselves, by Counter-UAS (CUAS) systems, or other remote monitoring or sensing infrastructure.
+//
+// Constraint at_least_one: src_endpoint, unmanned_aerial_system, unmanned_system_operator, unmanned_system_operating_area.
+type DroneFlightsActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Authentication Type (optional): The authentication type as defined by the caption of auth_protocol_id.
+	AuthProtocol string `json:"auth_protocol,omitempty"`
+	// Authentication Type ID (optional): The normalized identifier of the authentication type used to authorize a flight plan or mission.
+	AuthProtocolID int `json:"auth_protocol_id,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Unmanned Systems.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Drone Flights Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Classification Type (optional): UA Classification - Allows a region to classify UAS in a regional specific manner.
+	Classification string `json:"classification,omitempty"`
+	// Operation Description (optional): This optional, free-text field enables the operator to describe the purpose of a flight, if so desired.
+	Comment string `json:"comment,omitempty"`
+	// Connection Info (recommended): The network connection information.
+	ConnectionInfo *NetworkConnectionInfo `json:"connection_info,omitempty"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Destination Endpoint (required): The destination network endpoint of the Unmanned Aerial System (UAS), Counter Unmanned Aerial System (CUAS) platform, or other unmanned systems monitoring and/or sensing infrastructure.
+	DstEndpoint *NetworkEndpoint `json:"dst_endpoint,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Remote ID Protocol (optional): The networking protocol associated with the Remote ID device or beacon.
+	ProtocolName string `json:"protocol_name,omitempty"`
+	// Proxy Endpoint (recommended): The proxy (server) in a network connection.
+	ProxyEndpoint *NetworkProxy `json:"proxy_endpoint,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Source Endpoint (optional): The source network endpoint of the Unmanned Aerial System (UAS), Counter Unmanned Aerial System (CUAS) platform, or other unmanned systems monitoring and/or sensing infrastructure.
+	SrcEndpoint *NetworkEndpoint `json:"src_endpoint,omitempty"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Operational Status (optional): The normalized Operational status for the Unmanned Aerial System (UAS) normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Operational Status ID (recommended): The normalized Operational status identifier for the Unmanned Aerial System (UAS).
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// TLS (optional): The Transport Layer Security (TLS) attributes.
+	TLS *TLS `json:"tls,omitempty"`
+	// Traffic (optional): Traffic refers to the amount of data transmitted from a Unmanned Aerial System (UAS) or Counter Unmanned Aerial System (UAS) (CUAS) system at a given point of time.
+	Traffic *NetworkTraffic `json:"traffic,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmanned Aerial System (required): The Unmanned Aerial System object describes the characteristics, Position Location Information (PLI), and other metadata of Unmanned Aerial Systems (UAS) and other unmanned and drone systems used in Remote ID.
+	UnmannedAerialSystem *UnmannedAerialSystem `json:"unmanned_aerial_system,omitempty"`
+	// UAS Operating Area (recommended): The UAS Operating Area object describes details about a precise area of operations for a UAS flight or mission.
+	UnmannedSystemOperatingArea *UnmannedSystemOperatingArea `json:"unmanned_system_operating_area,omitempty"`
+	// Unmanned Systems Operator (required): The human or machine operator of an Unmanned System.
+	UnmannedSystemOperator *User `json:"unmanned_system_operator,omitempty"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// DroneFlightsActivityActivityID values.
+const (
+	DroneFlightsActivityActivityIDUnknown = 0  // Unknown
+	DroneFlightsActivityActivityIDCapture = 1  // Capture
+	DroneFlightsActivityActivityIDRecord  = 2  // Record
+	DroneFlightsActivityActivityIDOther   = 99 // Other
+)
+
+// DroneFlightsActivityAuthProtocolID values.
+const (
+	DroneFlightsActivityAuthProtocolIDUnknown                                 = 0  // Unknown
+	DroneFlightsActivityAuthProtocolIDNone                                    = 1  // None
+	DroneFlightsActivityAuthProtocolIDUASIDSignature                          = 2  // UAS ID Signature
+	DroneFlightsActivityAuthProtocolIDOperatorIDSignature                     = 3  // Operator ID Signature
+	DroneFlightsActivityAuthProtocolIDMessageSetSignature                     = 4  // Message Set Signature
+	DroneFlightsActivityAuthProtocolIDAuthenticationProvidedByNetworkRemoteID = 5  // Authentication Provided by Network Remote ID
+	DroneFlightsActivityAuthProtocolIDSpecificAuthenticationMethod            = 6  // Specific Authentication Method
+	DroneFlightsActivityAuthProtocolIDReserved                                = 7  // Reserved
+	DroneFlightsActivityAuthProtocolIDPrivateUser                             = 8  // Private User
+	DroneFlightsActivityAuthProtocolIDEAP                                     = 9  // EAP
+	DroneFlightsActivityAuthProtocolIDRADIUS                                  = 10 // RADIUS
+	DroneFlightsActivityAuthProtocolIDBasicAuthentication                     = 11 // Basic Authentication
+	DroneFlightsActivityAuthProtocolIDLDAP                                    = 12 // LDAP
+	DroneFlightsActivityAuthProtocolIDOther                                   = 99 // Other
+)
+
+// DroneFlightsActivityCategoryUID values.
+const (
+	DroneFlightsActivityCategoryUIDUnmannedSystems = 8 // Unmanned Systems
+)
+
+// DroneFlightsActivityClassUID values.
+const (
+	DroneFlightsActivityClassUIDDroneFlightsActivity = 8001 // Drone Flights Activity
+)
+
+// DroneFlightsActivitySeverityID values.
+const (
+	DroneFlightsActivitySeverityIDUnknown       = 0  // Unknown
+	DroneFlightsActivitySeverityIDInformational = 1  // Informational
+	DroneFlightsActivitySeverityIDLow           = 2  // Low
+	DroneFlightsActivitySeverityIDMedium        = 3  // Medium
+	DroneFlightsActivitySeverityIDHigh          = 4  // High
+	DroneFlightsActivitySeverityIDCritical      = 5  // Critical
+	DroneFlightsActivitySeverityIDFatal         = 6  // Fatal
+	DroneFlightsActivitySeverityIDOther         = 99 // Other
+)
+
+// DroneFlightsActivityStatusID values.
+const (
+	DroneFlightsActivityStatusIDUnknown               = 0  // Unknown
+	DroneFlightsActivityStatusIDUndeclared            = 1  // Undeclared
+	DroneFlightsActivityStatusIDGround                = 2  // Ground
+	DroneFlightsActivityStatusIDAirborne              = 3  // Airborne
+	DroneFlightsActivityStatusIDEmergency             = 4  // Emergency
+	DroneFlightsActivityStatusIDRemoteIDSystemFailure = 5  // Remote ID System Failure
+	DroneFlightsActivityStatusIDReserved              = 6  // Reserved
+	DroneFlightsActivityStatusIDOther                 = 99 // Other
+)
+
+// DroneFlightsActivityTypeUID values.
+const (
+	DroneFlightsActivityTypeUIDUnknown = 800100 // Drone Flights Activity: Unknown
+	DroneFlightsActivityTypeUIDCapture = 800101 // Drone Flights Activity: Capture
+	DroneFlightsActivityTypeUIDRecord  = 800102 // Drone Flights Activity: Record
+	DroneFlightsActivityTypeUIDOther   = 800199 // Drone Flights Activity: Other
+)
+
+// EmailActivity class constants.
+const (
+	EmailActivityClassUID    = 4009
+	EmailActivityCategoryUID = 4
+)
+
+// EmailActivity is the OCSF 1.5.0 class "Email Activity". Email Activity events report SMTP protocol and email activities including those with embedded URLs and files.
+type EmailActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Attempt (optional): The attempt number for attempting to deliver the email.
+	Attempt int `json:"attempt,omitempty"`
+	// Protocol Banner (optional): The initial connection response that a messaging server receives after it connects to an email server.
+	Banner string `json:"banner,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Network Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Email Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Command (recommended): The command issued by the initiator (client), such as SMTP HELO or EHLO.
+	Command string `json:"command,omitempty"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Direction (optional): The direction of the email, as defined by the direction_id value.
+	Direction string `json:"direction,omitempty"`
+	// Direction ID (required): The direction of the email relative to the scanning host or organization.Email scanned at an internet gateway might be characterized as inbound to the organization from the Internet, outbound from the organization to the Internet, or internal within the organization.
+	DirectionID int `json:"direction_id"`
+	// Destination Endpoint (recommended): The responder (server) receiving the email.
+	DstEndpoint *NetworkEndpoint `json:"dst_endpoint,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// Email (required): The email object.
+	Email *Email `json:"email,omitempty"`
+	// Email Authentication (recommended): The SPF, DKIM and DMARC attributes of an email.
+	EmailAuth *EmailAuth `json:"email_auth,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Message Trace UID (recommended): The identifier that tracks a message that travels through multiple points of a messaging service.
+	MessageTraceUID string `json:"message_trace_uid,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Protocol Name (recommended): The Protocol Name specifies the email communication protocol, such as SMTP, IMAP, or POP3.
+	ProtocolName string `json:"protocol_name,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Source Endpoint (recommended): The initiator (client) sending the email.
+	SrcEndpoint *NetworkEndpoint `json:"src_endpoint,omitempty"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// EmailActivityActivityID values.
+const (
+	EmailActivityActivityIDUnknown = 0  // Unknown
+	EmailActivityActivityIDSend    = 1  // Send
+	EmailActivityActivityIDReceive = 2  // Receive
+	EmailActivityActivityIDScan    = 3  // Scan
+	EmailActivityActivityIDTrace   = 4  // Trace
+	EmailActivityActivityIDOther   = 99 // Other
+)
+
+// EmailActivityCategoryUID values.
+const (
+	EmailActivityCategoryUIDNetworkActivity = 4 // Network Activity
+)
+
+// EmailActivityClassUID values.
+const (
+	EmailActivityClassUIDEmailActivity = 4009 // Email Activity
+)
+
+// EmailActivityDirectionID values.
+const (
+	EmailActivityDirectionIDUnknown  = 0  // Unknown
+	EmailActivityDirectionIDInbound  = 1  // Inbound
+	EmailActivityDirectionIDOutbound = 2  // Outbound
+	EmailActivityDirectionIDInternal = 3  // Internal
+	EmailActivityDirectionIDOther    = 99 // Other
+)
+
+// EmailActivitySeverityID values.
+const (
+	EmailActivitySeverityIDUnknown       = 0  // Unknown
+	EmailActivitySeverityIDInformational = 1  // Informational
+	EmailActivitySeverityIDLow           = 2  // Low
+	EmailActivitySeverityIDMedium        = 3  // Medium
+	EmailActivitySeverityIDHigh          = 4  // High
+	EmailActivitySeverityIDCritical      = 5  // Critical
+	EmailActivitySeverityIDFatal         = 6  // Fatal
+	EmailActivitySeverityIDOther         = 99 // Other
+)
+
+// EmailActivityStatusID values.
+const (
+	EmailActivityStatusIDUnknown = 0  // Unknown
+	EmailActivityStatusIDSuccess = 1  // Success
+	EmailActivityStatusIDFailure = 2  // Failure
+	EmailActivityStatusIDOther   = 99 // Other
+)
+
+// EmailActivityTypeUID values.
+const (
+	EmailActivityTypeUIDUnknown = 400900 // Email Activity: Unknown
+	EmailActivityTypeUIDSend    = 400901 // Email Activity: Send
+	EmailActivityTypeUIDReceive = 400902 // Email Activity: Receive
+	EmailActivityTypeUIDScan    = 400903 // Email Activity: Scan
+	EmailActivityTypeUIDTrace   = 400904 // Email Activity: Trace
+	EmailActivityTypeUIDOther   = 400999 // Email Activity: Other
+)
+
+// EmailFileActivity class constants.
+const (
+	EmailFileActivityClassUID    = 4011
+	EmailFileActivityCategoryUID = 4
+)
+
+// EmailFileActivity is the OCSF 1.5.0 class "Email File Activity". Email File Activity events report files within emails.
+//
+// Deprecated: since OCSF 1.3.0. Use the Email Activity class with the email.files[] array instead.
+type EmailFileActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Network Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Email File Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// File (required): The email file attachment.
+	File *File `json:"file,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// EmailFileActivityActivityID values.
+const (
+	EmailFileActivityActivityIDUnknown = 0  // Unknown
+	EmailFileActivityActivityIDSend    = 1  // Send
+	EmailFileActivityActivityIDReceive = 2  // Receive
+	EmailFileActivityActivityIDScan    = 3  // Scan
+	EmailFileActivityActivityIDOther   = 99 // Other
+)
+
+// EmailFileActivityCategoryUID values.
+const (
+	EmailFileActivityCategoryUIDNetworkActivity = 4 // Network Activity
+)
+
+// EmailFileActivityClassUID values.
+const (
+	EmailFileActivityClassUIDEmailFileActivity = 4011 // Email File Activity
+)
+
+// EmailFileActivitySeverityID values.
+const (
+	EmailFileActivitySeverityIDUnknown       = 0  // Unknown
+	EmailFileActivitySeverityIDInformational = 1  // Informational
+	EmailFileActivitySeverityIDLow           = 2  // Low
+	EmailFileActivitySeverityIDMedium        = 3  // Medium
+	EmailFileActivitySeverityIDHigh          = 4  // High
+	EmailFileActivitySeverityIDCritical      = 5  // Critical
+	EmailFileActivitySeverityIDFatal         = 6  // Fatal
+	EmailFileActivitySeverityIDOther         = 99 // Other
+)
+
+// EmailFileActivityStatusID values.
+const (
+	EmailFileActivityStatusIDUnknown = 0  // Unknown
+	EmailFileActivityStatusIDSuccess = 1  // Success
+	EmailFileActivityStatusIDFailure = 2  // Failure
+	EmailFileActivityStatusIDOther   = 99 // Other
+)
+
+// EmailFileActivityTypeUID values.
+const (
+	EmailFileActivityTypeUIDUnknown = 401100 // Email File Activity: Unknown
+	EmailFileActivityTypeUIDSend    = 401101 // Email File Activity: Send
+	EmailFileActivityTypeUIDReceive = 401102 // Email File Activity: Receive
+	EmailFileActivityTypeUIDScan    = 401103 // Email File Activity: Scan
+	EmailFileActivityTypeUIDOther   = 401199 // Email File Activity: Other
+)
+
+// EmailURLActivity class constants.
+const (
+	EmailURLActivityClassUID    = 4012
+	EmailURLActivityCategoryUID = 4
+)
+
+// EmailURLActivity is the OCSF 1.5.0 class "Email URL Activity". Email URL Activity events report URLs within an email.
+//
+// Deprecated: since OCSF 1.3.0. Use the Email Activity class with the email.urls[] array instead.
+type EmailURLActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Network Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Email URL Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+	// URL (required): The URL included in the email content.
+	URL *URL `json:"url,omitempty"`
+}
+
+// EmailURLActivityActivityID values.
+const (
+	EmailURLActivityActivityIDUnknown = 0  // Unknown
+	EmailURLActivityActivityIDSend    = 1  // Send
+	EmailURLActivityActivityIDReceive = 2  // Receive
+	EmailURLActivityActivityIDScan    = 3  // Scan
+	EmailURLActivityActivityIDOther   = 99 // Other
+)
+
+// EmailURLActivityCategoryUID values.
+const (
+	EmailURLActivityCategoryUIDNetworkActivity = 4 // Network Activity
+)
+
+// EmailURLActivityClassUID values.
+const (
+	EmailURLActivityClassUIDEmailURLActivity = 4012 // Email URL Activity
+)
+
+// EmailURLActivitySeverityID values.
+const (
+	EmailURLActivitySeverityIDUnknown       = 0  // Unknown
+	EmailURLActivitySeverityIDInformational = 1  // Informational
+	EmailURLActivitySeverityIDLow           = 2  // Low
+	EmailURLActivitySeverityIDMedium        = 3  // Medium
+	EmailURLActivitySeverityIDHigh          = 4  // High
+	EmailURLActivitySeverityIDCritical      = 5  // Critical
+	EmailURLActivitySeverityIDFatal         = 6  // Fatal
+	EmailURLActivitySeverityIDOther         = 99 // Other
+)
+
+// EmailURLActivityStatusID values.
+const (
+	EmailURLActivityStatusIDUnknown = 0  // Unknown
+	EmailURLActivityStatusIDSuccess = 1  // Success
+	EmailURLActivityStatusIDFailure = 2  // Failure
+	EmailURLActivityStatusIDOther   = 99 // Other
+)
+
+// EmailURLActivityTypeUID values.
+const (
+	EmailURLActivityTypeUIDUnknown = 401200 // Email URL Activity: Unknown
+	EmailURLActivityTypeUIDSend    = 401201 // Email URL Activity: Send
+	EmailURLActivityTypeUIDReceive = 401202 // Email URL Activity: Receive
+	EmailURLActivityTypeUIDScan    = 401203 // Email URL Activity: Scan
+	EmailURLActivityTypeUIDOther   = 401299 // Email URL Activity: Other
+)
+
 // EntityManagement class constants.
 const (
 	EntityManagementClassUID    = 3004
@@ -628,8 +3310,6 @@ const (
 )
 
 // EntityManagement is the OCSF 1.5.0 class "Entity Management". Entity Management events report activity by a managed client, a micro service, or a user at a management console.
-//
-// Not generated (object not in gen.yaml): enrichments (enrichment), http_response (http_response), observables (observable).
 type EntityManagement struct {
 	// Access List (optional): The list of requested access rights.
 	AccessList []string `json:"access_list,omitempty"`
@@ -657,16 +3337,22 @@ type EntityManagement struct {
 	Duration int64 `json:"duration,omitempty"`
 	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
 	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
 	// Entity (required): The managed entity that is being acted upon.
 	Entity *ManagedEntity `json:"entity,omitempty"`
 	// Entity Result (recommended): The updated managed entity.
 	EntityResult *ManagedEntity `json:"entity_result,omitempty"`
 	// HTTP Request (optional): Details about the underlying HTTP request.
 	HTTPRequest *HTTPRequest `json:"http_request,omitempty"`
+	// HTTP Response (optional): Details about the underlying HTTP response.
+	HTTPResponse *HTTPResponse `json:"http_response,omitempty"`
 	// Message (recommended): The description of the event/finding, as defined by the source.
 	Message string `json:"message,omitempty"`
 	// Metadata (required): The metadata associated with the event or a finding.
 	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
 	// Raw Data (optional): The raw event/finding data as received from the source.
 	RawData string `json:"raw_data,omitempty"`
 	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
@@ -767,38 +3453,8195 @@ const (
 	EntityManagementTypeUIDOther      = 300499 // Entity Management: Other
 )
 
+// EventLogActvity class constants.
+const (
+	EventLogActvityClassUID    = 1008
+	EventLogActvityCategoryUID = 1
+)
+
+// EventLogActvity is the OCSF 1.5.0 class "Event Log Activity". Event Log Activity events report actions pertaining to the system's event logging service(s), such as disabling logging or clearing the log data.
+//
+// Constraint at_least_one: log_file, log_name, log_provider, log_type, log_type_id.
+type EventLogActvity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Actor (recommended): The actor that performed the activity.
+	Actor *Actor `json:"actor,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: System Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Event Log Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Device (recommended): The device that reported the event.
+	Device *Device `json:"device,omitempty"`
+	// Destination Endpoint (recommended): The targeted endpoint for the event log activity.
+	DstEndpoint *NetworkEndpoint `json:"dst_endpoint,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// File (recommended): The file targeted by the activity.
+	File *File `json:"file,omitempty"`
+	// Log Name (recommended): The name of the event log targeted by the activity.
+	LogName string `json:"log_name,omitempty"`
+	// Log Provider (recommended): The logging provider or logging service targeted by the activity.Example: Microsoft-Windows-Security-Auditing, Auditd, or Syslog.
+	LogProvider string `json:"log_provider,omitempty"`
+	// Log Type (recommended): The log type, normalized to the caption of the log_type_id value.
+	LogType string `json:"log_type,omitempty"`
+	// Log Type ID (recommended): The normalized log type identifier.
+	LogTypeID int `json:"log_type_id,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Source Endpoint (recommended): The source endpoint for the event log activity.
+	SrcEndpoint *NetworkEndpoint `json:"src_endpoint,omitempty"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.Example: 0, 8, or 21 for Windows ClearEventLog.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event outcome.Example: Success, Privilege Missing, or Invalid Parameter for Windows ClearEventLog.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// EventLogActvityActivityID values.
+const (
+	EventLogActvityActivityIDUnknown = 0  // Unknown
+	EventLogActvityActivityIDClear   = 1  // Clear
+	EventLogActvityActivityIDDelete  = 2  // Delete
+	EventLogActvityActivityIDExport  = 3  // Export
+	EventLogActvityActivityIDArchive = 4  // Archive
+	EventLogActvityActivityIDRotate  = 5  // Rotate
+	EventLogActvityActivityIDStart   = 6  // Start
+	EventLogActvityActivityIDStop    = 7  // Stop
+	EventLogActvityActivityIDRestart = 8  // Restart
+	EventLogActvityActivityIDEnable  = 9  // Enable
+	EventLogActvityActivityIDDisable = 10 // Disable
+	EventLogActvityActivityIDOther   = 99 // Other
+)
+
+// EventLogActvityCategoryUID values.
+const (
+	EventLogActvityCategoryUIDSystemActivity = 1 // System Activity
+)
+
+// EventLogActvityClassUID values.
+const (
+	EventLogActvityClassUIDEventLogActivity = 1008 // Event Log Activity
+)
+
+// EventLogActvityLogTypeID values.
+const (
+	EventLogActvityLogTypeIDUnknown     = 0  // Unknown
+	EventLogActvityLogTypeIDOS          = 1  // OS
+	EventLogActvityLogTypeIDApplication = 2  // Application
+	EventLogActvityLogTypeIDOther       = 99 // Other
+)
+
+// EventLogActvitySeverityID values.
+const (
+	EventLogActvitySeverityIDUnknown       = 0  // Unknown
+	EventLogActvitySeverityIDInformational = 1  // Informational
+	EventLogActvitySeverityIDLow           = 2  // Low
+	EventLogActvitySeverityIDMedium        = 3  // Medium
+	EventLogActvitySeverityIDHigh          = 4  // High
+	EventLogActvitySeverityIDCritical      = 5  // Critical
+	EventLogActvitySeverityIDFatal         = 6  // Fatal
+	EventLogActvitySeverityIDOther         = 99 // Other
+)
+
+// EventLogActvityStatusID values.
+const (
+	EventLogActvityStatusIDUnknown = 0  // Unknown
+	EventLogActvityStatusIDSuccess = 1  // Success
+	EventLogActvityStatusIDFailure = 2  // Failure
+	EventLogActvityStatusIDOther   = 99 // Other
+)
+
+// EventLogActvityTypeUID values.
+const (
+	EventLogActvityTypeUIDUnknown = 100800 // Event Log Activity: Unknown
+	EventLogActvityTypeUIDClear   = 100801 // Event Log Activity: Clear
+	EventLogActvityTypeUIDDelete  = 100802 // Event Log Activity: Delete
+	EventLogActvityTypeUIDExport  = 100803 // Event Log Activity: Export
+	EventLogActvityTypeUIDArchive = 100804 // Event Log Activity: Archive
+	EventLogActvityTypeUIDRotate  = 100805 // Event Log Activity: Rotate
+	EventLogActvityTypeUIDStart   = 100806 // Event Log Activity: Start
+	EventLogActvityTypeUIDStop    = 100807 // Event Log Activity: Stop
+	EventLogActvityTypeUIDRestart = 100808 // Event Log Activity: Restart
+	EventLogActvityTypeUIDEnable  = 100809 // Event Log Activity: Enable
+	EventLogActvityTypeUIDDisable = 100810 // Event Log Activity: Disable
+	EventLogActvityTypeUIDOther   = 100899 // Event Log Activity: Other
+)
+
+// EvidenceInfo class constants.
+const (
+	EvidenceInfoClassUID    = 5040
+	EvidenceInfoCategoryUID = 5
+)
+
+// EvidenceInfo is the OCSF 1.5.0 class "Live Evidence Info". Data collected directly from devices that represents forensic information pulled, queried, or discovered from devices that may indicate malicious activity.
+//
+// Constraint at_least_one: device.hostname, device.mac, device.name.
+type EvidenceInfo struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Discovery.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Live Evidence Info.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Device (required): An addressable device, computer system or host from which evidence was collected.
+	Device *Device `json:"device,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Query Evidence (required): The specific resulting evidence information that was queried or discovered based on the query type.
+	QueryEvidence *QueryEvidence `json:"query_evidence,omitempty"`
+	// Query Info (recommended): The search details associated with the query request.
+	QueryInfo *QueryInfo `json:"query_info,omitempty"`
+	// Query Result (recommended): The result of the query.
+	QueryResult string `json:"query_result,omitempty"`
+	// Query Result ID (required): The normalized identifier of the query result.
+	QueryResultID int `json:"query_result_id"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// EvidenceInfoActivityID values.
+const (
+	EvidenceInfoActivityIDUnknown = 0  // Unknown
+	EvidenceInfoActivityIDQuery   = 1  // Query
+	EvidenceInfoActivityIDOther   = 99 // Other
+)
+
+// EvidenceInfoCategoryUID values.
+const (
+	EvidenceInfoCategoryUIDDiscovery = 5 // Discovery
+)
+
+// EvidenceInfoClassUID values.
+const (
+	EvidenceInfoClassUIDLiveEvidenceInfo = 5040 // Live Evidence Info
+)
+
+// EvidenceInfoQueryResultID values.
+const (
+	EvidenceInfoQueryResultIDUnknown      = 0  // Unknown
+	EvidenceInfoQueryResultIDExists       = 1  // Exists
+	EvidenceInfoQueryResultIDPartial      = 2  // Partial
+	EvidenceInfoQueryResultIDDoesNotExist = 3  // Does not exist
+	EvidenceInfoQueryResultIDError        = 4  // Error
+	EvidenceInfoQueryResultIDUnsupported  = 5  // Unsupported
+	EvidenceInfoQueryResultIDOther        = 99 // Other
+)
+
+// EvidenceInfoSeverityID values.
+const (
+	EvidenceInfoSeverityIDUnknown       = 0  // Unknown
+	EvidenceInfoSeverityIDInformational = 1  // Informational
+	EvidenceInfoSeverityIDLow           = 2  // Low
+	EvidenceInfoSeverityIDMedium        = 3  // Medium
+	EvidenceInfoSeverityIDHigh          = 4  // High
+	EvidenceInfoSeverityIDCritical      = 5  // Critical
+	EvidenceInfoSeverityIDFatal         = 6  // Fatal
+	EvidenceInfoSeverityIDOther         = 99 // Other
+)
+
+// EvidenceInfoStatusID values.
+const (
+	EvidenceInfoStatusIDUnknown = 0  // Unknown
+	EvidenceInfoStatusIDSuccess = 1  // Success
+	EvidenceInfoStatusIDFailure = 2  // Failure
+	EvidenceInfoStatusIDOther   = 99 // Other
+)
+
+// EvidenceInfoTypeUID values.
+const (
+	EvidenceInfoTypeUIDUnknown = 504000 // Live Evidence Info: Unknown
+	EvidenceInfoTypeUIDQuery   = 504001 // Live Evidence Info: Query
+	EvidenceInfoTypeUIDOther   = 504099 // Live Evidence Info: Other
+)
+
+// FileActivity class constants.
+const (
+	FileActivityClassUID    = 1001
+	FileActivityCategoryUID = 1
+)
+
+// FileActivity is the OCSF 1.5.0 class "File System Activity". File System Activity events report when a process performs an action on a file or folder.
+type FileActivity struct {
+	// Access Mask (optional): The access mask in a platform-native format.
+	AccessMask int `json:"access_mask,omitempty"`
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Actor (required): The actor that performed the activity on the file object
+	Actor *Actor `json:"actor,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: System Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: File System Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Component (recommended): The name or relative pathname of a sub-component of the data object, if applicable.
+	Component string `json:"component,omitempty"`
+	// Connection Identifier (optional): The network connection identifier.
+	ConnectionUID string `json:"connection_uid,omitempty"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Create Mask (recommended): The original Windows mask that is required to create the object.
+	CreateMask string `json:"create_mask,omitempty"`
+	// Device (required): An addressable device, computer system or host.
+	Device *Device `json:"device,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// File (required): The file that is the target of the activity.
+	File *File `json:"file,omitempty"`
+	// File Diff (recommended): File content differences used for change detection.
+	FileDiff string `json:"file_diff,omitempty"`
+	// File Result (recommended): The resulting file object when the activity was allowed and successful.
+	FileResult *File `json:"file_result,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// FileActivityActivityID values.
+const (
+	FileActivityActivityIDUnknown       = 0  // Unknown
+	FileActivityActivityIDCreate        = 1  // Create
+	FileActivityActivityIDRead          = 2  // Read
+	FileActivityActivityIDUpdate        = 3  // Update
+	FileActivityActivityIDDelete        = 4  // Delete
+	FileActivityActivityIDRename        = 5  // Rename
+	FileActivityActivityIDSetAttributes = 6  // Set Attributes
+	FileActivityActivityIDSetSecurity   = 7  // Set Security
+	FileActivityActivityIDGetAttributes = 8  // Get Attributes
+	FileActivityActivityIDGetSecurity   = 9  // Get Security
+	FileActivityActivityIDEncrypt       = 10 // Encrypt
+	FileActivityActivityIDDecrypt       = 11 // Decrypt
+	FileActivityActivityIDMount         = 12 // Mount
+	FileActivityActivityIDUnmount       = 13 // Unmount
+	FileActivityActivityIDOpen          = 14 // Open
+	FileActivityActivityIDOther         = 99 // Other
+)
+
+// FileActivityCategoryUID values.
+const (
+	FileActivityCategoryUIDSystemActivity = 1 // System Activity
+)
+
+// FileActivityClassUID values.
+const (
+	FileActivityClassUIDFileSystemActivity = 1001 // File System Activity
+)
+
+// FileActivitySeverityID values.
+const (
+	FileActivitySeverityIDUnknown       = 0  // Unknown
+	FileActivitySeverityIDInformational = 1  // Informational
+	FileActivitySeverityIDLow           = 2  // Low
+	FileActivitySeverityIDMedium        = 3  // Medium
+	FileActivitySeverityIDHigh          = 4  // High
+	FileActivitySeverityIDCritical      = 5  // Critical
+	FileActivitySeverityIDFatal         = 6  // Fatal
+	FileActivitySeverityIDOther         = 99 // Other
+)
+
+// FileActivityStatusID values.
+const (
+	FileActivityStatusIDUnknown = 0  // Unknown
+	FileActivityStatusIDSuccess = 1  // Success
+	FileActivityStatusIDFailure = 2  // Failure
+	FileActivityStatusIDOther   = 99 // Other
+)
+
+// FileActivityTypeUID values.
+const (
+	FileActivityTypeUIDUnknown       = 100100 // File System Activity: Unknown
+	FileActivityTypeUIDCreate        = 100101 // File System Activity: Create
+	FileActivityTypeUIDRead          = 100102 // File System Activity: Read
+	FileActivityTypeUIDUpdate        = 100103 // File System Activity: Update
+	FileActivityTypeUIDDelete        = 100104 // File System Activity: Delete
+	FileActivityTypeUIDRename        = 100105 // File System Activity: Rename
+	FileActivityTypeUIDSetAttributes = 100106 // File System Activity: Set Attributes
+	FileActivityTypeUIDSetSecurity   = 100107 // File System Activity: Set Security
+	FileActivityTypeUIDGetAttributes = 100108 // File System Activity: Get Attributes
+	FileActivityTypeUIDGetSecurity   = 100109 // File System Activity: Get Security
+	FileActivityTypeUIDEncrypt       = 100110 // File System Activity: Encrypt
+	FileActivityTypeUIDDecrypt       = 100111 // File System Activity: Decrypt
+	FileActivityTypeUIDMount         = 100112 // File System Activity: Mount
+	FileActivityTypeUIDUnmount       = 100113 // File System Activity: Unmount
+	FileActivityTypeUIDOpen          = 100114 // File System Activity: Open
+	FileActivityTypeUIDOther         = 100199 // File System Activity: Other
+)
+
+// FileHosting class constants.
+const (
+	FileHostingClassUID    = 6006
+	FileHostingCategoryUID = 6
+)
+
+// FileHosting is the OCSF 1.5.0 class "File Hosting Activity". File Hosting Activity events report the actions taken by file management applications, including file sharing servers like Sharepoint and services such as Box, MS OneDrive, Google Drive, or network file share services.
+type FileHosting struct {
+	// Access List (optional): The list of requested access rights.
+	AccessList []string `json:"access_list,omitempty"`
+	// Access Mask (optional): The sum of hexadecimal values of requested access rights.
+	AccessMask int `json:"access_mask,omitempty"`
+	// Access Check Result (optional): The list of access check results.
+	AccessResult any `json:"access_result,omitempty"`
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Actor (required): The actor that performed the activity on the target file.
+	Actor *Actor `json:"actor,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Application Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: File Hosting Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Connection Info (optional): The network connection information.
+	ConnectionInfo *NetworkConnectionInfo `json:"connection_info,omitempty"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Destination Endpoint (recommended): The endpoint that received the activity on the target file.
+	DstEndpoint *NetworkEndpoint `json:"dst_endpoint,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Expiration Time (optional): The share expiration time.
+	ExpirationTime int64 `json:"expiration_time,omitempty"`
+	// File (required): The file that is the target of the activity.
+	File *File `json:"file,omitempty"`
+	// File Result (optional): The resulting file object when the activity was allowed and successful.
+	FileResult *File `json:"file_result,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Share (optional): The share name.
+	Share string `json:"share,omitempty"`
+	// Share Type (optional): The share type, normalized to the caption of the share_type_id value.
+	ShareType string `json:"share_type,omitempty"`
+	// Share Type ID (optional): The normalized identifier of the share type.
+	ShareTypeID int `json:"share_type_id,omitempty"`
+	// Source Endpoint (required): The endpoint that performed the activity on the target file.
+	SrcEndpoint *NetworkEndpoint `json:"src_endpoint,omitempty"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// FileHostingActivityID values.
+const (
+	FileHostingActivityIDUnknown     = 0  // Unknown
+	FileHostingActivityIDUpload      = 1  // Upload
+	FileHostingActivityIDDownload    = 2  // Download
+	FileHostingActivityIDUpdate      = 3  // Update
+	FileHostingActivityIDDelete      = 4  // Delete
+	FileHostingActivityIDRename      = 5  // Rename
+	FileHostingActivityIDCopy        = 6  // Copy
+	FileHostingActivityIDMove        = 7  // Move
+	FileHostingActivityIDRestore     = 8  // Restore
+	FileHostingActivityIDPreview     = 9  // Preview
+	FileHostingActivityIDLock        = 10 // Lock
+	FileHostingActivityIDUnlock      = 11 // Unlock
+	FileHostingActivityIDShare       = 12 // Share
+	FileHostingActivityIDUnshare     = 13 // Unshare
+	FileHostingActivityIDOpen        = 14 // Open
+	FileHostingActivityIDSync        = 15 // Sync
+	FileHostingActivityIDUnsync      = 16 // Unsync
+	FileHostingActivityIDAccessCheck = 17 // Access Check
+	FileHostingActivityIDOther       = 99 // Other
+)
+
+// FileHostingCategoryUID values.
+const (
+	FileHostingCategoryUIDApplicationActivity = 6 // Application Activity
+)
+
+// FileHostingClassUID values.
+const (
+	FileHostingClassUIDFileHostingActivity = 6006 // File Hosting Activity
+)
+
+// FileHostingSeverityID values.
+const (
+	FileHostingSeverityIDUnknown       = 0  // Unknown
+	FileHostingSeverityIDInformational = 1  // Informational
+	FileHostingSeverityIDLow           = 2  // Low
+	FileHostingSeverityIDMedium        = 3  // Medium
+	FileHostingSeverityIDHigh          = 4  // High
+	FileHostingSeverityIDCritical      = 5  // Critical
+	FileHostingSeverityIDFatal         = 6  // Fatal
+	FileHostingSeverityIDOther         = 99 // Other
+)
+
+// FileHostingShareTypeID values.
+const (
+	FileHostingShareTypeIDUnknown = 0  // Unknown
+	FileHostingShareTypeIDFile    = 1  // File
+	FileHostingShareTypeIDPipe    = 2  // Pipe
+	FileHostingShareTypeIDPrint   = 3  // Print
+	FileHostingShareTypeIDOther   = 99 // Other
+)
+
+// FileHostingStatusID values.
+const (
+	FileHostingStatusIDUnknown = 0  // Unknown
+	FileHostingStatusIDSuccess = 1  // Success
+	FileHostingStatusIDFailure = 2  // Failure
+	FileHostingStatusIDOther   = 99 // Other
+)
+
+// FileHostingTypeUID values.
+const (
+	FileHostingTypeUIDUnknown     = 600600 // File Hosting Activity: Unknown
+	FileHostingTypeUIDUpload      = 600601 // File Hosting Activity: Upload
+	FileHostingTypeUIDDownload    = 600602 // File Hosting Activity: Download
+	FileHostingTypeUIDUpdate      = 600603 // File Hosting Activity: Update
+	FileHostingTypeUIDDelete      = 600604 // File Hosting Activity: Delete
+	FileHostingTypeUIDRename      = 600605 // File Hosting Activity: Rename
+	FileHostingTypeUIDCopy        = 600606 // File Hosting Activity: Copy
+	FileHostingTypeUIDMove        = 600607 // File Hosting Activity: Move
+	FileHostingTypeUIDRestore     = 600608 // File Hosting Activity: Restore
+	FileHostingTypeUIDPreview     = 600609 // File Hosting Activity: Preview
+	FileHostingTypeUIDLock        = 600610 // File Hosting Activity: Lock
+	FileHostingTypeUIDUnlock      = 600611 // File Hosting Activity: Unlock
+	FileHostingTypeUIDShare       = 600612 // File Hosting Activity: Share
+	FileHostingTypeUIDUnshare     = 600613 // File Hosting Activity: Unshare
+	FileHostingTypeUIDOpen        = 600614 // File Hosting Activity: Open
+	FileHostingTypeUIDSync        = 600615 // File Hosting Activity: Sync
+	FileHostingTypeUIDUnsync      = 600616 // File Hosting Activity: Unsync
+	FileHostingTypeUIDAccessCheck = 600617 // File Hosting Activity: Access Check
+	FileHostingTypeUIDOther       = 600699 // File Hosting Activity: Other
+)
+
+// FileQuery class constants.
+const (
+	FileQueryClassUID    = 5007
+	FileQueryCategoryUID = 5
+)
+
+// FileQuery is the OCSF 1.5.0 class "File Query". File Query events report information about files that are present on the system.
+//
+// Deprecated: since OCSF 1.5.0. Use the Live Evidence Info class.
+type FileQuery struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Discovery.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: File Query.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// File (required): The file that is the target of the query.
+	File *File `json:"file,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Query Info (recommended): The search details associated with the query request.
+	QueryInfo *QueryInfo `json:"query_info,omitempty"`
+	// Query Result (recommended): The result of the query.
+	QueryResult string `json:"query_result,omitempty"`
+	// Query Result ID (required): The normalized identifier of the query result.
+	QueryResultID int `json:"query_result_id"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// FileQueryActivityID values.
+const (
+	FileQueryActivityIDUnknown = 0  // Unknown
+	FileQueryActivityIDQuery   = 1  // Query
+	FileQueryActivityIDOther   = 99 // Other
+)
+
+// FileQueryCategoryUID values.
+const (
+	FileQueryCategoryUIDDiscovery = 5 // Discovery
+)
+
+// FileQueryClassUID values.
+const (
+	FileQueryClassUIDFileQuery = 5007 // File Query
+)
+
+// FileQueryQueryResultID values.
+const (
+	FileQueryQueryResultIDUnknown      = 0  // Unknown
+	FileQueryQueryResultIDExists       = 1  // Exists
+	FileQueryQueryResultIDPartial      = 2  // Partial
+	FileQueryQueryResultIDDoesNotExist = 3  // Does not exist
+	FileQueryQueryResultIDError        = 4  // Error
+	FileQueryQueryResultIDUnsupported  = 5  // Unsupported
+	FileQueryQueryResultIDOther        = 99 // Other
+)
+
+// FileQuerySeverityID values.
+const (
+	FileQuerySeverityIDUnknown       = 0  // Unknown
+	FileQuerySeverityIDInformational = 1  // Informational
+	FileQuerySeverityIDLow           = 2  // Low
+	FileQuerySeverityIDMedium        = 3  // Medium
+	FileQuerySeverityIDHigh          = 4  // High
+	FileQuerySeverityIDCritical      = 5  // Critical
+	FileQuerySeverityIDFatal         = 6  // Fatal
+	FileQuerySeverityIDOther         = 99 // Other
+)
+
+// FileQueryStatusID values.
+const (
+	FileQueryStatusIDUnknown = 0  // Unknown
+	FileQueryStatusIDSuccess = 1  // Success
+	FileQueryStatusIDFailure = 2  // Failure
+	FileQueryStatusIDOther   = 99 // Other
+)
+
+// FileQueryTypeUID values.
+const (
+	FileQueryTypeUIDUnknown = 500700 // File Query: Unknown
+	FileQueryTypeUIDQuery   = 500701 // File Query: Query
+	FileQueryTypeUIDOther   = 500799 // File Query: Other
+)
+
+// FileRemediationActivity class constants.
+const (
+	FileRemediationActivityClassUID    = 7002
+	FileRemediationActivityCategoryUID = 7
+)
+
+// FileRemediationActivity is the OCSF 1.5.0 class "File Remediation Activity". File Remediation Activity events report on attempts at remediating files.
+type FileRemediationActivity struct {
+	// Activity ID (required): Matches the MITRE D3FEND™ Tactic.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Remediation.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: File Remediation Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Command UID (required): The unique identifier of the remediation command that pertains to this event.
+	CommandUID string `json:"command_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Countermeasures (recommended): The MITRE D3FEND™ Matrix Countermeasures associated with a remediation.
+	Countermeasures []D3fend `json:"countermeasures,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// File (required): The file that pertains to the remediation event.
+	File *File `json:"file,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Remediation Guidance (optional): Describes the recommended remediation steps to address identified issue(s).
+	Remediation *Remediation `json:"remediation,omitempty"`
+	// Scan (optional): The remediation scan that pertains to this event.
+	Scan *Scan `json:"scan,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// FileRemediationActivityActivityID values.
+const (
+	FileRemediationActivityActivityIDUnknown = 0  // Unknown
+	FileRemediationActivityActivityIDIsolate = 1  // Isolate
+	FileRemediationActivityActivityIDEvict   = 2  // Evict
+	FileRemediationActivityActivityIDRestore = 3  // Restore
+	FileRemediationActivityActivityIDHarden  = 4  // Harden
+	FileRemediationActivityActivityIDDetect  = 5  // Detect
+	FileRemediationActivityActivityIDOther   = 99 // Other
+)
+
+// FileRemediationActivityCategoryUID values.
+const (
+	FileRemediationActivityCategoryUIDRemediation = 7 // Remediation
+)
+
+// FileRemediationActivityClassUID values.
+const (
+	FileRemediationActivityClassUIDFileRemediationActivity = 7002 // File Remediation Activity
+)
+
+// FileRemediationActivitySeverityID values.
+const (
+	FileRemediationActivitySeverityIDUnknown       = 0  // Unknown
+	FileRemediationActivitySeverityIDInformational = 1  // Informational
+	FileRemediationActivitySeverityIDLow           = 2  // Low
+	FileRemediationActivitySeverityIDMedium        = 3  // Medium
+	FileRemediationActivitySeverityIDHigh          = 4  // High
+	FileRemediationActivitySeverityIDCritical      = 5  // Critical
+	FileRemediationActivitySeverityIDFatal         = 6  // Fatal
+	FileRemediationActivitySeverityIDOther         = 99 // Other
+)
+
+// FileRemediationActivityStatusID values.
+const (
+	FileRemediationActivityStatusIDUnknown      = 0  // Unknown
+	FileRemediationActivityStatusIDSuccess      = 1  // Success
+	FileRemediationActivityStatusIDFailure      = 2  // Failure
+	FileRemediationActivityStatusIDDoesNotExist = 3  // Does Not Exist
+	FileRemediationActivityStatusIDPartial      = 4  // Partial
+	FileRemediationActivityStatusIDUnsupported  = 5  // Unsupported
+	FileRemediationActivityStatusIDError        = 6  // Error
+	FileRemediationActivityStatusIDOther        = 99 // Other
+)
+
+// FileRemediationActivityTypeUID values.
+const (
+	FileRemediationActivityTypeUIDUnknown = 700200 // File Remediation Activity: Unknown
+	FileRemediationActivityTypeUIDIsolate = 700201 // File Remediation Activity: Isolate
+	FileRemediationActivityTypeUIDEvict   = 700202 // File Remediation Activity: Evict
+	FileRemediationActivityTypeUIDRestore = 700203 // File Remediation Activity: Restore
+	FileRemediationActivityTypeUIDHarden  = 700204 // File Remediation Activity: Harden
+	FileRemediationActivityTypeUIDDetect  = 700205 // File Remediation Activity: Detect
+	FileRemediationActivityTypeUIDOther   = 700299 // File Remediation Activity: Other
+)
+
+// FolderQuery class constants.
+const (
+	FolderQueryClassUID    = 5008
+	FolderQueryCategoryUID = 5
+)
+
+// FolderQuery is the OCSF 1.5.0 class "Folder Query". Folder Query events report information about folders that are present on the system.
+//
+// Deprecated: since OCSF 1.5.0. Use the Live Evidence Info class.
+type FolderQuery struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Discovery.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Folder Query.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Folder (required): The folder that is the target of the query.
+	Folder *File `json:"folder,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Query Info (recommended): The search details associated with the query request.
+	QueryInfo *QueryInfo `json:"query_info,omitempty"`
+	// Query Result (recommended): The result of the query.
+	QueryResult string `json:"query_result,omitempty"`
+	// Query Result ID (required): The normalized identifier of the query result.
+	QueryResultID int `json:"query_result_id"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// FolderQueryActivityID values.
+const (
+	FolderQueryActivityIDUnknown = 0  // Unknown
+	FolderQueryActivityIDQuery   = 1  // Query
+	FolderQueryActivityIDOther   = 99 // Other
+)
+
+// FolderQueryCategoryUID values.
+const (
+	FolderQueryCategoryUIDDiscovery = 5 // Discovery
+)
+
+// FolderQueryClassUID values.
+const (
+	FolderQueryClassUIDFolderQuery = 5008 // Folder Query
+)
+
+// FolderQueryQueryResultID values.
+const (
+	FolderQueryQueryResultIDUnknown      = 0  // Unknown
+	FolderQueryQueryResultIDExists       = 1  // Exists
+	FolderQueryQueryResultIDPartial      = 2  // Partial
+	FolderQueryQueryResultIDDoesNotExist = 3  // Does not exist
+	FolderQueryQueryResultIDError        = 4  // Error
+	FolderQueryQueryResultIDUnsupported  = 5  // Unsupported
+	FolderQueryQueryResultIDOther        = 99 // Other
+)
+
+// FolderQuerySeverityID values.
+const (
+	FolderQuerySeverityIDUnknown       = 0  // Unknown
+	FolderQuerySeverityIDInformational = 1  // Informational
+	FolderQuerySeverityIDLow           = 2  // Low
+	FolderQuerySeverityIDMedium        = 3  // Medium
+	FolderQuerySeverityIDHigh          = 4  // High
+	FolderQuerySeverityIDCritical      = 5  // Critical
+	FolderQuerySeverityIDFatal         = 6  // Fatal
+	FolderQuerySeverityIDOther         = 99 // Other
+)
+
+// FolderQueryStatusID values.
+const (
+	FolderQueryStatusIDUnknown = 0  // Unknown
+	FolderQueryStatusIDSuccess = 1  // Success
+	FolderQueryStatusIDFailure = 2  // Failure
+	FolderQueryStatusIDOther   = 99 // Other
+)
+
+// FolderQueryTypeUID values.
+const (
+	FolderQueryTypeUIDUnknown = 500800 // Folder Query: Unknown
+	FolderQueryTypeUIDQuery   = 500801 // Folder Query: Query
+	FolderQueryTypeUIDOther   = 500899 // Folder Query: Other
+)
+
+// FtpActivity class constants.
+const (
+	FtpActivityClassUID    = 4008
+	FtpActivityCategoryUID = 4
+)
+
+// FtpActivity is the OCSF 1.5.0 class "FTP Activity". File Transfer Protocol (FTP) Activity events report file transfers between a server and a client as seen on the network.
+//
+// Constraint at_least_one: dst_endpoint, src_endpoint.
+type FtpActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Application Name (optional): The name of the application associated with the event or object.
+	AppName string `json:"app_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Network Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: FTP Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Response Codes (recommended): The list of return codes to the FTP command.
+	Codes []int `json:"codes,omitempty"`
+	// Command (recommended): The FTP command.
+	Command string `json:"command,omitempty"`
+	// Command Responses (recommended): The list of responses to the FTP command.
+	CommandResponses []string `json:"command_responses,omitempty"`
+	// Connection Info (recommended): The network connection information.
+	ConnectionInfo *NetworkConnectionInfo `json:"connection_info,omitempty"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Destination Endpoint (recommended): The responder (server) in a network connection.
+	DstEndpoint *NetworkEndpoint `json:"dst_endpoint,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// File (optional): The file that is the target of the FTP activity.
+	File *File `json:"file,omitempty"`
+	// JA4+ Fingerprints (optional): A list of the JA4+ network fingerprints.
+	JA4FingerprintList []JA4Fingerprint `json:"ja4_fingerprint_list,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Name (recommended): The name of the data affiliated with the command.
+	Name string `json:"name,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Port (recommended): The dynamic port established for impending data transfers.
+	Port int `json:"port,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Source Endpoint (recommended): The initiator (client) of the network connection.
+	SrcEndpoint *NetworkEndpoint `json:"src_endpoint,omitempty"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// TLS (optional): The Transport Layer Security (TLS) attributes.
+	TLS *TLS `json:"tls,omitempty"`
+	// Traffic (recommended): The network traffic refers to the amount of data moving across a network at a given point of time.
+	Traffic *NetworkTraffic `json:"traffic,omitempty"`
+	// Type (recommended): The type of FTP network connection (e.g.
+	Type string `json:"type,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// FtpActivityActivityID values.
+const (
+	FtpActivityActivityIDUnknown = 0  // Unknown
+	FtpActivityActivityIDPut     = 1  // Put
+	FtpActivityActivityIDGet     = 2  // Get
+	FtpActivityActivityIDPoll    = 3  // Poll
+	FtpActivityActivityIDDelete  = 4  // Delete
+	FtpActivityActivityIDRename  = 5  // Rename
+	FtpActivityActivityIDList    = 6  // List
+	FtpActivityActivityIDOther   = 99 // Other
+)
+
+// FtpActivityCategoryUID values.
+const (
+	FtpActivityCategoryUIDNetworkActivity = 4 // Network Activity
+)
+
+// FtpActivityClassUID values.
+const (
+	FtpActivityClassUIDFTPActivity = 4008 // FTP Activity
+)
+
+// FtpActivitySeverityID values.
+const (
+	FtpActivitySeverityIDUnknown       = 0  // Unknown
+	FtpActivitySeverityIDInformational = 1  // Informational
+	FtpActivitySeverityIDLow           = 2  // Low
+	FtpActivitySeverityIDMedium        = 3  // Medium
+	FtpActivitySeverityIDHigh          = 4  // High
+	FtpActivitySeverityIDCritical      = 5  // Critical
+	FtpActivitySeverityIDFatal         = 6  // Fatal
+	FtpActivitySeverityIDOther         = 99 // Other
+)
+
+// FtpActivityStatusID values.
+const (
+	FtpActivityStatusIDUnknown = 0  // Unknown
+	FtpActivityStatusIDSuccess = 1  // Success
+	FtpActivityStatusIDFailure = 2  // Failure
+	FtpActivityStatusIDOther   = 99 // Other
+)
+
+// FtpActivityTypeUID values.
+const (
+	FtpActivityTypeUIDUnknown = 400800 // FTP Activity: Unknown
+	FtpActivityTypeUIDPut     = 400801 // FTP Activity: Put
+	FtpActivityTypeUIDGet     = 400802 // FTP Activity: Get
+	FtpActivityTypeUIDPoll    = 400803 // FTP Activity: Poll
+	FtpActivityTypeUIDDelete  = 400804 // FTP Activity: Delete
+	FtpActivityTypeUIDRename  = 400805 // FTP Activity: Rename
+	FtpActivityTypeUIDList    = 400806 // FTP Activity: List
+	FtpActivityTypeUIDOther   = 400899 // FTP Activity: Other
+)
+
+// GroupManagement class constants.
+const (
+	GroupManagementClassUID    = 3006
+	GroupManagementCategoryUID = 3
+)
+
+// GroupManagement is the OCSF 1.5.0 class "Group Management". Group Management events report management updates to a group, including updates to membership and permissions.
+type GroupManagement struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Actor (recommended): The actor object describes details about the user/role/process that was the source of the activity.
+	Actor *Actor `json:"actor,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Identity & Access Management.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Group Management.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Group (required): Group that was the target of the event.
+	Group *Group `json:"group,omitempty"`
+	// HTTP Request (optional): Details about the underlying HTTP request.
+	HTTPRequest *HTTPRequest `json:"http_request,omitempty"`
+	// HTTP Response (optional): Details about the underlying HTTP response.
+	HTTPResponse *HTTPResponse `json:"http_response,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Privileges (recommended): A list of privileges assigned to the group.
+	Privileges []string `json:"privileges,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Resource (recommended): Resource that the privileges give access to.
+	Resource *ResourceDetails `json:"resource,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Source Endpoint (recommended): Details about the source of the IAM activity.
+	SrcEndpoint *NetworkEndpoint `json:"src_endpoint,omitempty"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+	// User (recommended): A user that was added to or removed from the group.
+	User *User `json:"user,omitempty"`
+}
+
+// GroupManagementActivityID values.
+const (
+	GroupManagementActivityIDUnknown          = 0  // Unknown
+	GroupManagementActivityIDAssignPrivileges = 1  // Assign Privileges
+	GroupManagementActivityIDRevokePrivileges = 2  // Revoke Privileges
+	GroupManagementActivityIDAddUser          = 3  // Add User
+	GroupManagementActivityIDRemoveUser       = 4  // Remove User
+	GroupManagementActivityIDDelete           = 5  // Delete
+	GroupManagementActivityIDCreate           = 6  // Create
+	GroupManagementActivityIDOther            = 99 // Other
+)
+
+// GroupManagementCategoryUID values.
+const (
+	GroupManagementCategoryUIDIdentityAccessManagement = 3 // Identity & Access Management
+)
+
+// GroupManagementClassUID values.
+const (
+	GroupManagementClassUIDGroupManagement = 3006 // Group Management
+)
+
+// GroupManagementSeverityID values.
+const (
+	GroupManagementSeverityIDUnknown       = 0  // Unknown
+	GroupManagementSeverityIDInformational = 1  // Informational
+	GroupManagementSeverityIDLow           = 2  // Low
+	GroupManagementSeverityIDMedium        = 3  // Medium
+	GroupManagementSeverityIDHigh          = 4  // High
+	GroupManagementSeverityIDCritical      = 5  // Critical
+	GroupManagementSeverityIDFatal         = 6  // Fatal
+	GroupManagementSeverityIDOther         = 99 // Other
+)
+
+// GroupManagementStatusID values.
+const (
+	GroupManagementStatusIDUnknown = 0  // Unknown
+	GroupManagementStatusIDSuccess = 1  // Success
+	GroupManagementStatusIDFailure = 2  // Failure
+	GroupManagementStatusIDOther   = 99 // Other
+)
+
+// GroupManagementTypeUID values.
+const (
+	GroupManagementTypeUIDUnknown          = 300600 // Group Management: Unknown
+	GroupManagementTypeUIDAssignPrivileges = 300601 // Group Management: Assign Privileges
+	GroupManagementTypeUIDRevokePrivileges = 300602 // Group Management: Revoke Privileges
+	GroupManagementTypeUIDAddUser          = 300603 // Group Management: Add User
+	GroupManagementTypeUIDRemoveUser       = 300604 // Group Management: Remove User
+	GroupManagementTypeUIDDelete           = 300605 // Group Management: Delete
+	GroupManagementTypeUIDCreate           = 300606 // Group Management: Create
+	GroupManagementTypeUIDOther            = 300699 // Group Management: Other
+)
+
+// HTTPActivity class constants.
+const (
+	HTTPActivityClassUID    = 4002
+	HTTPActivityCategoryUID = 4
+)
+
+// HTTPActivity is the OCSF 1.5.0 class "HTTP Activity". HTTP Activity events report HTTP connection and traffic information.
+//
+// Constraint at_least_one: http_request, http_response.
+type HTTPActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Application Name (optional): The name of the application associated with the event or object.
+	AppName string `json:"app_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Network Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: HTTP Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Connection Info (recommended): The network connection information.
+	ConnectionInfo *NetworkConnectionInfo `json:"connection_info,omitempty"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Destination Endpoint (recommended): The responder (server) in a network connection.
+	DstEndpoint *NetworkEndpoint `json:"dst_endpoint,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// File (optional): The file that is the target of the HTTP activity.
+	File *File `json:"file,omitempty"`
+	// HTTP Cookies (recommended): The cookies object describes details about HTTP cookies
+	HTTPCookies []HTTPCookie `json:"http_cookies,omitempty"`
+	// HTTP Request (recommended): The HTTP Request Object documents attributes of a request made to a web server.
+	HTTPRequest *HTTPRequest `json:"http_request,omitempty"`
+	// HTTP Response (recommended): The HTTP Response from a web server to a requester.
+	HTTPResponse *HTTPResponse `json:"http_response,omitempty"`
+	// JA4+ Fingerprints (optional): A list of the JA4+ network fingerprints.
+	JA4FingerprintList []JA4Fingerprint `json:"ja4_fingerprint_list,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Source Endpoint (recommended): The initiator (client) of the network connection.
+	SrcEndpoint *NetworkEndpoint `json:"src_endpoint,omitempty"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// TLS (optional): The Transport Layer Security (TLS) attributes.
+	TLS *TLS `json:"tls,omitempty"`
+	// Traffic (recommended): The network traffic refers to the amount of data moving across a network at a given point of time.
+	Traffic *NetworkTraffic `json:"traffic,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// HTTPActivityActivityID values.
+const (
+	HTTPActivityActivityIDUnknown = 0  // Unknown
+	HTTPActivityActivityIDConnect = 1  // Connect
+	HTTPActivityActivityIDDelete  = 2  // Delete
+	HTTPActivityActivityIDGet     = 3  // Get
+	HTTPActivityActivityIDHead    = 4  // Head
+	HTTPActivityActivityIDOptions = 5  // Options
+	HTTPActivityActivityIDPost    = 6  // Post
+	HTTPActivityActivityIDPut     = 7  // Put
+	HTTPActivityActivityIDTrace   = 8  // Trace
+	HTTPActivityActivityIDOther   = 99 // Other
+)
+
+// HTTPActivityCategoryUID values.
+const (
+	HTTPActivityCategoryUIDNetworkActivity = 4 // Network Activity
+)
+
+// HTTPActivityClassUID values.
+const (
+	HTTPActivityClassUIDHTTPActivity = 4002 // HTTP Activity
+)
+
+// HTTPActivitySeverityID values.
+const (
+	HTTPActivitySeverityIDUnknown       = 0  // Unknown
+	HTTPActivitySeverityIDInformational = 1  // Informational
+	HTTPActivitySeverityIDLow           = 2  // Low
+	HTTPActivitySeverityIDMedium        = 3  // Medium
+	HTTPActivitySeverityIDHigh          = 4  // High
+	HTTPActivitySeverityIDCritical      = 5  // Critical
+	HTTPActivitySeverityIDFatal         = 6  // Fatal
+	HTTPActivitySeverityIDOther         = 99 // Other
+)
+
+// HTTPActivityStatusID values.
+const (
+	HTTPActivityStatusIDUnknown = 0  // Unknown
+	HTTPActivityStatusIDSuccess = 1  // Success
+	HTTPActivityStatusIDFailure = 2  // Failure
+	HTTPActivityStatusIDOther   = 99 // Other
+)
+
+// HTTPActivityTypeUID values.
+const (
+	HTTPActivityTypeUIDUnknown = 400200 // HTTP Activity: Unknown
+	HTTPActivityTypeUIDConnect = 400201 // HTTP Activity: Connect
+	HTTPActivityTypeUIDDelete  = 400202 // HTTP Activity: Delete
+	HTTPActivityTypeUIDGet     = 400203 // HTTP Activity: Get
+	HTTPActivityTypeUIDHead    = 400204 // HTTP Activity: Head
+	HTTPActivityTypeUIDOptions = 400205 // HTTP Activity: Options
+	HTTPActivityTypeUIDPost    = 400206 // HTTP Activity: Post
+	HTTPActivityTypeUIDPut     = 400207 // HTTP Activity: Put
+	HTTPActivityTypeUIDTrace   = 400208 // HTTP Activity: Trace
+	HTTPActivityTypeUIDOther   = 400299 // HTTP Activity: Other
+)
+
+// IncidentFinding class constants.
+const (
+	IncidentFindingClassUID    = 2005
+	IncidentFindingCategoryUID = 2
+)
+
+// IncidentFinding is the OCSF 1.5.0 class "Incident Finding". An Incident Finding reports the creation, update, or closure of security incidents as a result of detections and/or analytics.
+//
+// Constraint at_least_one: assignee, assignee_group.
+type IncidentFinding struct {
+	// Activity ID (required): The normalized identifier of the Incident activity.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The Incident activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Assignee (optional): The details of the user assigned to an Incident.
+	Assignee *User `json:"assignee,omitempty"`
+	// Assignee Group (optional): The details of the group assigned to an Incident.
+	AssigneeGroup *Group `json:"assignee_group,omitempty"`
+	// MITRE ATT&CK® and ATLAS™ Details (optional): An array of MITRE ATT&CK® objects describing the tactics, techniques & sub-techniques associated to the Incident.
+	Attacks []Attack `json:"attacks,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Findings.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Incident Finding.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Comment (optional): Additional user supplied details for updating or closing the incident.
+	Comment string `json:"comment,omitempty"`
+	// Confidence (optional): The confidence, normalized to the caption of the confidence_id value.
+	Confidence string `json:"confidence,omitempty"`
+	// Confidence ID (recommended): The normalized confidence refers to the accuracy of the rule that created the finding.
+	ConfidenceID int `json:"confidence_id,omitempty"`
+	// Confidence Score (optional): The confidence score as reported by the event source.
+	ConfidenceScore int `json:"confidence_score,omitempty"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Description (recommended): The short description of the Incident.
+	Desc string `json:"desc,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The time of the most recent event included in the incident.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Finding Information List (required): A list of finding_info objects associated to an incident.
+	FindingInfoList []FindingInfo `json:"finding_info_list,omitempty"`
+	// Impact (recommended): The impact , normalized to the caption of the impact_id value.
+	Impact string `json:"impact,omitempty"`
+	// Impact ID (recommended): The normalized impact of the incident or finding.
+	ImpactID int `json:"impact_id,omitempty"`
+	// Impact Score (recommended): The impact as an integer value of the finding, valid range 0-100.
+	ImpactScore int `json:"impact_score,omitempty"`
+	// Suspected Breach (optional): A determination based on analytics as to whether a potential breach was found.
+	IsSuspectedBreach bool `json:"is_suspected_breach,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Priority (optional): The priority, normalized to the caption of the priority_id value.
+	Priority string `json:"priority,omitempty"`
+	// Priority ID (recommended): The normalized priority.
+	PriorityID int `json:"priority_id,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Source URL (recommended): A Url link used to access the original incident.
+	SrcURL string `json:"src_url,omitempty"`
+	// Start Time (optional): The time of the least recent event included in the incident.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The normalized status of the Incident normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (required): The normalized status identifier of the Incident.
+	StatusID int `json:"status_id"`
+	// Tickets (optional): The associated ticket(s) in the ticketing system.
+	Tickets []Ticket `json:"tickets,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+	// Vendor Attributes (optional): The Vendor Attributes object can be used to represent values of attributes populated by the Vendor/Finding Provider.
+	VendorAttributes *VendorAttributes `json:"vendor_attributes,omitempty"`
+	// Verdict (recommended): The verdict assigned to an Incident finding.
+	Verdict string `json:"verdict,omitempty"`
+	// Verdict ID (recommended): The normalized verdict of an Incident.
+	VerdictID int `json:"verdict_id,omitempty"`
+}
+
+// IncidentFindingActivityID values.
+const (
+	IncidentFindingActivityIDUnknown = 0  // Unknown
+	IncidentFindingActivityIDCreate  = 1  // Create
+	IncidentFindingActivityIDUpdate  = 2  // Update
+	IncidentFindingActivityIDClose   = 3  // Close
+	IncidentFindingActivityIDOther   = 99 // Other
+)
+
+// IncidentFindingCategoryUID values.
+const (
+	IncidentFindingCategoryUIDFindings = 2 // Findings
+)
+
+// IncidentFindingClassUID values.
+const (
+	IncidentFindingClassUIDIncidentFinding = 2005 // Incident Finding
+)
+
+// IncidentFindingConfidenceID values.
+const (
+	IncidentFindingConfidenceIDUnknown = 0  // Unknown
+	IncidentFindingConfidenceIDLow     = 1  // Low
+	IncidentFindingConfidenceIDMedium  = 2  // Medium
+	IncidentFindingConfidenceIDHigh    = 3  // High
+	IncidentFindingConfidenceIDOther   = 99 // Other
+)
+
+// IncidentFindingImpactID values.
+const (
+	IncidentFindingImpactIDUnknown  = 0  // Unknown
+	IncidentFindingImpactIDLow      = 1  // Low
+	IncidentFindingImpactIDMedium   = 2  // Medium
+	IncidentFindingImpactIDHigh     = 3  // High
+	IncidentFindingImpactIDCritical = 4  // Critical
+	IncidentFindingImpactIDOther    = 99 // Other
+)
+
+// IncidentFindingPriorityID values.
+const (
+	IncidentFindingPriorityIDUnknown  = 0  // Unknown
+	IncidentFindingPriorityIDLow      = 1  // Low
+	IncidentFindingPriorityIDMedium   = 2  // Medium
+	IncidentFindingPriorityIDHigh     = 3  // High
+	IncidentFindingPriorityIDCritical = 4  // Critical
+	IncidentFindingPriorityIDOther    = 99 // Other
+)
+
+// IncidentFindingSeverityID values.
+const (
+	IncidentFindingSeverityIDUnknown       = 0  // Unknown
+	IncidentFindingSeverityIDInformational = 1  // Informational
+	IncidentFindingSeverityIDLow           = 2  // Low
+	IncidentFindingSeverityIDMedium        = 3  // Medium
+	IncidentFindingSeverityIDHigh          = 4  // High
+	IncidentFindingSeverityIDCritical      = 5  // Critical
+	IncidentFindingSeverityIDFatal         = 6  // Fatal
+	IncidentFindingSeverityIDOther         = 99 // Other
+)
+
+// IncidentFindingStatusID values.
+const (
+	IncidentFindingStatusIDUnknown    = 0  // Unknown
+	IncidentFindingStatusIDNew        = 1  // New
+	IncidentFindingStatusIDInProgress = 2  // In Progress
+	IncidentFindingStatusIDOnHold     = 3  // On Hold
+	IncidentFindingStatusIDResolved   = 4  // Resolved
+	IncidentFindingStatusIDClosed     = 5  // Closed
+	IncidentFindingStatusIDOther      = 99 // Other
+)
+
+// IncidentFindingTypeUID values.
+const (
+	IncidentFindingTypeUIDUnknown = 200500 // Incident Finding: Unknown
+	IncidentFindingTypeUIDCreate  = 200501 // Incident Finding: Create
+	IncidentFindingTypeUIDUpdate  = 200502 // Incident Finding: Update
+	IncidentFindingTypeUIDClose   = 200503 // Incident Finding: Close
+	IncidentFindingTypeUIDOther   = 200599 // Incident Finding: Other
+)
+
+// IncidentFindingVerdictID values.
+const (
+	IncidentFindingVerdictIDUnknown           = 0  // Unknown
+	IncidentFindingVerdictIDFalsePositive     = 1  // False Positive
+	IncidentFindingVerdictIDTruePositive      = 2  // True Positive
+	IncidentFindingVerdictIDDisregard         = 3  // Disregard
+	IncidentFindingVerdictIDSuspicious        = 4  // Suspicious
+	IncidentFindingVerdictIDBenign            = 5  // Benign
+	IncidentFindingVerdictIDTest              = 6  // Test
+	IncidentFindingVerdictIDInsufficientData  = 7  // Insufficient Data
+	IncidentFindingVerdictIDSecurityRisk      = 8  // Security Risk
+	IncidentFindingVerdictIDManagedExternally = 9  // Managed Externally
+	IncidentFindingVerdictIDDuplicate         = 10 // Duplicate
+	IncidentFindingVerdictIDOther             = 99 // Other
+)
+
+// InventoryInfo class constants.
+const (
+	InventoryInfoClassUID    = 5001
+	InventoryInfoCategoryUID = 5
+)
+
+// InventoryInfo is the OCSF 1.5.0 class "Device Inventory Info". Device Inventory Info events report device inventory data that is either logged or proactively collected.
+type InventoryInfo struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Actor (optional): The actor object describes details about the user/role/process that was the source of the activity.
+	Actor *Actor `json:"actor,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Discovery.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Device Inventory Info.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Device (required): The device that is being discovered by an inventory process.
+	Device *Device `json:"device,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// InventoryInfoActivityID values.
+const (
+	InventoryInfoActivityIDUnknown = 0  // Unknown
+	InventoryInfoActivityIDLog     = 1  // Log
+	InventoryInfoActivityIDCollect = 2  // Collect
+	InventoryInfoActivityIDOther   = 99 // Other
+)
+
+// InventoryInfoCategoryUID values.
+const (
+	InventoryInfoCategoryUIDDiscovery = 5 // Discovery
+)
+
+// InventoryInfoClassUID values.
+const (
+	InventoryInfoClassUIDDeviceInventoryInfo = 5001 // Device Inventory Info
+)
+
+// InventoryInfoSeverityID values.
+const (
+	InventoryInfoSeverityIDUnknown       = 0  // Unknown
+	InventoryInfoSeverityIDInformational = 1  // Informational
+	InventoryInfoSeverityIDLow           = 2  // Low
+	InventoryInfoSeverityIDMedium        = 3  // Medium
+	InventoryInfoSeverityIDHigh          = 4  // High
+	InventoryInfoSeverityIDCritical      = 5  // Critical
+	InventoryInfoSeverityIDFatal         = 6  // Fatal
+	InventoryInfoSeverityIDOther         = 99 // Other
+)
+
+// InventoryInfoStatusID values.
+const (
+	InventoryInfoStatusIDUnknown = 0  // Unknown
+	InventoryInfoStatusIDSuccess = 1  // Success
+	InventoryInfoStatusIDFailure = 2  // Failure
+	InventoryInfoStatusIDOther   = 99 // Other
+)
+
+// InventoryInfoTypeUID values.
+const (
+	InventoryInfoTypeUIDUnknown = 500100 // Device Inventory Info: Unknown
+	InventoryInfoTypeUIDLog     = 500101 // Device Inventory Info: Log
+	InventoryInfoTypeUIDCollect = 500102 // Device Inventory Info: Collect
+	InventoryInfoTypeUIDOther   = 500199 // Device Inventory Info: Other
+)
+
+// JobQuery class constants.
+const (
+	JobQueryClassUID    = 5010
+	JobQueryCategoryUID = 5
+)
+
+// JobQuery is the OCSF 1.5.0 class "Job Query". Job Query events report information about scheduled jobs.
+//
+// Deprecated: since OCSF 1.5.0. Use the Live Evidence Info class.
+type JobQuery struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Discovery.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Job Query.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Job (required): The job object that pertains to the event.
+	Job *Job `json:"job,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Query Info (recommended): The search details associated with the query request.
+	QueryInfo *QueryInfo `json:"query_info,omitempty"`
+	// Query Result (recommended): The result of the query.
+	QueryResult string `json:"query_result,omitempty"`
+	// Query Result ID (required): The normalized identifier of the query result.
+	QueryResultID int `json:"query_result_id"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// JobQueryActivityID values.
+const (
+	JobQueryActivityIDUnknown = 0  // Unknown
+	JobQueryActivityIDQuery   = 1  // Query
+	JobQueryActivityIDOther   = 99 // Other
+)
+
+// JobQueryCategoryUID values.
+const (
+	JobQueryCategoryUIDDiscovery = 5 // Discovery
+)
+
+// JobQueryClassUID values.
+const (
+	JobQueryClassUIDJobQuery = 5010 // Job Query
+)
+
+// JobQueryQueryResultID values.
+const (
+	JobQueryQueryResultIDUnknown      = 0  // Unknown
+	JobQueryQueryResultIDExists       = 1  // Exists
+	JobQueryQueryResultIDPartial      = 2  // Partial
+	JobQueryQueryResultIDDoesNotExist = 3  // Does not exist
+	JobQueryQueryResultIDError        = 4  // Error
+	JobQueryQueryResultIDUnsupported  = 5  // Unsupported
+	JobQueryQueryResultIDOther        = 99 // Other
+)
+
+// JobQuerySeverityID values.
+const (
+	JobQuerySeverityIDUnknown       = 0  // Unknown
+	JobQuerySeverityIDInformational = 1  // Informational
+	JobQuerySeverityIDLow           = 2  // Low
+	JobQuerySeverityIDMedium        = 3  // Medium
+	JobQuerySeverityIDHigh          = 4  // High
+	JobQuerySeverityIDCritical      = 5  // Critical
+	JobQuerySeverityIDFatal         = 6  // Fatal
+	JobQuerySeverityIDOther         = 99 // Other
+)
+
+// JobQueryStatusID values.
+const (
+	JobQueryStatusIDUnknown = 0  // Unknown
+	JobQueryStatusIDSuccess = 1  // Success
+	JobQueryStatusIDFailure = 2  // Failure
+	JobQueryStatusIDOther   = 99 // Other
+)
+
+// JobQueryTypeUID values.
+const (
+	JobQueryTypeUIDUnknown = 501000 // Job Query: Unknown
+	JobQueryTypeUIDQuery   = 501001 // Job Query: Query
+	JobQueryTypeUIDOther   = 501099 // Job Query: Other
+)
+
+// KernelActivity class constants.
+const (
+	KernelActivityClassUID    = 1003
+	KernelActivityCategoryUID = 1
+)
+
+// KernelActivity is the OCSF 1.5.0 class "Kernel Activity". Kernel Activity events report when an process creates, reads, or deletes a kernel resource.
+type KernelActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Actor (required): The actor object describes details about the user/role/process that was the source of the activity.
+	Actor *Actor `json:"actor,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: System Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Kernel Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Device (required): An addressable device, computer system or host.
+	Device *Device `json:"device,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Kernel (required): The target kernel resource.
+	Kernel *Kernel `json:"kernel,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// KernelActivityActivityID values.
+const (
+	KernelActivityActivityIDUnknown = 0  // Unknown
+	KernelActivityActivityIDCreate  = 1  // Create
+	KernelActivityActivityIDRead    = 2  // Read
+	KernelActivityActivityIDDelete  = 3  // Delete
+	KernelActivityActivityIDInvoke  = 4  // Invoke
+	KernelActivityActivityIDOther   = 99 // Other
+)
+
+// KernelActivityCategoryUID values.
+const (
+	KernelActivityCategoryUIDSystemActivity = 1 // System Activity
+)
+
+// KernelActivityClassUID values.
+const (
+	KernelActivityClassUIDKernelActivity = 1003 // Kernel Activity
+)
+
+// KernelActivitySeverityID values.
+const (
+	KernelActivitySeverityIDUnknown       = 0  // Unknown
+	KernelActivitySeverityIDInformational = 1  // Informational
+	KernelActivitySeverityIDLow           = 2  // Low
+	KernelActivitySeverityIDMedium        = 3  // Medium
+	KernelActivitySeverityIDHigh          = 4  // High
+	KernelActivitySeverityIDCritical      = 5  // Critical
+	KernelActivitySeverityIDFatal         = 6  // Fatal
+	KernelActivitySeverityIDOther         = 99 // Other
+)
+
+// KernelActivityStatusID values.
+const (
+	KernelActivityStatusIDUnknown = 0  // Unknown
+	KernelActivityStatusIDSuccess = 1  // Success
+	KernelActivityStatusIDFailure = 2  // Failure
+	KernelActivityStatusIDOther   = 99 // Other
+)
+
+// KernelActivityTypeUID values.
+const (
+	KernelActivityTypeUIDUnknown = 100300 // Kernel Activity: Unknown
+	KernelActivityTypeUIDCreate  = 100301 // Kernel Activity: Create
+	KernelActivityTypeUIDRead    = 100302 // Kernel Activity: Read
+	KernelActivityTypeUIDDelete  = 100303 // Kernel Activity: Delete
+	KernelActivityTypeUIDInvoke  = 100304 // Kernel Activity: Invoke
+	KernelActivityTypeUIDOther   = 100399 // Kernel Activity: Other
+)
+
+// KernelExtensionActivity class constants.
+const (
+	KernelExtensionActivityClassUID    = 1002
+	KernelExtensionActivityCategoryUID = 1
+)
+
+// KernelExtensionActivity is the OCSF 1.5.0 class "Kernel Extension Activity". Kernel Extension events report when a driver/extension is loaded or unloaded into the kernel
+type KernelExtensionActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Actor (required): The actor process that loaded or unloaded the driver/extension.
+	Actor *Actor `json:"actor,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: System Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Kernel Extension Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Device (required): An addressable device, computer system or host.
+	Device *Device `json:"device,omitempty"`
+	// Kernel Driver (required): The driver that was loaded/unloaded into the kernel
+	Driver *KernelDriver `json:"driver,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// KernelExtensionActivityActivityID values.
+const (
+	KernelExtensionActivityActivityIDUnknown = 0  // Unknown
+	KernelExtensionActivityActivityIDLoad    = 1  // Load
+	KernelExtensionActivityActivityIDUnload  = 2  // Unload
+	KernelExtensionActivityActivityIDOther   = 99 // Other
+)
+
+// KernelExtensionActivityCategoryUID values.
+const (
+	KernelExtensionActivityCategoryUIDSystemActivity = 1 // System Activity
+)
+
+// KernelExtensionActivityClassUID values.
+const (
+	KernelExtensionActivityClassUIDKernelExtensionActivity = 1002 // Kernel Extension Activity
+)
+
+// KernelExtensionActivitySeverityID values.
+const (
+	KernelExtensionActivitySeverityIDUnknown       = 0  // Unknown
+	KernelExtensionActivitySeverityIDInformational = 1  // Informational
+	KernelExtensionActivitySeverityIDLow           = 2  // Low
+	KernelExtensionActivitySeverityIDMedium        = 3  // Medium
+	KernelExtensionActivitySeverityIDHigh          = 4  // High
+	KernelExtensionActivitySeverityIDCritical      = 5  // Critical
+	KernelExtensionActivitySeverityIDFatal         = 6  // Fatal
+	KernelExtensionActivitySeverityIDOther         = 99 // Other
+)
+
+// KernelExtensionActivityStatusID values.
+const (
+	KernelExtensionActivityStatusIDUnknown = 0  // Unknown
+	KernelExtensionActivityStatusIDSuccess = 1  // Success
+	KernelExtensionActivityStatusIDFailure = 2  // Failure
+	KernelExtensionActivityStatusIDOther   = 99 // Other
+)
+
+// KernelExtensionActivityTypeUID values.
+const (
+	KernelExtensionActivityTypeUIDUnknown = 100200 // Kernel Extension Activity: Unknown
+	KernelExtensionActivityTypeUIDLoad    = 100201 // Kernel Extension Activity: Load
+	KernelExtensionActivityTypeUIDUnload  = 100202 // Kernel Extension Activity: Unload
+	KernelExtensionActivityTypeUIDOther   = 100299 // Kernel Extension Activity: Other
+)
+
+// KernelObjectQuery class constants.
+const (
+	KernelObjectQueryClassUID    = 5006
+	KernelObjectQueryCategoryUID = 5
+)
+
+// KernelObjectQuery is the OCSF 1.5.0 class "Kernel Object Query". Kernel Object Query events report information about discovered kernel resources.
+//
+// Deprecated: since OCSF 1.5.0. Use the Live Evidence Info class.
+type KernelObjectQuery struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Discovery.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Kernel Object Query.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Kernel (required): The kernel object that pertains to the event.
+	Kernel *Kernel `json:"kernel,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Query Info (recommended): The search details associated with the query request.
+	QueryInfo *QueryInfo `json:"query_info,omitempty"`
+	// Query Result (recommended): The result of the query.
+	QueryResult string `json:"query_result,omitempty"`
+	// Query Result ID (required): The normalized identifier of the query result.
+	QueryResultID int `json:"query_result_id"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// KernelObjectQueryActivityID values.
+const (
+	KernelObjectQueryActivityIDUnknown = 0  // Unknown
+	KernelObjectQueryActivityIDQuery   = 1  // Query
+	KernelObjectQueryActivityIDOther   = 99 // Other
+)
+
+// KernelObjectQueryCategoryUID values.
+const (
+	KernelObjectQueryCategoryUIDDiscovery = 5 // Discovery
+)
+
+// KernelObjectQueryClassUID values.
+const (
+	KernelObjectQueryClassUIDKernelObjectQuery = 5006 // Kernel Object Query
+)
+
+// KernelObjectQueryQueryResultID values.
+const (
+	KernelObjectQueryQueryResultIDUnknown      = 0  // Unknown
+	KernelObjectQueryQueryResultIDExists       = 1  // Exists
+	KernelObjectQueryQueryResultIDPartial      = 2  // Partial
+	KernelObjectQueryQueryResultIDDoesNotExist = 3  // Does not exist
+	KernelObjectQueryQueryResultIDError        = 4  // Error
+	KernelObjectQueryQueryResultIDUnsupported  = 5  // Unsupported
+	KernelObjectQueryQueryResultIDOther        = 99 // Other
+)
+
+// KernelObjectQuerySeverityID values.
+const (
+	KernelObjectQuerySeverityIDUnknown       = 0  // Unknown
+	KernelObjectQuerySeverityIDInformational = 1  // Informational
+	KernelObjectQuerySeverityIDLow           = 2  // Low
+	KernelObjectQuerySeverityIDMedium        = 3  // Medium
+	KernelObjectQuerySeverityIDHigh          = 4  // High
+	KernelObjectQuerySeverityIDCritical      = 5  // Critical
+	KernelObjectQuerySeverityIDFatal         = 6  // Fatal
+	KernelObjectQuerySeverityIDOther         = 99 // Other
+)
+
+// KernelObjectQueryStatusID values.
+const (
+	KernelObjectQueryStatusIDUnknown = 0  // Unknown
+	KernelObjectQueryStatusIDSuccess = 1  // Success
+	KernelObjectQueryStatusIDFailure = 2  // Failure
+	KernelObjectQueryStatusIDOther   = 99 // Other
+)
+
+// KernelObjectQueryTypeUID values.
+const (
+	KernelObjectQueryTypeUIDUnknown = 500600 // Kernel Object Query: Unknown
+	KernelObjectQueryTypeUIDQuery   = 500601 // Kernel Object Query: Query
+	KernelObjectQueryTypeUIDOther   = 500699 // Kernel Object Query: Other
+)
+
+// MemoryActivity class constants.
+const (
+	MemoryActivityClassUID    = 1004
+	MemoryActivityCategoryUID = 1
+)
+
+// MemoryActivity is the OCSF 1.5.0 class "Memory Activity". Memory Activity events report when a process has memory allocated, read/modified, or other manipulation activities - such as a buffer overflow or turning off data execution protection (DEP).
+type MemoryActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Actor (required): The actor object describes details about the user/role/process that was the source of the activity.
+	Actor *Actor `json:"actor,omitempty"`
+	// Actual Permissions (recommended): The permissions that were granted to access memory.
+	ActualPermissions int `json:"actual_permissions,omitempty"`
+	// Base Address (recommended): The memory address that was access or requested.
+	BaseAddress string `json:"base_address,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: System Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Memory Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Device (required): An addressable device, computer system or host.
+	Device *Device `json:"device,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Process (required): The process that had memory allocated, read/written, or had other manipulation activities performed on it.
+	Process *Process `json:"process,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Requested Permissions (recommended): The permissions mask that was requested to access memory.
+	RequestedPermissions int `json:"requested_permissions,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Size (recommended): The memory size that was access or requested.
+	Size int64 `json:"size,omitempty"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// MemoryActivityActivityID values.
+const (
+	MemoryActivityActivityIDUnknown        = 0  // Unknown
+	MemoryActivityActivityIDAllocatePage   = 1  // Allocate Page
+	MemoryActivityActivityIDModifyPage     = 2  // Modify Page
+	MemoryActivityActivityIDDeletePage     = 3  // Delete Page
+	MemoryActivityActivityIDBufferOverflow = 4  // Buffer Overflow
+	MemoryActivityActivityIDDisableDEP     = 5  // Disable DEP
+	MemoryActivityActivityIDEnableDEP      = 6  // Enable DEP
+	MemoryActivityActivityIDRead           = 7  // Read
+	MemoryActivityActivityIDWrite          = 8  // Write
+	MemoryActivityActivityIDMapView        = 9  // Map View
+	MemoryActivityActivityIDOther          = 99 // Other
+)
+
+// MemoryActivityCategoryUID values.
+const (
+	MemoryActivityCategoryUIDSystemActivity = 1 // System Activity
+)
+
+// MemoryActivityClassUID values.
+const (
+	MemoryActivityClassUIDMemoryActivity = 1004 // Memory Activity
+)
+
+// MemoryActivitySeverityID values.
+const (
+	MemoryActivitySeverityIDUnknown       = 0  // Unknown
+	MemoryActivitySeverityIDInformational = 1  // Informational
+	MemoryActivitySeverityIDLow           = 2  // Low
+	MemoryActivitySeverityIDMedium        = 3  // Medium
+	MemoryActivitySeverityIDHigh          = 4  // High
+	MemoryActivitySeverityIDCritical      = 5  // Critical
+	MemoryActivitySeverityIDFatal         = 6  // Fatal
+	MemoryActivitySeverityIDOther         = 99 // Other
+)
+
+// MemoryActivityStatusID values.
+const (
+	MemoryActivityStatusIDUnknown = 0  // Unknown
+	MemoryActivityStatusIDSuccess = 1  // Success
+	MemoryActivityStatusIDFailure = 2  // Failure
+	MemoryActivityStatusIDOther   = 99 // Other
+)
+
+// MemoryActivityTypeUID values.
+const (
+	MemoryActivityTypeUIDUnknown        = 100400 // Memory Activity: Unknown
+	MemoryActivityTypeUIDAllocatePage   = 100401 // Memory Activity: Allocate Page
+	MemoryActivityTypeUIDModifyPage     = 100402 // Memory Activity: Modify Page
+	MemoryActivityTypeUIDDeletePage     = 100403 // Memory Activity: Delete Page
+	MemoryActivityTypeUIDBufferOverflow = 100404 // Memory Activity: Buffer Overflow
+	MemoryActivityTypeUIDDisableDEP     = 100405 // Memory Activity: Disable DEP
+	MemoryActivityTypeUIDEnableDEP      = 100406 // Memory Activity: Enable DEP
+	MemoryActivityTypeUIDRead           = 100407 // Memory Activity: Read
+	MemoryActivityTypeUIDWrite          = 100408 // Memory Activity: Write
+	MemoryActivityTypeUIDMapView        = 100409 // Memory Activity: Map View
+	MemoryActivityTypeUIDOther          = 100499 // Memory Activity: Other
+)
+
+// ModuleActivity class constants.
+const (
+	ModuleActivityClassUID    = 1005
+	ModuleActivityCategoryUID = 1
+)
+
+// ModuleActivity is the OCSF 1.5.0 class "Module Activity". Module Activity events report when a process loads or unloads the module.
+type ModuleActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Actor (required): The actor that loaded or unloaded the module.
+	Actor *Actor `json:"actor,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: System Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Module Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Device (required): An addressable device, computer system or host.
+	Device *Device `json:"device,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Module (required): The module that was loaded or unloaded.
+	Module *Module `json:"module,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// ModuleActivityActivityID values.
+const (
+	ModuleActivityActivityIDUnknown = 0  // Unknown
+	ModuleActivityActivityIDLoad    = 1  // Load
+	ModuleActivityActivityIDUnload  = 2  // Unload
+	ModuleActivityActivityIDOther   = 99 // Other
+)
+
+// ModuleActivityCategoryUID values.
+const (
+	ModuleActivityCategoryUIDSystemActivity = 1 // System Activity
+)
+
+// ModuleActivityClassUID values.
+const (
+	ModuleActivityClassUIDModuleActivity = 1005 // Module Activity
+)
+
+// ModuleActivitySeverityID values.
+const (
+	ModuleActivitySeverityIDUnknown       = 0  // Unknown
+	ModuleActivitySeverityIDInformational = 1  // Informational
+	ModuleActivitySeverityIDLow           = 2  // Low
+	ModuleActivitySeverityIDMedium        = 3  // Medium
+	ModuleActivitySeverityIDHigh          = 4  // High
+	ModuleActivitySeverityIDCritical      = 5  // Critical
+	ModuleActivitySeverityIDFatal         = 6  // Fatal
+	ModuleActivitySeverityIDOther         = 99 // Other
+)
+
+// ModuleActivityStatusID values.
+const (
+	ModuleActivityStatusIDUnknown = 0  // Unknown
+	ModuleActivityStatusIDSuccess = 1  // Success
+	ModuleActivityStatusIDFailure = 2  // Failure
+	ModuleActivityStatusIDOther   = 99 // Other
+)
+
+// ModuleActivityTypeUID values.
+const (
+	ModuleActivityTypeUIDUnknown = 100500 // Module Activity: Unknown
+	ModuleActivityTypeUIDLoad    = 100501 // Module Activity: Load
+	ModuleActivityTypeUIDUnload  = 100502 // Module Activity: Unload
+	ModuleActivityTypeUIDOther   = 100599 // Module Activity: Other
+)
+
+// ModuleQuery class constants.
+const (
+	ModuleQueryClassUID    = 5011
+	ModuleQueryCategoryUID = 5
+)
+
+// ModuleQuery is the OCSF 1.5.0 class "Module Query". Module Query events report information about loaded modules.
+//
+// Deprecated: since OCSF 1.5.0. Use the Live Evidence Info class.
+type ModuleQuery struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Discovery.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Module Query.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Module (required): The module that pertains to the event.
+	Module *Module `json:"module,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Process (required): The process that loaded the module.
+	Process *Process `json:"process,omitempty"`
+	// Query Info (recommended): The search details associated with the query request.
+	QueryInfo *QueryInfo `json:"query_info,omitempty"`
+	// Query Result (recommended): The result of the query.
+	QueryResult string `json:"query_result,omitempty"`
+	// Query Result ID (required): The normalized identifier of the query result.
+	QueryResultID int `json:"query_result_id"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// ModuleQueryActivityID values.
+const (
+	ModuleQueryActivityIDUnknown = 0  // Unknown
+	ModuleQueryActivityIDQuery   = 1  // Query
+	ModuleQueryActivityIDOther   = 99 // Other
+)
+
+// ModuleQueryCategoryUID values.
+const (
+	ModuleQueryCategoryUIDDiscovery = 5 // Discovery
+)
+
+// ModuleQueryClassUID values.
+const (
+	ModuleQueryClassUIDModuleQuery = 5011 // Module Query
+)
+
+// ModuleQueryQueryResultID values.
+const (
+	ModuleQueryQueryResultIDUnknown      = 0  // Unknown
+	ModuleQueryQueryResultIDExists       = 1  // Exists
+	ModuleQueryQueryResultIDPartial      = 2  // Partial
+	ModuleQueryQueryResultIDDoesNotExist = 3  // Does not exist
+	ModuleQueryQueryResultIDError        = 4  // Error
+	ModuleQueryQueryResultIDUnsupported  = 5  // Unsupported
+	ModuleQueryQueryResultIDOther        = 99 // Other
+)
+
+// ModuleQuerySeverityID values.
+const (
+	ModuleQuerySeverityIDUnknown       = 0  // Unknown
+	ModuleQuerySeverityIDInformational = 1  // Informational
+	ModuleQuerySeverityIDLow           = 2  // Low
+	ModuleQuerySeverityIDMedium        = 3  // Medium
+	ModuleQuerySeverityIDHigh          = 4  // High
+	ModuleQuerySeverityIDCritical      = 5  // Critical
+	ModuleQuerySeverityIDFatal         = 6  // Fatal
+	ModuleQuerySeverityIDOther         = 99 // Other
+)
+
+// ModuleQueryStatusID values.
+const (
+	ModuleQueryStatusIDUnknown = 0  // Unknown
+	ModuleQueryStatusIDSuccess = 1  // Success
+	ModuleQueryStatusIDFailure = 2  // Failure
+	ModuleQueryStatusIDOther   = 99 // Other
+)
+
+// ModuleQueryTypeUID values.
+const (
+	ModuleQueryTypeUIDUnknown = 501100 // Module Query: Unknown
+	ModuleQueryTypeUIDQuery   = 501101 // Module Query: Query
+	ModuleQueryTypeUIDOther   = 501199 // Module Query: Other
+)
+
+// NetworkActivity class constants.
+const (
+	NetworkActivityClassUID    = 4001
+	NetworkActivityCategoryUID = 4
+)
+
+// NetworkActivity is the OCSF 1.5.0 class "Network Activity". Network Activity events report network connection and traffic activity.
+//
+// Constraint at_least_one: dst_endpoint, src_endpoint.
+type NetworkActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Application Name (optional): The name of the application associated with the event or object.
+	AppName string `json:"app_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Network Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Network Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Connection Info (recommended): The network connection information.
+	ConnectionInfo *NetworkConnectionInfo `json:"connection_info,omitempty"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Destination Endpoint (recommended): The responder (server) in a network connection.
+	DstEndpoint *NetworkEndpoint `json:"dst_endpoint,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// JA4+ Fingerprints (optional): A list of the JA4+ network fingerprints.
+	JA4FingerprintList []JA4Fingerprint `json:"ja4_fingerprint_list,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Source Endpoint (recommended): The initiator (client) of the network connection.
+	SrcEndpoint *NetworkEndpoint `json:"src_endpoint,omitempty"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// TLS (optional): The Transport Layer Security (TLS) attributes.
+	TLS *TLS `json:"tls,omitempty"`
+	// Traffic (recommended): The network traffic refers to the amount of data moving across a network at a given point of time.
+	Traffic *NetworkTraffic `json:"traffic,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+	// URL (recommended): The URL details relevant to the network traffic.
+	URL *URL `json:"url,omitempty"`
+}
+
+// NetworkActivityActivityID values.
+const (
+	NetworkActivityActivityIDUnknown = 0  // Unknown
+	NetworkActivityActivityIDOpen    = 1  // Open
+	NetworkActivityActivityIDClose   = 2  // Close
+	NetworkActivityActivityIDReset   = 3  // Reset
+	NetworkActivityActivityIDFail    = 4  // Fail
+	NetworkActivityActivityIDRefuse  = 5  // Refuse
+	NetworkActivityActivityIDTraffic = 6  // Traffic
+	NetworkActivityActivityIDListen  = 7  // Listen
+	NetworkActivityActivityIDOther   = 99 // Other
+)
+
+// NetworkActivityCategoryUID values.
+const (
+	NetworkActivityCategoryUIDNetworkActivity = 4 // Network Activity
+)
+
+// NetworkActivityClassUID values.
+const (
+	NetworkActivityClassUIDNetworkActivity = 4001 // Network Activity
+)
+
+// NetworkActivitySeverityID values.
+const (
+	NetworkActivitySeverityIDUnknown       = 0  // Unknown
+	NetworkActivitySeverityIDInformational = 1  // Informational
+	NetworkActivitySeverityIDLow           = 2  // Low
+	NetworkActivitySeverityIDMedium        = 3  // Medium
+	NetworkActivitySeverityIDHigh          = 4  // High
+	NetworkActivitySeverityIDCritical      = 5  // Critical
+	NetworkActivitySeverityIDFatal         = 6  // Fatal
+	NetworkActivitySeverityIDOther         = 99 // Other
+)
+
+// NetworkActivityStatusID values.
+const (
+	NetworkActivityStatusIDUnknown = 0  // Unknown
+	NetworkActivityStatusIDSuccess = 1  // Success
+	NetworkActivityStatusIDFailure = 2  // Failure
+	NetworkActivityStatusIDOther   = 99 // Other
+)
+
+// NetworkActivityTypeUID values.
+const (
+	NetworkActivityTypeUIDUnknown = 400100 // Network Activity: Unknown
+	NetworkActivityTypeUIDOpen    = 400101 // Network Activity: Open
+	NetworkActivityTypeUIDClose   = 400102 // Network Activity: Close
+	NetworkActivityTypeUIDReset   = 400103 // Network Activity: Reset
+	NetworkActivityTypeUIDFail    = 400104 // Network Activity: Fail
+	NetworkActivityTypeUIDRefuse  = 400105 // Network Activity: Refuse
+	NetworkActivityTypeUIDTraffic = 400106 // Network Activity: Traffic
+	NetworkActivityTypeUIDListen  = 400107 // Network Activity: Listen
+	NetworkActivityTypeUIDOther   = 400199 // Network Activity: Other
+)
+
+// NetworkConnectionQuery class constants.
+const (
+	NetworkConnectionQueryClassUID    = 5012
+	NetworkConnectionQueryCategoryUID = 5
+)
+
+// NetworkConnectionQuery is the OCSF 1.5.0 class "Network Connection Query". Network Connection Query events report information about active network connections.
+//
+// Deprecated: since OCSF 1.5.0. Use the Live Evidence Info class.
+type NetworkConnectionQuery struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Discovery.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Network Connection Query.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Connection Info (required): The network connection information.
+	ConnectionInfo *NetworkConnectionInfo `json:"connection_info,omitempty"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Process (required): The process that owns the socket.
+	Process *Process `json:"process,omitempty"`
+	// Query Info (recommended): The search details associated with the query request.
+	QueryInfo *QueryInfo `json:"query_info,omitempty"`
+	// Query Result (recommended): The result of the query.
+	QueryResult string `json:"query_result,omitempty"`
+	// Query Result ID (required): The normalized identifier of the query result.
+	QueryResultID int `json:"query_result_id"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// State (recommended): The state of the socket, normalized to the caption of the state_id value.
+	State string `json:"state,omitempty"`
+	// State ID (required): The state of the socket.
+	StateID int `json:"state_id"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// NetworkConnectionQueryActivityID values.
+const (
+	NetworkConnectionQueryActivityIDUnknown = 0  // Unknown
+	NetworkConnectionQueryActivityIDQuery   = 1  // Query
+	NetworkConnectionQueryActivityIDOther   = 99 // Other
+)
+
+// NetworkConnectionQueryCategoryUID values.
+const (
+	NetworkConnectionQueryCategoryUIDDiscovery = 5 // Discovery
+)
+
+// NetworkConnectionQueryClassUID values.
+const (
+	NetworkConnectionQueryClassUIDNetworkConnectionQuery = 5012 // Network Connection Query
+)
+
+// NetworkConnectionQueryQueryResultID values.
+const (
+	NetworkConnectionQueryQueryResultIDUnknown      = 0  // Unknown
+	NetworkConnectionQueryQueryResultIDExists       = 1  // Exists
+	NetworkConnectionQueryQueryResultIDPartial      = 2  // Partial
+	NetworkConnectionQueryQueryResultIDDoesNotExist = 3  // Does not exist
+	NetworkConnectionQueryQueryResultIDError        = 4  // Error
+	NetworkConnectionQueryQueryResultIDUnsupported  = 5  // Unsupported
+	NetworkConnectionQueryQueryResultIDOther        = 99 // Other
+)
+
+// NetworkConnectionQuerySeverityID values.
+const (
+	NetworkConnectionQuerySeverityIDUnknown       = 0  // Unknown
+	NetworkConnectionQuerySeverityIDInformational = 1  // Informational
+	NetworkConnectionQuerySeverityIDLow           = 2  // Low
+	NetworkConnectionQuerySeverityIDMedium        = 3  // Medium
+	NetworkConnectionQuerySeverityIDHigh          = 4  // High
+	NetworkConnectionQuerySeverityIDCritical      = 5  // Critical
+	NetworkConnectionQuerySeverityIDFatal         = 6  // Fatal
+	NetworkConnectionQuerySeverityIDOther         = 99 // Other
+)
+
+// NetworkConnectionQueryStateID values.
+const (
+	NetworkConnectionQueryStateIDUnknown     = 0  // Unknown
+	NetworkConnectionQueryStateIDESTABLISHED = 1  // ESTABLISHED
+	NetworkConnectionQueryStateIDSYNSENT     = 2  // SYN_SENT
+	NetworkConnectionQueryStateIDSYNRECV     = 3  // SYN_RECV
+	NetworkConnectionQueryStateIDFINWAIT1    = 4  // FIN_WAIT1
+	NetworkConnectionQueryStateIDFINWAIT2    = 5  // FIN_WAIT2
+	NetworkConnectionQueryStateIDTIMEWAIT    = 6  // TIME_WAIT
+	NetworkConnectionQueryStateIDCLOSED      = 7  // CLOSED
+	NetworkConnectionQueryStateIDCLOSEWAIT   = 8  // CLOSE_WAIT
+	NetworkConnectionQueryStateIDLASTACK     = 9  // LAST_ACK
+	NetworkConnectionQueryStateIDLISTEN      = 10 // LISTEN
+	NetworkConnectionQueryStateIDCLOSING     = 11 // CLOSING
+	NetworkConnectionQueryStateIDOther       = 99 // Other
+)
+
+// NetworkConnectionQueryStatusID values.
+const (
+	NetworkConnectionQueryStatusIDUnknown = 0  // Unknown
+	NetworkConnectionQueryStatusIDSuccess = 1  // Success
+	NetworkConnectionQueryStatusIDFailure = 2  // Failure
+	NetworkConnectionQueryStatusIDOther   = 99 // Other
+)
+
+// NetworkConnectionQueryTypeUID values.
+const (
+	NetworkConnectionQueryTypeUIDUnknown = 501200 // Network Connection Query: Unknown
+	NetworkConnectionQueryTypeUIDQuery   = 501201 // Network Connection Query: Query
+	NetworkConnectionQueryTypeUIDOther   = 501299 // Network Connection Query: Other
+)
+
+// NetworkFileActivity class constants.
+const (
+	NetworkFileActivityClassUID    = 4010
+	NetworkFileActivityCategoryUID = 4
+)
+
+// NetworkFileActivity is the OCSF 1.5.0 class "Network File Activity". Network File Activity events report file activities traversing the network, including file storage services such as Box, MS OneDrive, or Google Drive.
+//
+// Constraint at_least_one: dst_endpoint, src_endpoint.
+//
+// Deprecated: since OCSF 1.1.0. Use the new class: 'File Hosting Activity' in the 'Application' category.
+type NetworkFileActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Actor (required): The actor that performed the activity on the target file.
+	Actor *Actor `json:"actor,omitempty"`
+	// Application Name (optional): The name of the application associated with the event or object.
+	AppName string `json:"app_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Network Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Network File Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Connection Info (optional): The network connection information.
+	ConnectionInfo *NetworkConnectionInfo `json:"connection_info,omitempty"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Destination Endpoint (recommended): The endpoint that received the activity on the target file.
+	DstEndpoint *NetworkEndpoint `json:"dst_endpoint,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Expiration Time (optional): The share expiration time.
+	ExpirationTime int64 `json:"expiration_time,omitempty"`
+	// File (required): The file that is the target of the activity.
+	File *File `json:"file,omitempty"`
+	// JA4+ Fingerprints (optional): A list of the JA4+ network fingerprints.
+	JA4FingerprintList []JA4Fingerprint `json:"ja4_fingerprint_list,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Source Endpoint (required): The endpoint that performed the activity on the target file.
+	SrcEndpoint *NetworkEndpoint `json:"src_endpoint,omitempty"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// TLS (optional): The Transport Layer Security (TLS) attributes.
+	TLS *TLS `json:"tls,omitempty"`
+	// Traffic (recommended): The network traffic refers to the amount of data moving across a network at a given point of time.
+	Traffic *NetworkTraffic `json:"traffic,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// NetworkFileActivityActivityID values.
+const (
+	NetworkFileActivityActivityIDUnknown  = 0  // Unknown
+	NetworkFileActivityActivityIDUpload   = 1  // Upload
+	NetworkFileActivityActivityIDDownload = 2  // Download
+	NetworkFileActivityActivityIDUpdate   = 3  // Update
+	NetworkFileActivityActivityIDDelete   = 4  // Delete
+	NetworkFileActivityActivityIDRename   = 5  // Rename
+	NetworkFileActivityActivityIDCopy     = 6  // Copy
+	NetworkFileActivityActivityIDMove     = 7  // Move
+	NetworkFileActivityActivityIDRestore  = 8  // Restore
+	NetworkFileActivityActivityIDPreview  = 9  // Preview
+	NetworkFileActivityActivityIDLock     = 10 // Lock
+	NetworkFileActivityActivityIDUnlock   = 11 // Unlock
+	NetworkFileActivityActivityIDShare    = 12 // Share
+	NetworkFileActivityActivityIDUnshare  = 13 // Unshare
+	NetworkFileActivityActivityIDOpen     = 14 // Open
+	NetworkFileActivityActivityIDSync     = 15 // Sync
+	NetworkFileActivityActivityIDUnsync   = 16 // Unsync
+	NetworkFileActivityActivityIDOther    = 99 // Other
+)
+
+// NetworkFileActivityCategoryUID values.
+const (
+	NetworkFileActivityCategoryUIDNetworkActivity = 4 // Network Activity
+)
+
+// NetworkFileActivityClassUID values.
+const (
+	NetworkFileActivityClassUIDNetworkFileActivity = 4010 // Network File Activity
+)
+
+// NetworkFileActivitySeverityID values.
+const (
+	NetworkFileActivitySeverityIDUnknown       = 0  // Unknown
+	NetworkFileActivitySeverityIDInformational = 1  // Informational
+	NetworkFileActivitySeverityIDLow           = 2  // Low
+	NetworkFileActivitySeverityIDMedium        = 3  // Medium
+	NetworkFileActivitySeverityIDHigh          = 4  // High
+	NetworkFileActivitySeverityIDCritical      = 5  // Critical
+	NetworkFileActivitySeverityIDFatal         = 6  // Fatal
+	NetworkFileActivitySeverityIDOther         = 99 // Other
+)
+
+// NetworkFileActivityStatusID values.
+const (
+	NetworkFileActivityStatusIDUnknown = 0  // Unknown
+	NetworkFileActivityStatusIDSuccess = 1  // Success
+	NetworkFileActivityStatusIDFailure = 2  // Failure
+	NetworkFileActivityStatusIDOther   = 99 // Other
+)
+
+// NetworkFileActivityTypeUID values.
+const (
+	NetworkFileActivityTypeUIDUnknown  = 401000 // Network File Activity: Unknown
+	NetworkFileActivityTypeUIDUpload   = 401001 // Network File Activity: Upload
+	NetworkFileActivityTypeUIDDownload = 401002 // Network File Activity: Download
+	NetworkFileActivityTypeUIDUpdate   = 401003 // Network File Activity: Update
+	NetworkFileActivityTypeUIDDelete   = 401004 // Network File Activity: Delete
+	NetworkFileActivityTypeUIDRename   = 401005 // Network File Activity: Rename
+	NetworkFileActivityTypeUIDCopy     = 401006 // Network File Activity: Copy
+	NetworkFileActivityTypeUIDMove     = 401007 // Network File Activity: Move
+	NetworkFileActivityTypeUIDRestore  = 401008 // Network File Activity: Restore
+	NetworkFileActivityTypeUIDPreview  = 401009 // Network File Activity: Preview
+	NetworkFileActivityTypeUIDLock     = 401010 // Network File Activity: Lock
+	NetworkFileActivityTypeUIDUnlock   = 401011 // Network File Activity: Unlock
+	NetworkFileActivityTypeUIDShare    = 401012 // Network File Activity: Share
+	NetworkFileActivityTypeUIDUnshare  = 401013 // Network File Activity: Unshare
+	NetworkFileActivityTypeUIDOpen     = 401014 // Network File Activity: Open
+	NetworkFileActivityTypeUIDSync     = 401015 // Network File Activity: Sync
+	NetworkFileActivityTypeUIDUnsync   = 401016 // Network File Activity: Unsync
+	NetworkFileActivityTypeUIDOther    = 401099 // Network File Activity: Other
+)
+
+// NetworkRemediationActivity class constants.
+const (
+	NetworkRemediationActivityClassUID    = 7004
+	NetworkRemediationActivityCategoryUID = 7
+)
+
+// NetworkRemediationActivity is the OCSF 1.5.0 class "Network Remediation Activity". Network Remediation Activity events report on attempts at remediating computer networks.
+type NetworkRemediationActivity struct {
+	// Activity ID (required): Matches the MITRE D3FEND™ Tactic.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Remediation.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Network Remediation Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Command UID (required): The unique identifier of the remediation command that pertains to this event.
+	CommandUID string `json:"command_uid"`
+	// Connection Info (required): The network connection that pertains to the remediation event.
+	ConnectionInfo *NetworkConnectionInfo `json:"connection_info,omitempty"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Countermeasures (recommended): The MITRE D3FEND™ Matrix Countermeasures associated with a remediation.
+	Countermeasures []D3fend `json:"countermeasures,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Remediation Guidance (optional): Describes the recommended remediation steps to address identified issue(s).
+	Remediation *Remediation `json:"remediation,omitempty"`
+	// Scan (optional): The remediation scan that pertains to this event.
+	Scan *Scan `json:"scan,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// NetworkRemediationActivityActivityID values.
+const (
+	NetworkRemediationActivityActivityIDUnknown = 0  // Unknown
+	NetworkRemediationActivityActivityIDIsolate = 1  // Isolate
+	NetworkRemediationActivityActivityIDEvict   = 2  // Evict
+	NetworkRemediationActivityActivityIDRestore = 3  // Restore
+	NetworkRemediationActivityActivityIDHarden  = 4  // Harden
+	NetworkRemediationActivityActivityIDDetect  = 5  // Detect
+	NetworkRemediationActivityActivityIDOther   = 99 // Other
+)
+
+// NetworkRemediationActivityCategoryUID values.
+const (
+	NetworkRemediationActivityCategoryUIDRemediation = 7 // Remediation
+)
+
+// NetworkRemediationActivityClassUID values.
+const (
+	NetworkRemediationActivityClassUIDNetworkRemediationActivity = 7004 // Network Remediation Activity
+)
+
+// NetworkRemediationActivitySeverityID values.
+const (
+	NetworkRemediationActivitySeverityIDUnknown       = 0  // Unknown
+	NetworkRemediationActivitySeverityIDInformational = 1  // Informational
+	NetworkRemediationActivitySeverityIDLow           = 2  // Low
+	NetworkRemediationActivitySeverityIDMedium        = 3  // Medium
+	NetworkRemediationActivitySeverityIDHigh          = 4  // High
+	NetworkRemediationActivitySeverityIDCritical      = 5  // Critical
+	NetworkRemediationActivitySeverityIDFatal         = 6  // Fatal
+	NetworkRemediationActivitySeverityIDOther         = 99 // Other
+)
+
+// NetworkRemediationActivityStatusID values.
+const (
+	NetworkRemediationActivityStatusIDUnknown      = 0  // Unknown
+	NetworkRemediationActivityStatusIDSuccess      = 1  // Success
+	NetworkRemediationActivityStatusIDFailure      = 2  // Failure
+	NetworkRemediationActivityStatusIDDoesNotExist = 3  // Does Not Exist
+	NetworkRemediationActivityStatusIDPartial      = 4  // Partial
+	NetworkRemediationActivityStatusIDUnsupported  = 5  // Unsupported
+	NetworkRemediationActivityStatusIDError        = 6  // Error
+	NetworkRemediationActivityStatusIDOther        = 99 // Other
+)
+
+// NetworkRemediationActivityTypeUID values.
+const (
+	NetworkRemediationActivityTypeUIDUnknown = 700400 // Network Remediation Activity: Unknown
+	NetworkRemediationActivityTypeUIDIsolate = 700401 // Network Remediation Activity: Isolate
+	NetworkRemediationActivityTypeUIDEvict   = 700402 // Network Remediation Activity: Evict
+	NetworkRemediationActivityTypeUIDRestore = 700403 // Network Remediation Activity: Restore
+	NetworkRemediationActivityTypeUIDHarden  = 700404 // Network Remediation Activity: Harden
+	NetworkRemediationActivityTypeUIDDetect  = 700405 // Network Remediation Activity: Detect
+	NetworkRemediationActivityTypeUIDOther   = 700499 // Network Remediation Activity: Other
+)
+
+// NetworksQuery class constants.
+const (
+	NetworksQueryClassUID    = 5013
+	NetworksQueryCategoryUID = 5
+)
+
+// NetworksQuery is the OCSF 1.5.0 class "Networks Query". Networks Query events report information about network adapters.
+//
+// Deprecated: since OCSF 1.5.0. Use the Live Evidence Info class.
+type NetworksQuery struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Discovery.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Networks Query.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Network Interfaces (required): The physical or virtual network interfaces that are associated with the device, one for each unique MAC address/IP address/hostname/name combination.Note: The first element of the array is the network information that pertains to the event.
+	NetworkInterfaces []NetworkInterface `json:"network_interfaces,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Query Info (recommended): The search details associated with the query request.
+	QueryInfo *QueryInfo `json:"query_info,omitempty"`
+	// Query Result (recommended): The result of the query.
+	QueryResult string `json:"query_result,omitempty"`
+	// Query Result ID (required): The normalized identifier of the query result.
+	QueryResultID int `json:"query_result_id"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// NetworksQueryActivityID values.
+const (
+	NetworksQueryActivityIDUnknown = 0  // Unknown
+	NetworksQueryActivityIDQuery   = 1  // Query
+	NetworksQueryActivityIDOther   = 99 // Other
+)
+
+// NetworksQueryCategoryUID values.
+const (
+	NetworksQueryCategoryUIDDiscovery = 5 // Discovery
+)
+
+// NetworksQueryClassUID values.
+const (
+	NetworksQueryClassUIDNetworksQuery = 5013 // Networks Query
+)
+
+// NetworksQueryQueryResultID values.
+const (
+	NetworksQueryQueryResultIDUnknown      = 0  // Unknown
+	NetworksQueryQueryResultIDExists       = 1  // Exists
+	NetworksQueryQueryResultIDPartial      = 2  // Partial
+	NetworksQueryQueryResultIDDoesNotExist = 3  // Does not exist
+	NetworksQueryQueryResultIDError        = 4  // Error
+	NetworksQueryQueryResultIDUnsupported  = 5  // Unsupported
+	NetworksQueryQueryResultIDOther        = 99 // Other
+)
+
+// NetworksQuerySeverityID values.
+const (
+	NetworksQuerySeverityIDUnknown       = 0  // Unknown
+	NetworksQuerySeverityIDInformational = 1  // Informational
+	NetworksQuerySeverityIDLow           = 2  // Low
+	NetworksQuerySeverityIDMedium        = 3  // Medium
+	NetworksQuerySeverityIDHigh          = 4  // High
+	NetworksQuerySeverityIDCritical      = 5  // Critical
+	NetworksQuerySeverityIDFatal         = 6  // Fatal
+	NetworksQuerySeverityIDOther         = 99 // Other
+)
+
+// NetworksQueryStatusID values.
+const (
+	NetworksQueryStatusIDUnknown = 0  // Unknown
+	NetworksQueryStatusIDSuccess = 1  // Success
+	NetworksQueryStatusIDFailure = 2  // Failure
+	NetworksQueryStatusIDOther   = 99 // Other
+)
+
+// NetworksQueryTypeUID values.
+const (
+	NetworksQueryTypeUIDUnknown = 501300 // Networks Query: Unknown
+	NetworksQueryTypeUIDQuery   = 501301 // Networks Query: Query
+	NetworksQueryTypeUIDOther   = 501399 // Networks Query: Other
+)
+
+// NtpActivity class constants.
+const (
+	NtpActivityClassUID    = 4013
+	NtpActivityCategoryUID = 4
+)
+
+// NtpActivity is the OCSF 1.5.0 class "NTP Activity". The Network Time Protocol (NTP) Activity events report instances of remote clients synchronizing their clocks with an NTP server, as observed on the network.
+//
+// Constraint at_least_one: dst_endpoint, src_endpoint.
+type NtpActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Application Name (optional): The name of the application associated with the event or object.
+	AppName string `json:"app_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Network Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: NTP Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Connection Info (recommended): The network connection information.
+	ConnectionInfo *NetworkConnectionInfo `json:"connection_info,omitempty"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Root Delay (recommended): The total round-trip delay to the reference clock in milliseconds.
+	Delay int `json:"delay,omitempty"`
+	// Root Dispersion (recommended): The dispersion in the NTP protocol is the estimated time error or uncertainty relative to the reference clock in milliseconds.
+	Dispersion int `json:"dispersion,omitempty"`
+	// Destination Endpoint (recommended): The responder (server) in a network connection.
+	DstEndpoint *NetworkEndpoint `json:"dst_endpoint,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// JA4+ Fingerprints (optional): A list of the JA4+ network fingerprints.
+	JA4FingerprintList []JA4Fingerprint `json:"ja4_fingerprint_list,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Precision (recommended): The NTP precision quantifies a clock's accuracy and stability in log2 seconds, as defined in RFC-5905.
+	Precision int `json:"precision,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Source Endpoint (recommended): The initiator (client) of the network connection.
+	SrcEndpoint *NetworkEndpoint `json:"src_endpoint,omitempty"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Stratum (recommended): The stratum level of the NTP server's time source, normalized to the caption of the stratum_id value.
+	Stratum string `json:"stratum,omitempty"`
+	// Stratum ID (recommended): The normalized identifier of the stratum level, as defined in RFC-5905.
+	StratumID int `json:"stratum_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// TLS (optional): The Transport Layer Security (TLS) attributes.
+	TLS *TLS `json:"tls,omitempty"`
+	// Traffic (recommended): The network traffic refers to the amount of data moving across a network at a given point of time.
+	Traffic *NetworkTraffic `json:"traffic,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+	// Version (required): The version number of the NTP protocol.
+	Version string `json:"version"`
+}
+
+// NtpActivityActivityID values.
+const (
+	NtpActivityActivityIDUnknown                  = 0  // Unknown
+	NtpActivityActivityIDSymmetricActiveExchange  = 1  // Symmetric Active Exchange
+	NtpActivityActivityIDSymmetricPassiveResponse = 2  // Symmetric Passive Response
+	NtpActivityActivityIDClientSynchronization    = 3  // Client Synchronization
+	NtpActivityActivityIDServerResponse           = 4  // Server Response
+	NtpActivityActivityIDBroadcast                = 5  // Broadcast
+	NtpActivityActivityIDControl                  = 6  // Control
+	NtpActivityActivityIDPrivateUseCase           = 7  // Private Use Case
+	NtpActivityActivityIDOther                    = 99 // Other
+)
+
+// NtpActivityCategoryUID values.
+const (
+	NtpActivityCategoryUIDNetworkActivity = 4 // Network Activity
+)
+
+// NtpActivityClassUID values.
+const (
+	NtpActivityClassUIDNTPActivity = 4013 // NTP Activity
+)
+
+// NtpActivitySeverityID values.
+const (
+	NtpActivitySeverityIDUnknown       = 0  // Unknown
+	NtpActivitySeverityIDInformational = 1  // Informational
+	NtpActivitySeverityIDLow           = 2  // Low
+	NtpActivitySeverityIDMedium        = 3  // Medium
+	NtpActivitySeverityIDHigh          = 4  // High
+	NtpActivitySeverityIDCritical      = 5  // Critical
+	NtpActivitySeverityIDFatal         = 6  // Fatal
+	NtpActivitySeverityIDOther         = 99 // Other
+)
+
+// NtpActivityStatusID values.
+const (
+	NtpActivityStatusIDUnknown = 0  // Unknown
+	NtpActivityStatusIDSuccess = 1  // Success
+	NtpActivityStatusIDFailure = 2  // Failure
+	NtpActivityStatusIDOther   = 99 // Other
+)
+
+// NtpActivityStratumID values.
+const (
+	NtpActivityStratumIDUnknown         = 0  // Unknown
+	NtpActivityStratumIDPrimaryServer   = 1  // Primary Server
+	NtpActivityStratumIDSecondaryServer = 2  // Secondary Server
+	NtpActivityStratumIDUnsynchronized  = 16 // Unsynchronized
+	NtpActivityStratumIDReserved        = 17 // Reserved
+	NtpActivityStratumIDOther           = 99 // Other
+)
+
+// NtpActivityTypeUID values.
+const (
+	NtpActivityTypeUIDUnknown                  = 401300 // NTP Activity: Unknown
+	NtpActivityTypeUIDSymmetricActiveExchange  = 401301 // NTP Activity: Symmetric Active Exchange
+	NtpActivityTypeUIDSymmetricPassiveResponse = 401302 // NTP Activity: Symmetric Passive Response
+	NtpActivityTypeUIDClientSynchronization    = 401303 // NTP Activity: Client Synchronization
+	NtpActivityTypeUIDServerResponse           = 401304 // NTP Activity: Server Response
+	NtpActivityTypeUIDBroadcast                = 401305 // NTP Activity: Broadcast
+	NtpActivityTypeUIDControl                  = 401306 // NTP Activity: Control
+	NtpActivityTypeUIDPrivateUseCase           = 401307 // NTP Activity: Private Use Case
+	NtpActivityTypeUIDOther                    = 401399 // NTP Activity: Other
+)
+
+// OsintInventoryInfo class constants.
+const (
+	OsintInventoryInfoClassUID    = 5021
+	OsintInventoryInfoCategoryUID = 5
+)
+
+// OsintInventoryInfo is the OCSF 1.5.0 class "OSINT Inventory Info". OSINT Inventory Info events report open source intelligence or threat intelligence inventory data that is either logged or proactively collected.
+type OsintInventoryInfo struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Actor (optional): The actor describes the process that was the source of the inventory activity.
+	Actor *Actor `json:"actor,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Discovery.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: OSINT Inventory Info.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// OSINT (required): The OSINT that is being discovered by an inventory process.
+	Osint []Osint `json:"osint,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// OsintInventoryInfoActivityID values.
+const (
+	OsintInventoryInfoActivityIDUnknown = 0  // Unknown
+	OsintInventoryInfoActivityIDLog     = 1  // Log
+	OsintInventoryInfoActivityIDCollect = 2  // Collect
+	OsintInventoryInfoActivityIDOther   = 99 // Other
+)
+
+// OsintInventoryInfoCategoryUID values.
+const (
+	OsintInventoryInfoCategoryUIDDiscovery = 5 // Discovery
+)
+
+// OsintInventoryInfoClassUID values.
+const (
+	OsintInventoryInfoClassUIDOSINTInventoryInfo = 5021 // OSINT Inventory Info
+)
+
+// OsintInventoryInfoSeverityID values.
+const (
+	OsintInventoryInfoSeverityIDUnknown       = 0  // Unknown
+	OsintInventoryInfoSeverityIDInformational = 1  // Informational
+	OsintInventoryInfoSeverityIDLow           = 2  // Low
+	OsintInventoryInfoSeverityIDMedium        = 3  // Medium
+	OsintInventoryInfoSeverityIDHigh          = 4  // High
+	OsintInventoryInfoSeverityIDCritical      = 5  // Critical
+	OsintInventoryInfoSeverityIDFatal         = 6  // Fatal
+	OsintInventoryInfoSeverityIDOther         = 99 // Other
+)
+
+// OsintInventoryInfoStatusID values.
+const (
+	OsintInventoryInfoStatusIDUnknown = 0  // Unknown
+	OsintInventoryInfoStatusIDSuccess = 1  // Success
+	OsintInventoryInfoStatusIDFailure = 2  // Failure
+	OsintInventoryInfoStatusIDOther   = 99 // Other
+)
+
+// OsintInventoryInfoTypeUID values.
+const (
+	OsintInventoryInfoTypeUIDUnknown = 502100 // OSINT Inventory Info: Unknown
+	OsintInventoryInfoTypeUIDLog     = 502101 // OSINT Inventory Info: Log
+	OsintInventoryInfoTypeUIDCollect = 502102 // OSINT Inventory Info: Collect
+	OsintInventoryInfoTypeUIDOther   = 502199 // OSINT Inventory Info: Other
+)
+
+// PatchState class constants.
+const (
+	PatchStateClassUID    = 5004
+	PatchStateCategoryUID = 5
+)
+
+// PatchState is the OCSF 1.5.0 class "Operating System Patch State". Operating System Patch State reports the installation of an OS patch to a device and any associated knowledgebase articles.
+//
+// Constraint at_least_one: device.os.sp_name, device.os.sp_ver, device.os.version.
+type PatchState struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Discovery.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Operating System Patch State.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Device (required): An addressable device, computer system or host.
+	Device *Device `json:"device,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Knowledgebase Articles (recommended): A list of KB articles or patches related to an endpoint.
+	KBArticleList []KBArticle `json:"kb_article_list,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// PatchStateActivityID values.
+const (
+	PatchStateActivityIDUnknown = 0  // Unknown
+	PatchStateActivityIDLog     = 1  // Log
+	PatchStateActivityIDCollect = 2  // Collect
+	PatchStateActivityIDOther   = 99 // Other
+)
+
+// PatchStateCategoryUID values.
+const (
+	PatchStateCategoryUIDDiscovery = 5 // Discovery
+)
+
+// PatchStateClassUID values.
+const (
+	PatchStateClassUIDOperatingSystemPatchState = 5004 // Operating System Patch State
+)
+
+// PatchStateSeverityID values.
+const (
+	PatchStateSeverityIDUnknown       = 0  // Unknown
+	PatchStateSeverityIDInformational = 1  // Informational
+	PatchStateSeverityIDLow           = 2  // Low
+	PatchStateSeverityIDMedium        = 3  // Medium
+	PatchStateSeverityIDHigh          = 4  // High
+	PatchStateSeverityIDCritical      = 5  // Critical
+	PatchStateSeverityIDFatal         = 6  // Fatal
+	PatchStateSeverityIDOther         = 99 // Other
+)
+
+// PatchStateStatusID values.
+const (
+	PatchStateStatusIDUnknown = 0  // Unknown
+	PatchStateStatusIDSuccess = 1  // Success
+	PatchStateStatusIDFailure = 2  // Failure
+	PatchStateStatusIDOther   = 99 // Other
+)
+
+// PatchStateTypeUID values.
+const (
+	PatchStateTypeUIDUnknown = 500400 // Operating System Patch State: Unknown
+	PatchStateTypeUIDLog     = 500401 // Operating System Patch State: Log
+	PatchStateTypeUIDCollect = 500402 // Operating System Patch State: Collect
+	PatchStateTypeUIDOther   = 500499 // Operating System Patch State: Other
+)
+
+// PeripheralDeviceQuery class constants.
+const (
+	PeripheralDeviceQueryClassUID    = 5014
+	PeripheralDeviceQueryCategoryUID = 5
+)
+
+// PeripheralDeviceQuery is the OCSF 1.5.0 class "Peripheral Device Query". Peripheral Device Query events report information about peripheral devices.
+//
+// Deprecated: since OCSF 1.5.0. Use the Live Evidence Info class.
+type PeripheralDeviceQuery struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Discovery.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Peripheral Device Query.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Peripheral Device (required): The peripheral device that triggered the event.
+	PeripheralDevice *PeripheralDevice `json:"peripheral_device,omitempty"`
+	// Query Info (recommended): The search details associated with the query request.
+	QueryInfo *QueryInfo `json:"query_info,omitempty"`
+	// Query Result (recommended): The result of the query.
+	QueryResult string `json:"query_result,omitempty"`
+	// Query Result ID (required): The normalized identifier of the query result.
+	QueryResultID int `json:"query_result_id"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// PeripheralDeviceQueryActivityID values.
+const (
+	PeripheralDeviceQueryActivityIDUnknown = 0  // Unknown
+	PeripheralDeviceQueryActivityIDQuery   = 1  // Query
+	PeripheralDeviceQueryActivityIDOther   = 99 // Other
+)
+
+// PeripheralDeviceQueryCategoryUID values.
+const (
+	PeripheralDeviceQueryCategoryUIDDiscovery = 5 // Discovery
+)
+
+// PeripheralDeviceQueryClassUID values.
+const (
+	PeripheralDeviceQueryClassUIDPeripheralDeviceQuery = 5014 // Peripheral Device Query
+)
+
+// PeripheralDeviceQueryQueryResultID values.
+const (
+	PeripheralDeviceQueryQueryResultIDUnknown      = 0  // Unknown
+	PeripheralDeviceQueryQueryResultIDExists       = 1  // Exists
+	PeripheralDeviceQueryQueryResultIDPartial      = 2  // Partial
+	PeripheralDeviceQueryQueryResultIDDoesNotExist = 3  // Does not exist
+	PeripheralDeviceQueryQueryResultIDError        = 4  // Error
+	PeripheralDeviceQueryQueryResultIDUnsupported  = 5  // Unsupported
+	PeripheralDeviceQueryQueryResultIDOther        = 99 // Other
+)
+
+// PeripheralDeviceQuerySeverityID values.
+const (
+	PeripheralDeviceQuerySeverityIDUnknown       = 0  // Unknown
+	PeripheralDeviceQuerySeverityIDInformational = 1  // Informational
+	PeripheralDeviceQuerySeverityIDLow           = 2  // Low
+	PeripheralDeviceQuerySeverityIDMedium        = 3  // Medium
+	PeripheralDeviceQuerySeverityIDHigh          = 4  // High
+	PeripheralDeviceQuerySeverityIDCritical      = 5  // Critical
+	PeripheralDeviceQuerySeverityIDFatal         = 6  // Fatal
+	PeripheralDeviceQuerySeverityIDOther         = 99 // Other
+)
+
+// PeripheralDeviceQueryStatusID values.
+const (
+	PeripheralDeviceQueryStatusIDUnknown = 0  // Unknown
+	PeripheralDeviceQueryStatusIDSuccess = 1  // Success
+	PeripheralDeviceQueryStatusIDFailure = 2  // Failure
+	PeripheralDeviceQueryStatusIDOther   = 99 // Other
+)
+
+// PeripheralDeviceQueryTypeUID values.
+const (
+	PeripheralDeviceQueryTypeUIDUnknown = 501400 // Peripheral Device Query: Unknown
+	PeripheralDeviceQueryTypeUIDQuery   = 501401 // Peripheral Device Query: Query
+	PeripheralDeviceQueryTypeUIDOther   = 501499 // Peripheral Device Query: Other
+)
+
+// ProcessActivity class constants.
+const (
+	ProcessActivityClassUID    = 1007
+	ProcessActivityCategoryUID = 1
+)
+
+// ProcessActivity is the OCSF 1.5.0 class "Process Activity". Process Activity events report when a process launches, injects, opens or terminates another process, successful or otherwise.
+type ProcessActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Actor (required): The actor that performed the activity on the target process.
+	Actor *Actor `json:"actor,omitempty"`
+	// Actual Permissions (recommended): The permissions that were granted to the process in a platform-native format.
+	ActualPermissions int `json:"actual_permissions,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: System Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Process Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Device (required): An addressable device, computer system or host.
+	Device *Device `json:"device,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Exit Code (recommended): The exit code reported by a process when it terminates.
+	ExitCode int `json:"exit_code,omitempty"`
+	// Injection Type (recommended): The process injection method, normalized to the caption of the injection_type_id value.
+	InjectionType string `json:"injection_type,omitempty"`
+	// Injection Type ID (recommended): The normalized identifier of the process injection method.
+	InjectionTypeID int `json:"injection_type_id,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Module (recommended): The module that was injected by the actor process.
+	Module *Module `json:"module,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Process (required): The process that was launched, injected into, opened, or terminated.
+	Process *Process `json:"process,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Requested Permissions (recommended): The permissions mask that was requested by the process.
+	RequestedPermissions int `json:"requested_permissions,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// ProcessActivityActivityID values.
+const (
+	ProcessActivityActivityIDUnknown   = 0  // Unknown
+	ProcessActivityActivityIDLaunch    = 1  // Launch
+	ProcessActivityActivityIDTerminate = 2  // Terminate
+	ProcessActivityActivityIDOpen      = 3  // Open
+	ProcessActivityActivityIDInject    = 4  // Inject
+	ProcessActivityActivityIDSetUserID = 5  // Set User ID
+	ProcessActivityActivityIDOther     = 99 // Other
+)
+
+// ProcessActivityCategoryUID values.
+const (
+	ProcessActivityCategoryUIDSystemActivity = 1 // System Activity
+)
+
+// ProcessActivityClassUID values.
+const (
+	ProcessActivityClassUIDProcessActivity = 1007 // Process Activity
+)
+
+// ProcessActivityInjectionTypeID values.
+const (
+	ProcessActivityInjectionTypeIDUnknown      = 0  // Unknown
+	ProcessActivityInjectionTypeIDRemoteThread = 1  // Remote Thread
+	ProcessActivityInjectionTypeIDLoadLibrary  = 2  // Load Library
+	ProcessActivityInjectionTypeIDQueueAPC     = 3  // Queue APC
+	ProcessActivityInjectionTypeIDOther        = 99 // Other
+)
+
+// ProcessActivitySeverityID values.
+const (
+	ProcessActivitySeverityIDUnknown       = 0  // Unknown
+	ProcessActivitySeverityIDInformational = 1  // Informational
+	ProcessActivitySeverityIDLow           = 2  // Low
+	ProcessActivitySeverityIDMedium        = 3  // Medium
+	ProcessActivitySeverityIDHigh          = 4  // High
+	ProcessActivitySeverityIDCritical      = 5  // Critical
+	ProcessActivitySeverityIDFatal         = 6  // Fatal
+	ProcessActivitySeverityIDOther         = 99 // Other
+)
+
+// ProcessActivityStatusID values.
+const (
+	ProcessActivityStatusIDUnknown = 0  // Unknown
+	ProcessActivityStatusIDSuccess = 1  // Success
+	ProcessActivityStatusIDFailure = 2  // Failure
+	ProcessActivityStatusIDOther   = 99 // Other
+)
+
+// ProcessActivityTypeUID values.
+const (
+	ProcessActivityTypeUIDUnknown   = 100700 // Process Activity: Unknown
+	ProcessActivityTypeUIDLaunch    = 100701 // Process Activity: Launch
+	ProcessActivityTypeUIDTerminate = 100702 // Process Activity: Terminate
+	ProcessActivityTypeUIDOpen      = 100703 // Process Activity: Open
+	ProcessActivityTypeUIDInject    = 100704 // Process Activity: Inject
+	ProcessActivityTypeUIDSetUserID = 100705 // Process Activity: Set User ID
+	ProcessActivityTypeUIDOther     = 100799 // Process Activity: Other
+)
+
+// ProcessQuery class constants.
+const (
+	ProcessQueryClassUID    = 5015
+	ProcessQueryCategoryUID = 5
+)
+
+// ProcessQuery is the OCSF 1.5.0 class "Process Query". Process Query events report information about running processes.
+//
+// Deprecated: since OCSF 1.5.0. Use the Live Evidence Info class.
+type ProcessQuery struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Discovery.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Process Query.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Process (required): The process object.
+	Process *Process `json:"process,omitempty"`
+	// Query Info (recommended): The search details associated with the query request.
+	QueryInfo *QueryInfo `json:"query_info,omitempty"`
+	// Query Result (recommended): The result of the query.
+	QueryResult string `json:"query_result,omitempty"`
+	// Query Result ID (required): The normalized identifier of the query result.
+	QueryResultID int `json:"query_result_id"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// ProcessQueryActivityID values.
+const (
+	ProcessQueryActivityIDUnknown = 0  // Unknown
+	ProcessQueryActivityIDQuery   = 1  // Query
+	ProcessQueryActivityIDOther   = 99 // Other
+)
+
+// ProcessQueryCategoryUID values.
+const (
+	ProcessQueryCategoryUIDDiscovery = 5 // Discovery
+)
+
+// ProcessQueryClassUID values.
+const (
+	ProcessQueryClassUIDProcessQuery = 5015 // Process Query
+)
+
+// ProcessQueryQueryResultID values.
+const (
+	ProcessQueryQueryResultIDUnknown      = 0  // Unknown
+	ProcessQueryQueryResultIDExists       = 1  // Exists
+	ProcessQueryQueryResultIDPartial      = 2  // Partial
+	ProcessQueryQueryResultIDDoesNotExist = 3  // Does not exist
+	ProcessQueryQueryResultIDError        = 4  // Error
+	ProcessQueryQueryResultIDUnsupported  = 5  // Unsupported
+	ProcessQueryQueryResultIDOther        = 99 // Other
+)
+
+// ProcessQuerySeverityID values.
+const (
+	ProcessQuerySeverityIDUnknown       = 0  // Unknown
+	ProcessQuerySeverityIDInformational = 1  // Informational
+	ProcessQuerySeverityIDLow           = 2  // Low
+	ProcessQuerySeverityIDMedium        = 3  // Medium
+	ProcessQuerySeverityIDHigh          = 4  // High
+	ProcessQuerySeverityIDCritical      = 5  // Critical
+	ProcessQuerySeverityIDFatal         = 6  // Fatal
+	ProcessQuerySeverityIDOther         = 99 // Other
+)
+
+// ProcessQueryStatusID values.
+const (
+	ProcessQueryStatusIDUnknown = 0  // Unknown
+	ProcessQueryStatusIDSuccess = 1  // Success
+	ProcessQueryStatusIDFailure = 2  // Failure
+	ProcessQueryStatusIDOther   = 99 // Other
+)
+
+// ProcessQueryTypeUID values.
+const (
+	ProcessQueryTypeUIDUnknown = 501500 // Process Query: Unknown
+	ProcessQueryTypeUIDQuery   = 501501 // Process Query: Query
+	ProcessQueryTypeUIDOther   = 501599 // Process Query: Other
+)
+
+// ProcessRemediationActivity class constants.
+const (
+	ProcessRemediationActivityClassUID    = 7003
+	ProcessRemediationActivityCategoryUID = 7
+)
+
+// ProcessRemediationActivity is the OCSF 1.5.0 class "Process Remediation Activity". Process Remediation Activity events report on attempts at remediating processes.
+type ProcessRemediationActivity struct {
+	// Activity ID (required): Matches the MITRE D3FEND™ Tactic.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Remediation.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Process Remediation Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Command UID (required): The unique identifier of the remediation command that pertains to this event.
+	CommandUID string `json:"command_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Countermeasures (recommended): The MITRE D3FEND™ Matrix Countermeasures associated with a remediation.
+	Countermeasures []D3fend `json:"countermeasures,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Process (required): The process that pertains to the remediation event.
+	Process *Process `json:"process,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Remediation Guidance (optional): Describes the recommended remediation steps to address identified issue(s).
+	Remediation *Remediation `json:"remediation,omitempty"`
+	// Scan (optional): The remediation scan that pertains to this event.
+	Scan *Scan `json:"scan,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// ProcessRemediationActivityActivityID values.
+const (
+	ProcessRemediationActivityActivityIDUnknown = 0  // Unknown
+	ProcessRemediationActivityActivityIDIsolate = 1  // Isolate
+	ProcessRemediationActivityActivityIDEvict   = 2  // Evict
+	ProcessRemediationActivityActivityIDRestore = 3  // Restore
+	ProcessRemediationActivityActivityIDHarden  = 4  // Harden
+	ProcessRemediationActivityActivityIDDetect  = 5  // Detect
+	ProcessRemediationActivityActivityIDOther   = 99 // Other
+)
+
+// ProcessRemediationActivityCategoryUID values.
+const (
+	ProcessRemediationActivityCategoryUIDRemediation = 7 // Remediation
+)
+
+// ProcessRemediationActivityClassUID values.
+const (
+	ProcessRemediationActivityClassUIDProcessRemediationActivity = 7003 // Process Remediation Activity
+)
+
+// ProcessRemediationActivitySeverityID values.
+const (
+	ProcessRemediationActivitySeverityIDUnknown       = 0  // Unknown
+	ProcessRemediationActivitySeverityIDInformational = 1  // Informational
+	ProcessRemediationActivitySeverityIDLow           = 2  // Low
+	ProcessRemediationActivitySeverityIDMedium        = 3  // Medium
+	ProcessRemediationActivitySeverityIDHigh          = 4  // High
+	ProcessRemediationActivitySeverityIDCritical      = 5  // Critical
+	ProcessRemediationActivitySeverityIDFatal         = 6  // Fatal
+	ProcessRemediationActivitySeverityIDOther         = 99 // Other
+)
+
+// ProcessRemediationActivityStatusID values.
+const (
+	ProcessRemediationActivityStatusIDUnknown      = 0  // Unknown
+	ProcessRemediationActivityStatusIDSuccess      = 1  // Success
+	ProcessRemediationActivityStatusIDFailure      = 2  // Failure
+	ProcessRemediationActivityStatusIDDoesNotExist = 3  // Does Not Exist
+	ProcessRemediationActivityStatusIDPartial      = 4  // Partial
+	ProcessRemediationActivityStatusIDUnsupported  = 5  // Unsupported
+	ProcessRemediationActivityStatusIDError        = 6  // Error
+	ProcessRemediationActivityStatusIDOther        = 99 // Other
+)
+
+// ProcessRemediationActivityTypeUID values.
+const (
+	ProcessRemediationActivityTypeUIDUnknown = 700300 // Process Remediation Activity: Unknown
+	ProcessRemediationActivityTypeUIDIsolate = 700301 // Process Remediation Activity: Isolate
+	ProcessRemediationActivityTypeUIDEvict   = 700302 // Process Remediation Activity: Evict
+	ProcessRemediationActivityTypeUIDRestore = 700303 // Process Remediation Activity: Restore
+	ProcessRemediationActivityTypeUIDHarden  = 700304 // Process Remediation Activity: Harden
+	ProcessRemediationActivityTypeUIDDetect  = 700305 // Process Remediation Activity: Detect
+	ProcessRemediationActivityTypeUIDOther   = 700399 // Process Remediation Activity: Other
+)
+
+// RDPActivity class constants.
+const (
+	RDPActivityClassUID    = 4005
+	RDPActivityCategoryUID = 4
+)
+
+// RDPActivity is the OCSF 1.5.0 class "RDP Activity". Remote Desktop Protocol (RDP) Activity events report remote client connections to a server as seen on the network.
+//
+// Constraint at_least_one: dst_endpoint, src_endpoint.
+type RDPActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Application Name (optional): The name of the application associated with the event or object.
+	AppName string `json:"app_name,omitempty"`
+	// Capabilities (optional): A list of RDP capabilities.
+	Capabilities []string `json:"capabilities,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Network Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Certificate Chain (recommended): The list of observed certificates in an RDP TLS connection.
+	CertificateChain []string `json:"certificate_chain,omitempty"`
+	// Class (optional): The event class name, as defined by class_uid value: RDP Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Connection Info (recommended): The network connection information.
+	ConnectionInfo *NetworkConnectionInfo `json:"connection_info,omitempty"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Device (optional): The device instigating the RDP connection.
+	Device *Device `json:"device,omitempty"`
+	// Destination Endpoint (recommended): The responder (server) in a network connection.
+	DstEndpoint *NetworkEndpoint `json:"dst_endpoint,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// File (optional): The file that is the target of the RDP activity.
+	File *File `json:"file,omitempty"`
+	// Identifier Cookie (optional): The client identifier cookie during client/server exchange.
+	IdentifierCookie string `json:"identifier_cookie,omitempty"`
+	// JA4+ Fingerprints (optional): A list of the JA4+ network fingerprints.
+	JA4FingerprintList []JA4Fingerprint `json:"ja4_fingerprint_list,omitempty"`
+	// Keyboard Information (optional): The keyboard detailed information.
+	KeyboardInfo *KeyboardInfo `json:"keyboard_info,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// RDP Version (recommended): The Remote Desktop Protocol version.
+	ProtocolVer string `json:"protocol_ver,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Remote Display (optional): The remote display affiliated with the event
+	RemoteDisplay *Display `json:"remote_display,omitempty"`
+	// API Request Details (recommended): The client request in an RDP network connection.
+	Request *Request `json:"request,omitempty"`
+	// API Response Details (recommended): The server response in an RDP network connection.
+	Response *Response `json:"response,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Source Endpoint (recommended): The initiator (client) of the network connection.
+	SrcEndpoint *NetworkEndpoint `json:"src_endpoint,omitempty"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// TLS (optional): The Transport Layer Security (TLS) attributes.
+	TLS *TLS `json:"tls,omitempty"`
+	// Traffic (recommended): The network traffic refers to the amount of data moving across a network at a given point of time.
+	Traffic *NetworkTraffic `json:"traffic,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// RDPActivityActivityID values.
+const (
+	RDPActivityActivityIDUnknown         = 0  // Unknown
+	RDPActivityActivityIDInitialRequest  = 1  // Initial Request
+	RDPActivityActivityIDInitialResponse = 2  // Initial Response
+	RDPActivityActivityIDConnectRequest  = 3  // Connect Request
+	RDPActivityActivityIDConnectResponse = 4  // Connect Response
+	RDPActivityActivityIDTLSHandshake    = 5  // TLS Handshake
+	RDPActivityActivityIDTraffic         = 6  // Traffic
+	RDPActivityActivityIDOther           = 99 // Other
+)
+
+// RDPActivityCategoryUID values.
+const (
+	RDPActivityCategoryUIDNetworkActivity = 4 // Network Activity
+)
+
+// RDPActivityClassUID values.
+const (
+	RDPActivityClassUIDRDPActivity = 4005 // RDP Activity
+)
+
+// RDPActivitySeverityID values.
+const (
+	RDPActivitySeverityIDUnknown       = 0  // Unknown
+	RDPActivitySeverityIDInformational = 1  // Informational
+	RDPActivitySeverityIDLow           = 2  // Low
+	RDPActivitySeverityIDMedium        = 3  // Medium
+	RDPActivitySeverityIDHigh          = 4  // High
+	RDPActivitySeverityIDCritical      = 5  // Critical
+	RDPActivitySeverityIDFatal         = 6  // Fatal
+	RDPActivitySeverityIDOther         = 99 // Other
+)
+
+// RDPActivityStatusID values.
+const (
+	RDPActivityStatusIDUnknown = 0  // Unknown
+	RDPActivityStatusIDSuccess = 1  // Success
+	RDPActivityStatusIDFailure = 2  // Failure
+	RDPActivityStatusIDOther   = 99 // Other
+)
+
+// RDPActivityTypeUID values.
+const (
+	RDPActivityTypeUIDUnknown         = 400500 // RDP Activity: Unknown
+	RDPActivityTypeUIDInitialRequest  = 400501 // RDP Activity: Initial Request
+	RDPActivityTypeUIDInitialResponse = 400502 // RDP Activity: Initial Response
+	RDPActivityTypeUIDConnectRequest  = 400503 // RDP Activity: Connect Request
+	RDPActivityTypeUIDConnectResponse = 400504 // RDP Activity: Connect Response
+	RDPActivityTypeUIDTLSHandshake    = 400505 // RDP Activity: TLS Handshake
+	RDPActivityTypeUIDTraffic         = 400506 // RDP Activity: Traffic
+	RDPActivityTypeUIDOther           = 400599 // RDP Activity: Other
+)
+
+// RemediationActivity class constants.
+const (
+	RemediationActivityClassUID    = 7001
+	RemediationActivityCategoryUID = 7
+)
+
+// RemediationActivity is the OCSF 1.5.0 class "Remediation Activity". Remediation Activity events report on attempts at remediating a compromised device or computer network.
+type RemediationActivity struct {
+	// Activity ID (required): Matches the MITRE D3FEND™ Tactic.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Remediation.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Remediation Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Command UID (required): The unique identifier of the remediation command that pertains to this event.
+	CommandUID string `json:"command_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Countermeasures (recommended): The MITRE D3FEND™ Matrix Countermeasures associated with a remediation.
+	Countermeasures []D3fend `json:"countermeasures,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Remediation Guidance (optional): Describes the recommended remediation steps to address identified issue(s).
+	Remediation *Remediation `json:"remediation,omitempty"`
+	// Scan (optional): The remediation scan that pertains to this event.
+	Scan *Scan `json:"scan,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// RemediationActivityActivityID values.
+const (
+	RemediationActivityActivityIDUnknown = 0  // Unknown
+	RemediationActivityActivityIDIsolate = 1  // Isolate
+	RemediationActivityActivityIDEvict   = 2  // Evict
+	RemediationActivityActivityIDRestore = 3  // Restore
+	RemediationActivityActivityIDHarden  = 4  // Harden
+	RemediationActivityActivityIDDetect  = 5  // Detect
+	RemediationActivityActivityIDOther   = 99 // Other
+)
+
+// RemediationActivityCategoryUID values.
+const (
+	RemediationActivityCategoryUIDRemediation = 7 // Remediation
+)
+
+// RemediationActivityClassUID values.
+const (
+	RemediationActivityClassUIDRemediationActivity = 7001 // Remediation Activity
+)
+
+// RemediationActivitySeverityID values.
+const (
+	RemediationActivitySeverityIDUnknown       = 0  // Unknown
+	RemediationActivitySeverityIDInformational = 1  // Informational
+	RemediationActivitySeverityIDLow           = 2  // Low
+	RemediationActivitySeverityIDMedium        = 3  // Medium
+	RemediationActivitySeverityIDHigh          = 4  // High
+	RemediationActivitySeverityIDCritical      = 5  // Critical
+	RemediationActivitySeverityIDFatal         = 6  // Fatal
+	RemediationActivitySeverityIDOther         = 99 // Other
+)
+
+// RemediationActivityStatusID values.
+const (
+	RemediationActivityStatusIDUnknown      = 0  // Unknown
+	RemediationActivityStatusIDSuccess      = 1  // Success
+	RemediationActivityStatusIDFailure      = 2  // Failure
+	RemediationActivityStatusIDDoesNotExist = 3  // Does Not Exist
+	RemediationActivityStatusIDPartial      = 4  // Partial
+	RemediationActivityStatusIDUnsupported  = 5  // Unsupported
+	RemediationActivityStatusIDError        = 6  // Error
+	RemediationActivityStatusIDOther        = 99 // Other
+)
+
+// RemediationActivityTypeUID values.
+const (
+	RemediationActivityTypeUIDUnknown = 700100 // Remediation Activity: Unknown
+	RemediationActivityTypeUIDIsolate = 700101 // Remediation Activity: Isolate
+	RemediationActivityTypeUIDEvict   = 700102 // Remediation Activity: Evict
+	RemediationActivityTypeUIDRestore = 700103 // Remediation Activity: Restore
+	RemediationActivityTypeUIDHarden  = 700104 // Remediation Activity: Harden
+	RemediationActivityTypeUIDDetect  = 700105 // Remediation Activity: Detect
+	RemediationActivityTypeUIDOther   = 700199 // Remediation Activity: Other
+)
+
+// ScanActivity class constants.
+const (
+	ScanActivityClassUID    = 6007
+	ScanActivityCategoryUID = 6
+)
+
+// ScanActivity is the OCSF 1.5.0 class "Scan Activity". Scan events report the start, completion, and results of a scan job.
+type ScanActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Application Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Scan Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Command UID (recommended): The command identifier that is associated with this scan event.
+	CommandUID string `json:"command_uid,omitempty"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Duration Milliseconds (recommended): The duration of the scan
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (recommended): The end time of the scan job.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Detections (recommended): The number of detections.
+	NumDetections int `json:"num_detections,omitempty"`
+	// Scanned Files (recommended): The number of files scanned.
+	NumFiles int `json:"num_files,omitempty"`
+	// Scanned Folders (recommended): The number of folders scanned.
+	NumFolders int `json:"num_folders,omitempty"`
+	// Scanned Network Items (recommended): The number of network items scanned.
+	NumNetworkItems int `json:"num_network_items,omitempty"`
+	// Scanned Processes (recommended): The number of processes scanned.
+	NumProcesses int `json:"num_processes,omitempty"`
+	// Scanned Registry Items (recommended): The number of registry items scanned.
+	NumRegistryItems int `json:"num_registry_items,omitempty"`
+	// Resolutions (recommended): The number of items that were resolved.
+	NumResolutions int `json:"num_resolutions,omitempty"`
+	// Skipped (recommended): The number of skipped items.
+	NumSkippedItems int `json:"num_skipped_items,omitempty"`
+	// Trusted (recommended): The number of trusted items.
+	NumTrustedItems int `json:"num_trusted_items,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Policy (recommended): The policy associated with this Scan event; required if the scan was initiated by a policy.
+	Policy *Policy `json:"policy,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Scan (required): The Scan object describes characteristics of the scan job.
+	Scan *Scan `json:"scan,omitempty"`
+	// Schedule UID (recommended): The unique identifier of the schedule associated with a scan job.
+	ScheduleUID string `json:"schedule_uid,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (recommended): The start time of the scan job.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Total (recommended): The total number of items that were scanned; zero if no items were scanned.
+	Total int `json:"total,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// ScanActivityActivityID values.
+const (
+	ScanActivityActivityIDUnknown           = 0  // Unknown
+	ScanActivityActivityIDStarted           = 1  // Started
+	ScanActivityActivityIDCompleted         = 2  // Completed
+	ScanActivityActivityIDCancelled         = 3  // Cancelled
+	ScanActivityActivityIDDurationViolation = 4  // Duration Violation
+	ScanActivityActivityIDPauseViolation    = 5  // Pause Violation
+	ScanActivityActivityIDError             = 6  // Error
+	ScanActivityActivityIDPaused            = 7  // Paused
+	ScanActivityActivityIDResumed           = 8  // Resumed
+	ScanActivityActivityIDRestarted         = 9  // Restarted
+	ScanActivityActivityIDDelayed           = 10 // Delayed
+	ScanActivityActivityIDOther             = 99 // Other
+)
+
+// ScanActivityCategoryUID values.
+const (
+	ScanActivityCategoryUIDApplicationActivity = 6 // Application Activity
+)
+
+// ScanActivityClassUID values.
+const (
+	ScanActivityClassUIDScanActivity = 6007 // Scan Activity
+)
+
+// ScanActivitySeverityID values.
+const (
+	ScanActivitySeverityIDUnknown       = 0  // Unknown
+	ScanActivitySeverityIDInformational = 1  // Informational
+	ScanActivitySeverityIDLow           = 2  // Low
+	ScanActivitySeverityIDMedium        = 3  // Medium
+	ScanActivitySeverityIDHigh          = 4  // High
+	ScanActivitySeverityIDCritical      = 5  // Critical
+	ScanActivitySeverityIDFatal         = 6  // Fatal
+	ScanActivitySeverityIDOther         = 99 // Other
+)
+
+// ScanActivityStatusID values.
+const (
+	ScanActivityStatusIDUnknown = 0  // Unknown
+	ScanActivityStatusIDSuccess = 1  // Success
+	ScanActivityStatusIDFailure = 2  // Failure
+	ScanActivityStatusIDOther   = 99 // Other
+)
+
+// ScanActivityTypeUID values.
+const (
+	ScanActivityTypeUIDUnknown           = 600700 // Scan Activity: Unknown
+	ScanActivityTypeUIDStarted           = 600701 // Scan Activity: Started
+	ScanActivityTypeUIDCompleted         = 600702 // Scan Activity: Completed
+	ScanActivityTypeUIDCancelled         = 600703 // Scan Activity: Cancelled
+	ScanActivityTypeUIDDurationViolation = 600704 // Scan Activity: Duration Violation
+	ScanActivityTypeUIDPauseViolation    = 600705 // Scan Activity: Pause Violation
+	ScanActivityTypeUIDError             = 600706 // Scan Activity: Error
+	ScanActivityTypeUIDPaused            = 600707 // Scan Activity: Paused
+	ScanActivityTypeUIDResumed           = 600708 // Scan Activity: Resumed
+	ScanActivityTypeUIDRestarted         = 600709 // Scan Activity: Restarted
+	ScanActivityTypeUIDDelayed           = 600710 // Scan Activity: Delayed
+	ScanActivityTypeUIDOther             = 600799 // Scan Activity: Other
+)
+
+// ScheduledJobActivity class constants.
+const (
+	ScheduledJobActivityClassUID    = 1006
+	ScheduledJobActivityCategoryUID = 1
+)
+
+// ScheduledJobActivity is the OCSF 1.5.0 class "Scheduled Job Activity". Scheduled Job Activity events report activities related to scheduled jobs or tasks.
+type ScheduledJobActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Actor (optional): The actor that performed the activity on the job object.
+	Actor *Actor `json:"actor,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: System Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Scheduled Job Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Device (required): An addressable device, computer system or host.
+	Device *Device `json:"device,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Job (required): The job object that pertains to the event.
+	Job *Job `json:"job,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// ScheduledJobActivityActivityID values.
+const (
+	ScheduledJobActivityActivityIDUnknown = 0  // Unknown
+	ScheduledJobActivityActivityIDCreate  = 1  // Create
+	ScheduledJobActivityActivityIDUpdate  = 2  // Update
+	ScheduledJobActivityActivityIDDelete  = 3  // Delete
+	ScheduledJobActivityActivityIDEnable  = 4  // Enable
+	ScheduledJobActivityActivityIDDisable = 5  // Disable
+	ScheduledJobActivityActivityIDStart   = 6  // Start
+	ScheduledJobActivityActivityIDOther   = 99 // Other
+)
+
+// ScheduledJobActivityCategoryUID values.
+const (
+	ScheduledJobActivityCategoryUIDSystemActivity = 1 // System Activity
+)
+
+// ScheduledJobActivityClassUID values.
+const (
+	ScheduledJobActivityClassUIDScheduledJobActivity = 1006 // Scheduled Job Activity
+)
+
+// ScheduledJobActivitySeverityID values.
+const (
+	ScheduledJobActivitySeverityIDUnknown       = 0  // Unknown
+	ScheduledJobActivitySeverityIDInformational = 1  // Informational
+	ScheduledJobActivitySeverityIDLow           = 2  // Low
+	ScheduledJobActivitySeverityIDMedium        = 3  // Medium
+	ScheduledJobActivitySeverityIDHigh          = 4  // High
+	ScheduledJobActivitySeverityIDCritical      = 5  // Critical
+	ScheduledJobActivitySeverityIDFatal         = 6  // Fatal
+	ScheduledJobActivitySeverityIDOther         = 99 // Other
+)
+
+// ScheduledJobActivityStatusID values.
+const (
+	ScheduledJobActivityStatusIDUnknown = 0  // Unknown
+	ScheduledJobActivityStatusIDSuccess = 1  // Success
+	ScheduledJobActivityStatusIDFailure = 2  // Failure
+	ScheduledJobActivityStatusIDOther   = 99 // Other
+)
+
+// ScheduledJobActivityTypeUID values.
+const (
+	ScheduledJobActivityTypeUIDUnknown = 100600 // Scheduled Job Activity: Unknown
+	ScheduledJobActivityTypeUIDCreate  = 100601 // Scheduled Job Activity: Create
+	ScheduledJobActivityTypeUIDUpdate  = 100602 // Scheduled Job Activity: Update
+	ScheduledJobActivityTypeUIDDelete  = 100603 // Scheduled Job Activity: Delete
+	ScheduledJobActivityTypeUIDEnable  = 100604 // Scheduled Job Activity: Enable
+	ScheduledJobActivityTypeUIDDisable = 100605 // Scheduled Job Activity: Disable
+	ScheduledJobActivityTypeUIDStart   = 100606 // Scheduled Job Activity: Start
+	ScheduledJobActivityTypeUIDOther   = 100699 // Scheduled Job Activity: Other
+)
+
+// ScriptActivity class constants.
+const (
+	ScriptActivityClassUID    = 1009
+	ScriptActivityCategoryUID = 1
+)
+
+// ScriptActivity is the OCSF 1.5.0 class "Script Activity". Script Activity events report when a process executes a script.
+type ScriptActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Actor (required): The actor object describes details about the user/role/process that was the source of the activity.
+	Actor *Actor `json:"actor,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: System Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Script Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Device (required): An addressable device, computer system or host.
+	Device *Device `json:"device,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Script (required): The script that was the target of the activity.
+	Script *Script `json:"script,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// ScriptActivityActivityID values.
+const (
+	ScriptActivityActivityIDUnknown = 0  // Unknown
+	ScriptActivityActivityIDExecute = 1  // Execute
+	ScriptActivityActivityIDOther   = 99 // Other
+)
+
+// ScriptActivityCategoryUID values.
+const (
+	ScriptActivityCategoryUIDSystemActivity = 1 // System Activity
+)
+
+// ScriptActivityClassUID values.
+const (
+	ScriptActivityClassUIDScriptActivity = 1009 // Script Activity
+)
+
+// ScriptActivitySeverityID values.
+const (
+	ScriptActivitySeverityIDUnknown       = 0  // Unknown
+	ScriptActivitySeverityIDInformational = 1  // Informational
+	ScriptActivitySeverityIDLow           = 2  // Low
+	ScriptActivitySeverityIDMedium        = 3  // Medium
+	ScriptActivitySeverityIDHigh          = 4  // High
+	ScriptActivitySeverityIDCritical      = 5  // Critical
+	ScriptActivitySeverityIDFatal         = 6  // Fatal
+	ScriptActivitySeverityIDOther         = 99 // Other
+)
+
+// ScriptActivityStatusID values.
+const (
+	ScriptActivityStatusIDUnknown = 0  // Unknown
+	ScriptActivityStatusIDSuccess = 1  // Success
+	ScriptActivityStatusIDFailure = 2  // Failure
+	ScriptActivityStatusIDOther   = 99 // Other
+)
+
+// ScriptActivityTypeUID values.
+const (
+	ScriptActivityTypeUIDUnknown = 100900 // Script Activity: Unknown
+	ScriptActivityTypeUIDExecute = 100901 // Script Activity: Execute
+	ScriptActivityTypeUIDOther   = 100999 // Script Activity: Other
+)
+
+// SecurityFinding class constants.
+const (
+	SecurityFindingClassUID    = 2001
+	SecurityFindingCategoryUID = 2
+)
+
+// SecurityFinding is the OCSF 1.5.0 class "Security Finding". Security Finding events describe findings, detections, anomalies, alerts and/or actions performed by security products
+//
+// Deprecated: since OCSF 1.1.0. Use the new specific classes according to the use-case: Vulnerability Finding, Compliance Finding, Detection Finding, Incident Finding, Data Security Finding.
+type SecurityFinding struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Analytic (recommended): The analytic technique used to analyze and derive insights from the data or information that led to the finding or conclusion.
+	Analytic *Analytic `json:"analytic,omitempty"`
+	// MITRE ATT&CK® and ATLAS™ Details (optional): An array of MITRE ATT&CK® objects describing the tactics, techniques & sub-techniques associated to the Finding.
+	Attacks []Attack `json:"attacks,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Findings.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Security Finding.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Compliance (optional): The compliance object provides context to compliance findings (e.g., a check against a specific regulatory or best practice framework such as CIS, NIST etc.) and contains compliance related details.
+	Compliance *Compliance `json:"compliance,omitempty"`
+	// Confidence (recommended): The confidence, normalized to the caption of the confidence_id value.
+	Confidence string `json:"confidence,omitempty"`
+	// Confidence ID (recommended): The normalized confidence refers to the accuracy of the rule that created the finding.
+	ConfidenceID int `json:"confidence_id,omitempty"`
+	// Confidence Score (recommended): The confidence score as reported by the event source.
+	ConfidenceScore int `json:"confidence_score,omitempty"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Data Sources (optional): A list of data sources utilized in generation of the finding.
+	DataSources []string `json:"data_sources,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Finding (required): The Finding object provides details about a finding/detection generated by a security tool.
+	Finding *Finding `json:"finding,omitempty"`
+	// Impact (recommended): The impact , normalized to the caption of the impact_id value.
+	Impact string `json:"impact,omitempty"`
+	// Impact ID (recommended): The normalized impact of the incident or finding.
+	ImpactID int `json:"impact_id,omitempty"`
+	// Impact Score (recommended): The impact as an integer value of the finding, valid range 0-100.
+	ImpactScore int `json:"impact_score,omitempty"`
+	// Kill Chain (optional): The Cyber Kill Chain® provides a detailed description of each phase and its associated activities within the broader context of a cyber attack.
+	KillChain []KillChainPhase `json:"kill_chain,omitempty"`
+	// Malware (optional): A list of Malware objects, describing details about the identified malware.
+	Malware []Malware `json:"malware,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// NIST List (optional): The NIST Cybersecurity Framework recommendations for managing the cybersecurity risk.
+	Nist []string `json:"nist,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Process (optional): The process object.
+	Process *Process `json:"process,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Resources Array (recommended): Describes details about resources that were affected by the activity/event.
+	Resources []ResourceDetails `json:"resources,omitempty"`
+	// Risk Level (recommended): The risk level, normalized to the caption of the risk_level_id value.
+	RiskLevel string `json:"risk_level,omitempty"`
+	// Risk Level ID (recommended): The normalized risk level id.
+	RiskLevelID int `json:"risk_level_id,omitempty"`
+	// Risk Score (recommended): The risk score as reported by the event source.
+	RiskScore int `json:"risk_score,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// State (optional): The normalized state of a security finding.
+	State string `json:"state,omitempty"`
+	// State ID (required): The normalized state identifier of a security finding.
+	StateID int `json:"state_id"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+	// Vulnerabilities (optional): This object describes vulnerabilities reported in a security finding.
+	Vulnerabilities []Vulnerability `json:"vulnerabilities,omitempty"`
+}
+
+// SecurityFindingActivityID values.
+const (
+	SecurityFindingActivityIDUnknown = 0  // Unknown
+	SecurityFindingActivityIDCreate  = 1  // Create
+	SecurityFindingActivityIDUpdate  = 2  // Update
+	SecurityFindingActivityIDClose   = 3  // Close
+	SecurityFindingActivityIDOther   = 99 // Other
+)
+
+// SecurityFindingCategoryUID values.
+const (
+	SecurityFindingCategoryUIDFindings = 2 // Findings
+)
+
+// SecurityFindingClassUID values.
+const (
+	SecurityFindingClassUIDSecurityFinding = 2001 // Security Finding
+)
+
+// SecurityFindingConfidenceID values.
+const (
+	SecurityFindingConfidenceIDUnknown = 0  // Unknown
+	SecurityFindingConfidenceIDLow     = 1  // Low
+	SecurityFindingConfidenceIDMedium  = 2  // Medium
+	SecurityFindingConfidenceIDHigh    = 3  // High
+	SecurityFindingConfidenceIDOther   = 99 // Other
+)
+
+// SecurityFindingImpactID values.
+const (
+	SecurityFindingImpactIDUnknown  = 0  // Unknown
+	SecurityFindingImpactIDLow      = 1  // Low
+	SecurityFindingImpactIDMedium   = 2  // Medium
+	SecurityFindingImpactIDHigh     = 3  // High
+	SecurityFindingImpactIDCritical = 4  // Critical
+	SecurityFindingImpactIDOther    = 99 // Other
+)
+
+// SecurityFindingRiskLevelID values.
+const (
+	SecurityFindingRiskLevelIDInfo     = 0  // Info
+	SecurityFindingRiskLevelIDLow      = 1  // Low
+	SecurityFindingRiskLevelIDMedium   = 2  // Medium
+	SecurityFindingRiskLevelIDHigh     = 3  // High
+	SecurityFindingRiskLevelIDCritical = 4  // Critical
+	SecurityFindingRiskLevelIDOther    = 99 // Other
+)
+
+// SecurityFindingSeverityID values.
+const (
+	SecurityFindingSeverityIDUnknown       = 0  // Unknown
+	SecurityFindingSeverityIDInformational = 1  // Informational
+	SecurityFindingSeverityIDLow           = 2  // Low
+	SecurityFindingSeverityIDMedium        = 3  // Medium
+	SecurityFindingSeverityIDHigh          = 4  // High
+	SecurityFindingSeverityIDCritical      = 5  // Critical
+	SecurityFindingSeverityIDFatal         = 6  // Fatal
+	SecurityFindingSeverityIDOther         = 99 // Other
+)
+
+// SecurityFindingStateID values.
+const (
+	SecurityFindingStateIDUnknown    = 0  // Unknown
+	SecurityFindingStateIDNew        = 1  // New
+	SecurityFindingStateIDInProgress = 2  // In Progress
+	SecurityFindingStateIDSuppressed = 3  // Suppressed
+	SecurityFindingStateIDResolved   = 4  // Resolved
+	SecurityFindingStateIDOther      = 99 // Other
+)
+
+// SecurityFindingStatusID values.
+const (
+	SecurityFindingStatusIDUnknown = 0  // Unknown
+	SecurityFindingStatusIDSuccess = 1  // Success
+	SecurityFindingStatusIDFailure = 2  // Failure
+	SecurityFindingStatusIDOther   = 99 // Other
+)
+
+// SecurityFindingTypeUID values.
+const (
+	SecurityFindingTypeUIDUnknown = 200100 // Security Finding: Unknown
+	SecurityFindingTypeUIDCreate  = 200101 // Security Finding: Create
+	SecurityFindingTypeUIDUpdate  = 200102 // Security Finding: Update
+	SecurityFindingTypeUIDClose   = 200103 // Security Finding: Close
+	SecurityFindingTypeUIDOther   = 200199 // Security Finding: Other
+)
+
+// ServiceQuery class constants.
+const (
+	ServiceQueryClassUID    = 5016
+	ServiceQueryCategoryUID = 5
+)
+
+// ServiceQuery is the OCSF 1.5.0 class "Service Query". Service Query events report information about running services.
+//
+// Deprecated: since OCSF 1.5.0. Use the Live Evidence Info class.
+type ServiceQuery struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Discovery.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Service Query.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Query Info (recommended): The search details associated with the query request.
+	QueryInfo *QueryInfo `json:"query_info,omitempty"`
+	// Query Result (recommended): The result of the query.
+	QueryResult string `json:"query_result,omitempty"`
+	// Query Result ID (required): The normalized identifier of the query result.
+	QueryResultID int `json:"query_result_id"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Service (required): The service that pertains to the event.
+	Service *Service `json:"service,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// ServiceQueryActivityID values.
+const (
+	ServiceQueryActivityIDUnknown = 0  // Unknown
+	ServiceQueryActivityIDQuery   = 1  // Query
+	ServiceQueryActivityIDOther   = 99 // Other
+)
+
+// ServiceQueryCategoryUID values.
+const (
+	ServiceQueryCategoryUIDDiscovery = 5 // Discovery
+)
+
+// ServiceQueryClassUID values.
+const (
+	ServiceQueryClassUIDServiceQuery = 5016 // Service Query
+)
+
+// ServiceQueryQueryResultID values.
+const (
+	ServiceQueryQueryResultIDUnknown      = 0  // Unknown
+	ServiceQueryQueryResultIDExists       = 1  // Exists
+	ServiceQueryQueryResultIDPartial      = 2  // Partial
+	ServiceQueryQueryResultIDDoesNotExist = 3  // Does not exist
+	ServiceQueryQueryResultIDError        = 4  // Error
+	ServiceQueryQueryResultIDUnsupported  = 5  // Unsupported
+	ServiceQueryQueryResultIDOther        = 99 // Other
+)
+
+// ServiceQuerySeverityID values.
+const (
+	ServiceQuerySeverityIDUnknown       = 0  // Unknown
+	ServiceQuerySeverityIDInformational = 1  // Informational
+	ServiceQuerySeverityIDLow           = 2  // Low
+	ServiceQuerySeverityIDMedium        = 3  // Medium
+	ServiceQuerySeverityIDHigh          = 4  // High
+	ServiceQuerySeverityIDCritical      = 5  // Critical
+	ServiceQuerySeverityIDFatal         = 6  // Fatal
+	ServiceQuerySeverityIDOther         = 99 // Other
+)
+
+// ServiceQueryStatusID values.
+const (
+	ServiceQueryStatusIDUnknown = 0  // Unknown
+	ServiceQueryStatusIDSuccess = 1  // Success
+	ServiceQueryStatusIDFailure = 2  // Failure
+	ServiceQueryStatusIDOther   = 99 // Other
+)
+
+// ServiceQueryTypeUID values.
+const (
+	ServiceQueryTypeUIDUnknown = 501600 // Service Query: Unknown
+	ServiceQueryTypeUIDQuery   = 501601 // Service Query: Query
+	ServiceQueryTypeUIDOther   = 501699 // Service Query: Other
+)
+
+// SessionQuery class constants.
+const (
+	SessionQueryClassUID    = 5017
+	SessionQueryCategoryUID = 5
+)
+
+// SessionQuery is the OCSF 1.5.0 class "User Session Query". User Session Query events report information about existing user sessions.
+//
+// Deprecated: since OCSF 1.5.0. Use the Live Evidence Info class.
+type SessionQuery struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Discovery.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: User Session Query.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Query Info (recommended): The search details associated with the query request.
+	QueryInfo *QueryInfo `json:"query_info,omitempty"`
+	// Query Result (recommended): The result of the query.
+	QueryResult string `json:"query_result,omitempty"`
+	// Query Result ID (required): The normalized identifier of the query result.
+	QueryResultID int `json:"query_result_id"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Session (required): The authenticated user or service session.
+	Session *Session `json:"session,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// SessionQueryActivityID values.
+const (
+	SessionQueryActivityIDUnknown = 0  // Unknown
+	SessionQueryActivityIDQuery   = 1  // Query
+	SessionQueryActivityIDOther   = 99 // Other
+)
+
+// SessionQueryCategoryUID values.
+const (
+	SessionQueryCategoryUIDDiscovery = 5 // Discovery
+)
+
+// SessionQueryClassUID values.
+const (
+	SessionQueryClassUIDUserSessionQuery = 5017 // User Session Query
+)
+
+// SessionQueryQueryResultID values.
+const (
+	SessionQueryQueryResultIDUnknown      = 0  // Unknown
+	SessionQueryQueryResultIDExists       = 1  // Exists
+	SessionQueryQueryResultIDPartial      = 2  // Partial
+	SessionQueryQueryResultIDDoesNotExist = 3  // Does not exist
+	SessionQueryQueryResultIDError        = 4  // Error
+	SessionQueryQueryResultIDUnsupported  = 5  // Unsupported
+	SessionQueryQueryResultIDOther        = 99 // Other
+)
+
+// SessionQuerySeverityID values.
+const (
+	SessionQuerySeverityIDUnknown       = 0  // Unknown
+	SessionQuerySeverityIDInformational = 1  // Informational
+	SessionQuerySeverityIDLow           = 2  // Low
+	SessionQuerySeverityIDMedium        = 3  // Medium
+	SessionQuerySeverityIDHigh          = 4  // High
+	SessionQuerySeverityIDCritical      = 5  // Critical
+	SessionQuerySeverityIDFatal         = 6  // Fatal
+	SessionQuerySeverityIDOther         = 99 // Other
+)
+
+// SessionQueryStatusID values.
+const (
+	SessionQueryStatusIDUnknown = 0  // Unknown
+	SessionQueryStatusIDSuccess = 1  // Success
+	SessionQueryStatusIDFailure = 2  // Failure
+	SessionQueryStatusIDOther   = 99 // Other
+)
+
+// SessionQueryTypeUID values.
+const (
+	SessionQueryTypeUIDUnknown = 501700 // User Session Query: Unknown
+	SessionQueryTypeUIDQuery   = 501701 // User Session Query: Query
+	SessionQueryTypeUIDOther   = 501799 // User Session Query: Other
+)
+
+// SMBActivity class constants.
+const (
+	SMBActivityClassUID    = 4006
+	SMBActivityCategoryUID = 4
+)
+
+// SMBActivity is the OCSF 1.5.0 class "SMB Activity". Server Message Block (SMB) Protocol Activity events report client/server connections sharing resources within the network.
+//
+// Constraint at_least_one: dst_endpoint, src_endpoint.
+type SMBActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Application Name (optional): The name of the application associated with the event or object.
+	AppName string `json:"app_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Network Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: SMB Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Client Dialects (recommended): The list of SMB dialects that the client speaks.
+	ClientDialects []string `json:"client_dialects,omitempty"`
+	// Command (recommended): The command name (e.g.
+	Command string `json:"command,omitempty"`
+	// Connection Info (recommended): The network connection information.
+	ConnectionInfo *NetworkConnectionInfo `json:"connection_info,omitempty"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Distributed Computing Environment/Remote Procedure Call (DCE/RPC) (optional): The DCE/RPC object describes the remote procedure call system for distributed computing environments.
+	DceRpc *DceRpc `json:"dce_rpc,omitempty"`
+	// Dialect (recommended): The negotiated protocol dialect.
+	Dialect string `json:"dialect,omitempty"`
+	// Destination Endpoint (recommended): The responder (server) in a network connection.
+	DstEndpoint *NetworkEndpoint `json:"dst_endpoint,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// File (recommended): The file that is the target of the SMB activity.
+	File *File `json:"file,omitempty"`
+	// JA4+ Fingerprints (optional): A list of the JA4+ network fingerprints.
+	JA4FingerprintList []JA4Fingerprint `json:"ja4_fingerprint_list,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Open Type (recommended): Indicates how the file was opened (e.g.
+	OpenType string `json:"open_type,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// API Response Details (recommended): The server response in an SMB network connection.
+	Response *Response `json:"response,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Share (recommended): The SMB share name.
+	Share string `json:"share,omitempty"`
+	// Share Type (recommended): The SMB share type, normalized to the caption of the share_type_id value.
+	ShareType string `json:"share_type,omitempty"`
+	// Share Type ID (recommended): The normalized identifier of the SMB share type.
+	ShareTypeID int `json:"share_type_id,omitempty"`
+	// Source Endpoint (recommended): The initiator (client) of the network connection.
+	SrcEndpoint *NetworkEndpoint `json:"src_endpoint,omitempty"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// TLS (optional): The Transport Layer Security (TLS) attributes.
+	TLS *TLS `json:"tls,omitempty"`
+	// Traffic (recommended): The network traffic refers to the amount of data moving across a network at a given point of time.
+	Traffic *NetworkTraffic `json:"traffic,omitempty"`
+	// Tree UID (recommended): The tree id is a unique SMB identifier which represents an open connection to a share.
+	TreeUID string `json:"tree_uid,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// SMBActivityActivityID values.
+const (
+	SMBActivityActivityIDUnknown         = 0  // Unknown
+	SMBActivityActivityIDFileSupersede   = 1  // File Supersede
+	SMBActivityActivityIDFileOpen        = 2  // File Open
+	SMBActivityActivityIDFileCreate      = 3  // File Create
+	SMBActivityActivityIDFileOpenIf      = 4  // File Open If
+	SMBActivityActivityIDFileOverwrite   = 5  // File Overwrite
+	SMBActivityActivityIDFileOverwriteIf = 6  // File Overwrite If
+	SMBActivityActivityIDOther           = 99 // Other
+)
+
+// SMBActivityCategoryUID values.
+const (
+	SMBActivityCategoryUIDNetworkActivity = 4 // Network Activity
+)
+
+// SMBActivityClassUID values.
+const (
+	SMBActivityClassUIDSMBActivity = 4006 // SMB Activity
+)
+
+// SMBActivitySeverityID values.
+const (
+	SMBActivitySeverityIDUnknown       = 0  // Unknown
+	SMBActivitySeverityIDInformational = 1  // Informational
+	SMBActivitySeverityIDLow           = 2  // Low
+	SMBActivitySeverityIDMedium        = 3  // Medium
+	SMBActivitySeverityIDHigh          = 4  // High
+	SMBActivitySeverityIDCritical      = 5  // Critical
+	SMBActivitySeverityIDFatal         = 6  // Fatal
+	SMBActivitySeverityIDOther         = 99 // Other
+)
+
+// SMBActivityShareTypeID values.
+const (
+	SMBActivityShareTypeIDUnknown = 0  // Unknown
+	SMBActivityShareTypeIDFile    = 1  // File
+	SMBActivityShareTypeIDPipe    = 2  // Pipe
+	SMBActivityShareTypeIDPrint   = 3  // Print
+	SMBActivityShareTypeIDOther   = 99 // Other
+)
+
+// SMBActivityStatusID values.
+const (
+	SMBActivityStatusIDUnknown = 0  // Unknown
+	SMBActivityStatusIDSuccess = 1  // Success
+	SMBActivityStatusIDFailure = 2  // Failure
+	SMBActivityStatusIDOther   = 99 // Other
+)
+
+// SMBActivityTypeUID values.
+const (
+	SMBActivityTypeUIDUnknown         = 400600 // SMB Activity: Unknown
+	SMBActivityTypeUIDFileSupersede   = 400601 // SMB Activity: File Supersede
+	SMBActivityTypeUIDFileOpen        = 400602 // SMB Activity: File Open
+	SMBActivityTypeUIDFileCreate      = 400603 // SMB Activity: File Create
+	SMBActivityTypeUIDFileOpenIf      = 400604 // SMB Activity: File Open If
+	SMBActivityTypeUIDFileOverwrite   = 400605 // SMB Activity: File Overwrite
+	SMBActivityTypeUIDFileOverwriteIf = 400606 // SMB Activity: File Overwrite If
+	SMBActivityTypeUIDOther           = 400699 // SMB Activity: Other
+)
+
+// SoftwareInfo class constants.
+const (
+	SoftwareInfoClassUID    = 5020
+	SoftwareInfoCategoryUID = 5
+)
+
+// SoftwareInfo is the OCSF 1.5.0 class "Software Inventory Info". Software Inventory Info events report device software inventory data that is either logged or proactively collected.
+type SoftwareInfo struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Actor (optional): The actor object describes details about the user/role/process that was the source of the activity.
+	Actor *Actor `json:"actor,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Discovery.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Software Inventory Info.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Device (required): The device that is being discovered by an inventory process.
+	Device *Device `json:"device,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Product (optional): Additional product attributes that have been discovered or enriched from a catalog or other external source.
+	Product *Product `json:"product,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Software Bill Of Materials (recommended): The Software Bill of Materials (SBOM) of the device software that is being discovered by an inventory process.
+	Sbom *Sbom `json:"sbom,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// SoftwareInfoActivityID values.
+const (
+	SoftwareInfoActivityIDUnknown = 0  // Unknown
+	SoftwareInfoActivityIDLog     = 1  // Log
+	SoftwareInfoActivityIDCollect = 2  // Collect
+	SoftwareInfoActivityIDOther   = 99 // Other
+)
+
+// SoftwareInfoCategoryUID values.
+const (
+	SoftwareInfoCategoryUIDDiscovery = 5 // Discovery
+)
+
+// SoftwareInfoClassUID values.
+const (
+	SoftwareInfoClassUIDSoftwareInventoryInfo = 5020 // Software Inventory Info
+)
+
+// SoftwareInfoSeverityID values.
+const (
+	SoftwareInfoSeverityIDUnknown       = 0  // Unknown
+	SoftwareInfoSeverityIDInformational = 1  // Informational
+	SoftwareInfoSeverityIDLow           = 2  // Low
+	SoftwareInfoSeverityIDMedium        = 3  // Medium
+	SoftwareInfoSeverityIDHigh          = 4  // High
+	SoftwareInfoSeverityIDCritical      = 5  // Critical
+	SoftwareInfoSeverityIDFatal         = 6  // Fatal
+	SoftwareInfoSeverityIDOther         = 99 // Other
+)
+
+// SoftwareInfoStatusID values.
+const (
+	SoftwareInfoStatusIDUnknown = 0  // Unknown
+	SoftwareInfoStatusIDSuccess = 1  // Success
+	SoftwareInfoStatusIDFailure = 2  // Failure
+	SoftwareInfoStatusIDOther   = 99 // Other
+)
+
+// SoftwareInfoTypeUID values.
+const (
+	SoftwareInfoTypeUIDUnknown = 502000 // Software Inventory Info: Unknown
+	SoftwareInfoTypeUIDLog     = 502001 // Software Inventory Info: Log
+	SoftwareInfoTypeUIDCollect = 502002 // Software Inventory Info: Collect
+	SoftwareInfoTypeUIDOther   = 502099 // Software Inventory Info: Other
+)
+
+// SSHActivity class constants.
+const (
+	SSHActivityClassUID    = 4007
+	SSHActivityCategoryUID = 4
+)
+
+// SSHActivity is the OCSF 1.5.0 class "SSH Activity". SSH Activity events report remote client connections to a server using the Secure Shell (SSH) Protocol.
+//
+// Constraint at_least_one: dst_endpoint, src_endpoint.
+type SSHActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Application Name (optional): The name of the application associated with the event or object.
+	AppName string `json:"app_name,omitempty"`
+	// Authentication Type (recommended): The SSH authentication type, normalized to the caption of 'auth_type_id'.
+	AuthType string `json:"auth_type,omitempty"`
+	// Authentication Type ID (recommended): The normalized identifier of the SSH authentication type.
+	AuthTypeID int `json:"auth_type_id,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Network Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: SSH Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Client HASSH (recommended): The Client HASSH fingerprinting object.
+	ClientHassh *Hassh `json:"client_hassh,omitempty"`
+	// Connection Info (recommended): The network connection information.
+	ConnectionInfo *NetworkConnectionInfo `json:"connection_info,omitempty"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Destination Endpoint (recommended): The responder (server) in a network connection.
+	DstEndpoint *NetworkEndpoint `json:"dst_endpoint,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// File (optional): The file that is the target of the SSH activity.
+	File *File `json:"file,omitempty"`
+	// JA4+ Fingerprints (optional): A list of the JA4+ network fingerprints.
+	JA4FingerprintList []JA4Fingerprint `json:"ja4_fingerprint_list,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// SSH Version (recommended): The Secure Shell Protocol version.
+	ProtocolVer string `json:"protocol_ver,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Server HASSH (recommended): The Server HASSH fingerprinting object.
+	ServerHassh *Hassh `json:"server_hassh,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Source Endpoint (recommended): The initiator (client) of the network connection.
+	SrcEndpoint *NetworkEndpoint `json:"src_endpoint,omitempty"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// TLS (optional): The Transport Layer Security (TLS) attributes.
+	TLS *TLS `json:"tls,omitempty"`
+	// Traffic (recommended): The network traffic refers to the amount of data moving across a network at a given point of time.
+	Traffic *NetworkTraffic `json:"traffic,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// SSHActivityActivityID values.
+const (
+	SSHActivityActivityIDUnknown = 0  // Unknown
+	SSHActivityActivityIDOpen    = 1  // Open
+	SSHActivityActivityIDClose   = 2  // Close
+	SSHActivityActivityIDReset   = 3  // Reset
+	SSHActivityActivityIDFail    = 4  // Fail
+	SSHActivityActivityIDRefuse  = 5  // Refuse
+	SSHActivityActivityIDTraffic = 6  // Traffic
+	SSHActivityActivityIDListen  = 7  // Listen
+	SSHActivityActivityIDOther   = 99 // Other
+)
+
+// SSHActivityAuthTypeID values.
+const (
+	SSHActivityAuthTypeIDUnknown             = 0  // Unknown
+	SSHActivityAuthTypeIDCertificateBased    = 1  // Certificate Based
+	SSHActivityAuthTypeIDGSSAPI              = 2  // GSSAPI
+	SSHActivityAuthTypeIDHostBased           = 3  // Host Based
+	SSHActivityAuthTypeIDKeyboardInteractive = 4  // Keyboard Interactive
+	SSHActivityAuthTypeIDPassword            = 5  // Password
+	SSHActivityAuthTypeIDPublicKey           = 6  // Public Key
+	SSHActivityAuthTypeIDOther               = 99 // Other
+)
+
+// SSHActivityCategoryUID values.
+const (
+	SSHActivityCategoryUIDNetworkActivity = 4 // Network Activity
+)
+
+// SSHActivityClassUID values.
+const (
+	SSHActivityClassUIDSSHActivity = 4007 // SSH Activity
+)
+
+// SSHActivitySeverityID values.
+const (
+	SSHActivitySeverityIDUnknown       = 0  // Unknown
+	SSHActivitySeverityIDInformational = 1  // Informational
+	SSHActivitySeverityIDLow           = 2  // Low
+	SSHActivitySeverityIDMedium        = 3  // Medium
+	SSHActivitySeverityIDHigh          = 4  // High
+	SSHActivitySeverityIDCritical      = 5  // Critical
+	SSHActivitySeverityIDFatal         = 6  // Fatal
+	SSHActivitySeverityIDOther         = 99 // Other
+)
+
+// SSHActivityStatusID values.
+const (
+	SSHActivityStatusIDUnknown = 0  // Unknown
+	SSHActivityStatusIDSuccess = 1  // Success
+	SSHActivityStatusIDFailure = 2  // Failure
+	SSHActivityStatusIDOther   = 99 // Other
+)
+
+// SSHActivityTypeUID values.
+const (
+	SSHActivityTypeUIDUnknown = 400700 // SSH Activity: Unknown
+	SSHActivityTypeUIDOpen    = 400701 // SSH Activity: Open
+	SSHActivityTypeUIDClose   = 400702 // SSH Activity: Close
+	SSHActivityTypeUIDReset   = 400703 // SSH Activity: Reset
+	SSHActivityTypeUIDFail    = 400704 // SSH Activity: Fail
+	SSHActivityTypeUIDRefuse  = 400705 // SSH Activity: Refuse
+	SSHActivityTypeUIDTraffic = 400706 // SSH Activity: Traffic
+	SSHActivityTypeUIDListen  = 400707 // SSH Activity: Listen
+	SSHActivityTypeUIDOther   = 400799 // SSH Activity: Other
+)
+
+// StartupItemQuery class constants.
+const (
+	StartupItemQueryClassUID    = 5022
+	StartupItemQueryCategoryUID = 5
+)
+
+// StartupItemQuery is the OCSF 1.5.0 class "Startup Item Query". Startup Item Query events report information about discovered items, e.g., application components that are generally configured to run automatically.
+//
+// Deprecated: since OCSF 1.5.0. Use the Live Evidence Info class.
+type StartupItemQuery struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Discovery.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Startup Item Query.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Query Info (recommended): The search details associated with the query request.
+	QueryInfo *QueryInfo `json:"query_info,omitempty"`
+	// Query Result (recommended): The result of the query.
+	QueryResult string `json:"query_result,omitempty"`
+	// Query Result ID (required): The normalized identifier of the query result.
+	QueryResultID int `json:"query_result_id"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Startup Item (required): The startup item object describes an application component that has associated startup criteria and configurations.
+	StartupItem *StartupItem `json:"startup_item,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// StartupItemQueryActivityID values.
+const (
+	StartupItemQueryActivityIDUnknown = 0  // Unknown
+	StartupItemQueryActivityIDQuery   = 1  // Query
+	StartupItemQueryActivityIDOther   = 99 // Other
+)
+
+// StartupItemQueryCategoryUID values.
+const (
+	StartupItemQueryCategoryUIDDiscovery = 5 // Discovery
+)
+
+// StartupItemQueryClassUID values.
+const (
+	StartupItemQueryClassUIDStartupItemQuery = 5022 // Startup Item Query
+)
+
+// StartupItemQueryQueryResultID values.
+const (
+	StartupItemQueryQueryResultIDUnknown      = 0  // Unknown
+	StartupItemQueryQueryResultIDExists       = 1  // Exists
+	StartupItemQueryQueryResultIDPartial      = 2  // Partial
+	StartupItemQueryQueryResultIDDoesNotExist = 3  // Does not exist
+	StartupItemQueryQueryResultIDError        = 4  // Error
+	StartupItemQueryQueryResultIDUnsupported  = 5  // Unsupported
+	StartupItemQueryQueryResultIDOther        = 99 // Other
+)
+
+// StartupItemQuerySeverityID values.
+const (
+	StartupItemQuerySeverityIDUnknown       = 0  // Unknown
+	StartupItemQuerySeverityIDInformational = 1  // Informational
+	StartupItemQuerySeverityIDLow           = 2  // Low
+	StartupItemQuerySeverityIDMedium        = 3  // Medium
+	StartupItemQuerySeverityIDHigh          = 4  // High
+	StartupItemQuerySeverityIDCritical      = 5  // Critical
+	StartupItemQuerySeverityIDFatal         = 6  // Fatal
+	StartupItemQuerySeverityIDOther         = 99 // Other
+)
+
+// StartupItemQueryStatusID values.
+const (
+	StartupItemQueryStatusIDUnknown = 0  // Unknown
+	StartupItemQueryStatusIDSuccess = 1  // Success
+	StartupItemQueryStatusIDFailure = 2  // Failure
+	StartupItemQueryStatusIDOther   = 99 // Other
+)
+
+// StartupItemQueryTypeUID values.
+const (
+	StartupItemQueryTypeUIDUnknown = 502200 // Startup Item Query: Unknown
+	StartupItemQueryTypeUIDQuery   = 502201 // Startup Item Query: Query
+	StartupItemQueryTypeUIDOther   = 502299 // Startup Item Query: Other
+)
+
+// TunnelActivity class constants.
+const (
+	TunnelActivityClassUID    = 4014
+	TunnelActivityCategoryUID = 4
+)
+
+// TunnelActivity is the OCSF 1.5.0 class "Tunnel Activity". Tunnel Activity events report secure tunnel establishment (such as VPN), teardowns, renewals, and other network tunnel specific actions.
+//
+// Constraint at_least_one: connection_info, session, src_endpoint, traffic, tunnel_interface, tunnel_type_id.
+type TunnelActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Application Name (optional): The name of the application associated with the event or object.
+	AppName string `json:"app_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Network Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Tunnel Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Connection Info (optional): The tunnel connection information.
+	ConnectionInfo *NetworkConnectionInfo `json:"connection_info,omitempty"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Device (recommended): The device that reported the event.
+	Device *Device `json:"device,omitempty"`
+	// Destination Endpoint (recommended): The server responding to the tunnel connection.
+	DstEndpoint *NetworkEndpoint `json:"dst_endpoint,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// JA4+ Fingerprints (optional): A list of the JA4+ network fingerprints.
+	JA4FingerprintList []JA4Fingerprint `json:"ja4_fingerprint_list,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Tunnel Protocol (optional): The networking protocol associated with the tunnel.
+	ProtocolName string `json:"protocol_name,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Tunnel Session (recommended): The session associated with the tunnel.
+	Session *Session `json:"session,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Source Endpoint (recommended): The initiator (client) of the tunnel connection.
+	SrcEndpoint *NetworkEndpoint `json:"src_endpoint,omitempty"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// TLS (optional): The Transport Layer Security (TLS) attributes.
+	TLS *TLS `json:"tls,omitempty"`
+	// Traffic (optional): Traffic refers to the amount of data moving across the tunnel at a given point of time.
+	Traffic *NetworkTraffic `json:"traffic,omitempty"`
+	// Tunnel Interface (recommended): The information about the virtual tunnel interface, e.g.
+	TunnelInterface *NetworkInterface `json:"tunnel_interface,omitempty"`
+	// Type (recommended): The tunnel type.
+	TunnelType string `json:"tunnel_type,omitempty"`
+	// Type (recommended): The normalized tunnel type ID.
+	TunnelTypeID int `json:"tunnel_type_id,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+	// User (recommended): The user associated with the tunnel activity.
+	User *User `json:"user,omitempty"`
+}
+
+// TunnelActivityActivityID values.
+const (
+	TunnelActivityActivityIDUnknown = 0  // Unknown
+	TunnelActivityActivityIDOpen    = 1  // Open
+	TunnelActivityActivityIDClose   = 2  // Close
+	TunnelActivityActivityIDRenew   = 3  // Renew
+	TunnelActivityActivityIDOther   = 99 // Other
+)
+
+// TunnelActivityCategoryUID values.
+const (
+	TunnelActivityCategoryUIDNetworkActivity = 4 // Network Activity
+)
+
+// TunnelActivityClassUID values.
+const (
+	TunnelActivityClassUIDTunnelActivity = 4014 // Tunnel Activity
+)
+
+// TunnelActivitySeverityID values.
+const (
+	TunnelActivitySeverityIDUnknown       = 0  // Unknown
+	TunnelActivitySeverityIDInformational = 1  // Informational
+	TunnelActivitySeverityIDLow           = 2  // Low
+	TunnelActivitySeverityIDMedium        = 3  // Medium
+	TunnelActivitySeverityIDHigh          = 4  // High
+	TunnelActivitySeverityIDCritical      = 5  // Critical
+	TunnelActivitySeverityIDFatal         = 6  // Fatal
+	TunnelActivitySeverityIDOther         = 99 // Other
+)
+
+// TunnelActivityStatusID values.
+const (
+	TunnelActivityStatusIDUnknown = 0  // Unknown
+	TunnelActivityStatusIDSuccess = 1  // Success
+	TunnelActivityStatusIDFailure = 2  // Failure
+	TunnelActivityStatusIDOther   = 99 // Other
+)
+
+// TunnelActivityTunnelTypeID values.
+const (
+	TunnelActivityTunnelTypeIDUnknown     = 0  // Unknown
+	TunnelActivityTunnelTypeIDSplitTunnel = 1  // Split Tunnel
+	TunnelActivityTunnelTypeIDFullTunnel  = 2  // Full Tunnel
+	TunnelActivityTunnelTypeIDOther       = 99 // Other
+)
+
+// TunnelActivityTypeUID values.
+const (
+	TunnelActivityTypeUIDUnknown = 401400 // Tunnel Activity: Unknown
+	TunnelActivityTypeUIDOpen    = 401401 // Tunnel Activity: Open
+	TunnelActivityTypeUIDClose   = 401402 // Tunnel Activity: Close
+	TunnelActivityTypeUIDRenew   = 401403 // Tunnel Activity: Renew
+	TunnelActivityTypeUIDOther   = 401499 // Tunnel Activity: Other
+)
+
+// UserAccess class constants.
+const (
+	UserAccessClassUID    = 3005
+	UserAccessCategoryUID = 3
+)
+
+// UserAccess is the OCSF 1.5.0 class "User Access Management". User Access Management events report management updates to a user's privileges.
+type UserAccess struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Actor (recommended): The actor object describes details about the user/role/process that was the source of the activity.
+	Actor *Actor `json:"actor,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Identity & Access Management.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: User Access Management.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// HTTP Request (optional): Details about the underlying HTTP request.
+	HTTPRequest *HTTPRequest `json:"http_request,omitempty"`
+	// HTTP Response (optional): Details about the underlying HTTP response.
+	HTTPResponse *HTTPResponse `json:"http_response,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Privileges (required): List of privileges assigned to a user.
+	Privileges []string `json:"privileges,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Resources Array (recommended): Resources that the privileges give access to.
+	Resources []ResourceDetails `json:"resources,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Source Endpoint (recommended): Details about the source of the IAM activity.
+	SrcEndpoint *NetworkEndpoint `json:"src_endpoint,omitempty"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+	// User (required): User to which privileges were assigned.
+	User *User `json:"user,omitempty"`
+}
+
+// UserAccessActivityID values.
+const (
+	UserAccessActivityIDUnknown          = 0  // Unknown
+	UserAccessActivityIDAssignPrivileges = 1  // Assign Privileges
+	UserAccessActivityIDRevokePrivileges = 2  // Revoke Privileges
+	UserAccessActivityIDOther            = 99 // Other
+)
+
+// UserAccessCategoryUID values.
+const (
+	UserAccessCategoryUIDIdentityAccessManagement = 3 // Identity & Access Management
+)
+
+// UserAccessClassUID values.
+const (
+	UserAccessClassUIDUserAccessManagement = 3005 // User Access Management
+)
+
+// UserAccessSeverityID values.
+const (
+	UserAccessSeverityIDUnknown       = 0  // Unknown
+	UserAccessSeverityIDInformational = 1  // Informational
+	UserAccessSeverityIDLow           = 2  // Low
+	UserAccessSeverityIDMedium        = 3  // Medium
+	UserAccessSeverityIDHigh          = 4  // High
+	UserAccessSeverityIDCritical      = 5  // Critical
+	UserAccessSeverityIDFatal         = 6  // Fatal
+	UserAccessSeverityIDOther         = 99 // Other
+)
+
+// UserAccessStatusID values.
+const (
+	UserAccessStatusIDUnknown = 0  // Unknown
+	UserAccessStatusIDSuccess = 1  // Success
+	UserAccessStatusIDFailure = 2  // Failure
+	UserAccessStatusIDOther   = 99 // Other
+)
+
+// UserAccessTypeUID values.
+const (
+	UserAccessTypeUIDUnknown          = 300500 // User Access Management: Unknown
+	UserAccessTypeUIDAssignPrivileges = 300501 // User Access Management: Assign Privileges
+	UserAccessTypeUIDRevokePrivileges = 300502 // User Access Management: Revoke Privileges
+	UserAccessTypeUIDOther            = 300599 // User Access Management: Other
+)
+
+// UserInventory class constants.
+const (
+	UserInventoryClassUID    = 5003
+	UserInventoryCategoryUID = 5
+)
+
+// UserInventory is the OCSF 1.5.0 class "User Inventory Info". User Inventory Info events report user inventory data that is either logged or proactively collected.
+type UserInventory struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Actor (optional): The actor describes the process that was the source of the inventory activity.
+	Actor *Actor `json:"actor,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Discovery.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: User Inventory Info.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+	// User (required): The user that is being discovered by an inventory process.
+	User *User `json:"user,omitempty"`
+}
+
+// UserInventoryActivityID values.
+const (
+	UserInventoryActivityIDUnknown = 0  // Unknown
+	UserInventoryActivityIDLog     = 1  // Log
+	UserInventoryActivityIDCollect = 2  // Collect
+	UserInventoryActivityIDOther   = 99 // Other
+)
+
+// UserInventoryCategoryUID values.
+const (
+	UserInventoryCategoryUIDDiscovery = 5 // Discovery
+)
+
+// UserInventoryClassUID values.
+const (
+	UserInventoryClassUIDUserInventoryInfo = 5003 // User Inventory Info
+)
+
+// UserInventorySeverityID values.
+const (
+	UserInventorySeverityIDUnknown       = 0  // Unknown
+	UserInventorySeverityIDInformational = 1  // Informational
+	UserInventorySeverityIDLow           = 2  // Low
+	UserInventorySeverityIDMedium        = 3  // Medium
+	UserInventorySeverityIDHigh          = 4  // High
+	UserInventorySeverityIDCritical      = 5  // Critical
+	UserInventorySeverityIDFatal         = 6  // Fatal
+	UserInventorySeverityIDOther         = 99 // Other
+)
+
+// UserInventoryStatusID values.
+const (
+	UserInventoryStatusIDUnknown = 0  // Unknown
+	UserInventoryStatusIDSuccess = 1  // Success
+	UserInventoryStatusIDFailure = 2  // Failure
+	UserInventoryStatusIDOther   = 99 // Other
+)
+
+// UserInventoryTypeUID values.
+const (
+	UserInventoryTypeUIDUnknown = 500300 // User Inventory Info: Unknown
+	UserInventoryTypeUIDLog     = 500301 // User Inventory Info: Log
+	UserInventoryTypeUIDCollect = 500302 // User Inventory Info: Collect
+	UserInventoryTypeUIDOther   = 500399 // User Inventory Info: Other
+)
+
+// UserQuery class constants.
+const (
+	UserQueryClassUID    = 5018
+	UserQueryCategoryUID = 5
+)
+
+// UserQuery is the OCSF 1.5.0 class "User Query". User Query events report user data that have been discovered, queried, polled or searched.
+//
+// Deprecated: since OCSF 1.5.0. Use the Live Evidence Info class.
+type UserQuery struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Discovery.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: User Query.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Query Info (recommended): The search details associated with the query request.
+	QueryInfo *QueryInfo `json:"query_info,omitempty"`
+	// Query Result (recommended): The result of the query.
+	QueryResult string `json:"query_result,omitempty"`
+	// Query Result ID (required): The normalized identifier of the query result.
+	QueryResultID int `json:"query_result_id"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+	// User (required): The user that pertains to the event or object.
+	User *User `json:"user,omitempty"`
+}
+
+// UserQueryActivityID values.
+const (
+	UserQueryActivityIDUnknown = 0  // Unknown
+	UserQueryActivityIDQuery   = 1  // Query
+	UserQueryActivityIDOther   = 99 // Other
+)
+
+// UserQueryCategoryUID values.
+const (
+	UserQueryCategoryUIDDiscovery = 5 // Discovery
+)
+
+// UserQueryClassUID values.
+const (
+	UserQueryClassUIDUserQuery = 5018 // User Query
+)
+
+// UserQueryQueryResultID values.
+const (
+	UserQueryQueryResultIDUnknown      = 0  // Unknown
+	UserQueryQueryResultIDExists       = 1  // Exists
+	UserQueryQueryResultIDPartial      = 2  // Partial
+	UserQueryQueryResultIDDoesNotExist = 3  // Does not exist
+	UserQueryQueryResultIDError        = 4  // Error
+	UserQueryQueryResultIDUnsupported  = 5  // Unsupported
+	UserQueryQueryResultIDOther        = 99 // Other
+)
+
+// UserQuerySeverityID values.
+const (
+	UserQuerySeverityIDUnknown       = 0  // Unknown
+	UserQuerySeverityIDInformational = 1  // Informational
+	UserQuerySeverityIDLow           = 2  // Low
+	UserQuerySeverityIDMedium        = 3  // Medium
+	UserQuerySeverityIDHigh          = 4  // High
+	UserQuerySeverityIDCritical      = 5  // Critical
+	UserQuerySeverityIDFatal         = 6  // Fatal
+	UserQuerySeverityIDOther         = 99 // Other
+)
+
+// UserQueryStatusID values.
+const (
+	UserQueryStatusIDUnknown = 0  // Unknown
+	UserQueryStatusIDSuccess = 1  // Success
+	UserQueryStatusIDFailure = 2  // Failure
+	UserQueryStatusIDOther   = 99 // Other
+)
+
+// UserQueryTypeUID values.
+const (
+	UserQueryTypeUIDUnknown = 501800 // User Query: Unknown
+	UserQueryTypeUIDQuery   = 501801 // User Query: Query
+	UserQueryTypeUIDOther   = 501899 // User Query: Other
+)
+
+// VulnerabilityFinding class constants.
+const (
+	VulnerabilityFindingClassUID    = 2002
+	VulnerabilityFindingCategoryUID = 2
+)
+
+// VulnerabilityFinding is the OCSF 1.5.0 class "Vulnerability Finding". The Vulnerability Finding event is a notification about weakness in an information system, system security procedures, internal controls, or implementation that could be exploited or triggered by a threat source.
+type VulnerabilityFinding struct {
+	// Activity ID (required): The normalized identifier of the finding activity.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The finding activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Findings.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Vulnerability Finding.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Comment (optional): A user provided comment about the finding.
+	Comment string `json:"comment,omitempty"`
+	// Confidence (optional): The confidence, normalized to the caption of the confidence_id value.
+	Confidence string `json:"confidence,omitempty"`
+	// Confidence ID (recommended): The normalized confidence refers to the accuracy of the rule that created the finding.
+	ConfidenceID int `json:"confidence_id,omitempty"`
+	// Confidence Score (optional): The confidence score as reported by the event source.
+	ConfidenceScore int `json:"confidence_score,omitempty"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Device (recommended): Describes the affected device/host.
+	Device *Device `json:"device,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The time of the most recent event included in the finding.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Finding Information (required): Describes the supporting information about a generated finding.
+	FindingInfo *FindingInfo `json:"finding_info,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Affected Resources (recommended): Describes details about the resource/resources that are affected by the vulnerability/vulnerabilities.
+	Resources []ResourceDetails `json:"resources,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The time of the least recent event included in the finding.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (optional): The normalized status of the Finding set by the consumer normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized status identifier of the Finding, set by the consumer.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+	// Vendor Attributes (optional): The Vendor Attributes object can be used to represent values of attributes populated by the Vendor/Finding Provider.
+	VendorAttributes *VendorAttributes `json:"vendor_attributes,omitempty"`
+	// Vulnerabilities (required): This object describes vulnerabilities reported in a security finding.
+	Vulnerabilities []Vulnerability `json:"vulnerabilities,omitempty"`
+}
+
+// VulnerabilityFindingActivityID values.
+const (
+	VulnerabilityFindingActivityIDUnknown = 0  // Unknown
+	VulnerabilityFindingActivityIDCreate  = 1  // Create
+	VulnerabilityFindingActivityIDUpdate  = 2  // Update
+	VulnerabilityFindingActivityIDClose   = 3  // Close
+	VulnerabilityFindingActivityIDOther   = 99 // Other
+)
+
+// VulnerabilityFindingCategoryUID values.
+const (
+	VulnerabilityFindingCategoryUIDFindings = 2 // Findings
+)
+
+// VulnerabilityFindingClassUID values.
+const (
+	VulnerabilityFindingClassUIDVulnerabilityFinding = 2002 // Vulnerability Finding
+)
+
+// VulnerabilityFindingConfidenceID values.
+const (
+	VulnerabilityFindingConfidenceIDUnknown = 0  // Unknown
+	VulnerabilityFindingConfidenceIDLow     = 1  // Low
+	VulnerabilityFindingConfidenceIDMedium  = 2  // Medium
+	VulnerabilityFindingConfidenceIDHigh    = 3  // High
+	VulnerabilityFindingConfidenceIDOther   = 99 // Other
+)
+
+// VulnerabilityFindingSeverityID values.
+const (
+	VulnerabilityFindingSeverityIDUnknown       = 0  // Unknown
+	VulnerabilityFindingSeverityIDInformational = 1  // Informational
+	VulnerabilityFindingSeverityIDLow           = 2  // Low
+	VulnerabilityFindingSeverityIDMedium        = 3  // Medium
+	VulnerabilityFindingSeverityIDHigh          = 4  // High
+	VulnerabilityFindingSeverityIDCritical      = 5  // Critical
+	VulnerabilityFindingSeverityIDFatal         = 6  // Fatal
+	VulnerabilityFindingSeverityIDOther         = 99 // Other
+)
+
+// VulnerabilityFindingStatusID values.
+const (
+	VulnerabilityFindingStatusIDUnknown    = 0  // Unknown
+	VulnerabilityFindingStatusIDNew        = 1  // New
+	VulnerabilityFindingStatusIDInProgress = 2  // In Progress
+	VulnerabilityFindingStatusIDSuppressed = 3  // Suppressed
+	VulnerabilityFindingStatusIDResolved   = 4  // Resolved
+	VulnerabilityFindingStatusIDArchived   = 5  // Archived
+	VulnerabilityFindingStatusIDOther      = 99 // Other
+)
+
+// VulnerabilityFindingTypeUID values.
+const (
+	VulnerabilityFindingTypeUIDUnknown = 200200 // Vulnerability Finding: Unknown
+	VulnerabilityFindingTypeUIDCreate  = 200201 // Vulnerability Finding: Create
+	VulnerabilityFindingTypeUIDUpdate  = 200202 // Vulnerability Finding: Update
+	VulnerabilityFindingTypeUIDClose   = 200203 // Vulnerability Finding: Close
+	VulnerabilityFindingTypeUIDOther   = 200299 // Vulnerability Finding: Other
+)
+
+// WebResourceAccessActivity class constants.
+const (
+	WebResourceAccessActivityClassUID    = 6004
+	WebResourceAccessActivityCategoryUID = 6
+)
+
+// WebResourceAccessActivity is the OCSF 1.5.0 class "Web Resource Access Activity". Web Resource Access Activity events describe successful/failed attempts to access a web resource over HTTP.
+//
+// Deprecated: since OCSF 1.0.0. Use the Web Resources Activity class with the Security Control and/or Network Proxy profile instead.
+type WebResourceAccessActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Application Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Web Resource Access Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// HTTP Request (required): Details about the underlying HTTP request.
+	HTTPRequest *HTTPRequest `json:"http_request,omitempty"`
+	// HTTP Response (optional): Details about the HTTP response, if available.
+	HTTPResponse *HTTPResponse `json:"http_response,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Source Endpoint (recommended): Details about the source endpoint of the request.
+	SrcEndpoint *NetworkEndpoint `json:"src_endpoint,omitempty"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// TLS (optional): The Transport Layer Security (TLS) attributes, if available.
+	TLS *TLS `json:"tls,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+	// Web Resources (required): Details about the resource that is the target of the activity.
+	WebResources []WebResource `json:"web_resources,omitempty"`
+}
+
+// WebResourceAccessActivityActivityID values.
+const (
+	WebResourceAccessActivityActivityIDUnknown      = 0  // Unknown
+	WebResourceAccessActivityActivityIDAccessGrant  = 1  // Access Grant
+	WebResourceAccessActivityActivityIDAccessDeny   = 2  // Access Deny
+	WebResourceAccessActivityActivityIDAccessRevoke = 3  // Access Revoke
+	WebResourceAccessActivityActivityIDAccessError  = 4  // Access Error
+	WebResourceAccessActivityActivityIDOther        = 99 // Other
+)
+
+// WebResourceAccessActivityCategoryUID values.
+const (
+	WebResourceAccessActivityCategoryUIDApplicationActivity = 6 // Application Activity
+)
+
+// WebResourceAccessActivityClassUID values.
+const (
+	WebResourceAccessActivityClassUIDWebResourceAccessActivity = 6004 // Web Resource Access Activity
+)
+
+// WebResourceAccessActivitySeverityID values.
+const (
+	WebResourceAccessActivitySeverityIDUnknown       = 0  // Unknown
+	WebResourceAccessActivitySeverityIDInformational = 1  // Informational
+	WebResourceAccessActivitySeverityIDLow           = 2  // Low
+	WebResourceAccessActivitySeverityIDMedium        = 3  // Medium
+	WebResourceAccessActivitySeverityIDHigh          = 4  // High
+	WebResourceAccessActivitySeverityIDCritical      = 5  // Critical
+	WebResourceAccessActivitySeverityIDFatal         = 6  // Fatal
+	WebResourceAccessActivitySeverityIDOther         = 99 // Other
+)
+
+// WebResourceAccessActivityStatusID values.
+const (
+	WebResourceAccessActivityStatusIDUnknown = 0  // Unknown
+	WebResourceAccessActivityStatusIDSuccess = 1  // Success
+	WebResourceAccessActivityStatusIDFailure = 2  // Failure
+	WebResourceAccessActivityStatusIDOther   = 99 // Other
+)
+
+// WebResourceAccessActivityTypeUID values.
+const (
+	WebResourceAccessActivityTypeUIDUnknown      = 600400 // Web Resource Access Activity: Unknown
+	WebResourceAccessActivityTypeUIDAccessGrant  = 600401 // Web Resource Access Activity: Access Grant
+	WebResourceAccessActivityTypeUIDAccessDeny   = 600402 // Web Resource Access Activity: Access Deny
+	WebResourceAccessActivityTypeUIDAccessRevoke = 600403 // Web Resource Access Activity: Access Revoke
+	WebResourceAccessActivityTypeUIDAccessError  = 600404 // Web Resource Access Activity: Access Error
+	WebResourceAccessActivityTypeUIDOther        = 600499 // Web Resource Access Activity: Other
+)
+
+// WebResourcesActivity class constants.
+const (
+	WebResourcesActivityClassUID    = 6001
+	WebResourcesActivityCategoryUID = 6
+)
+
+// WebResourcesActivity is the OCSF 1.5.0 class "Web Resources Activity". Web Resources Activity events describe actions executed on a set of Web Resources.
+type WebResourcesActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Application Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Web Resources Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Destination Endpoint (recommended): Details about server providing the web resources.
+	DstEndpoint *NetworkEndpoint `json:"dst_endpoint,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// HTTP Request (recommended): Details about the underlying HTTP request.
+	HTTPRequest *HTTPRequest `json:"http_request,omitempty"`
+	// HTTP Response (optional): Details about the HTTP response, if available.
+	HTTPResponse *HTTPResponse `json:"http_response,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Source Endpoint (recommended): Details about the endpoint from which the request originated.
+	SrcEndpoint *NetworkEndpoint `json:"src_endpoint,omitempty"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// TLS (optional): The Transport Layer Security (TLS) attributes, if available.
+	TLS *TLS `json:"tls,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+	// Web Resources (required): Describes details about web resources that were affected by an activity/event.
+	WebResources []WebResource `json:"web_resources,omitempty"`
+	// Web Resources Result (recommended): The results of the activity on web resources.
+	WebResourcesResult []WebResource `json:"web_resources_result,omitempty"`
+}
+
+// WebResourcesActivityActivityID values.
+const (
+	WebResourcesActivityActivityIDUnknown = 0  // Unknown
+	WebResourcesActivityActivityIDCreate  = 1  // Create
+	WebResourcesActivityActivityIDRead    = 2  // Read
+	WebResourcesActivityActivityIDUpdate  = 3  // Update
+	WebResourcesActivityActivityIDDelete  = 4  // Delete
+	WebResourcesActivityActivityIDSearch  = 5  // Search
+	WebResourcesActivityActivityIDImport  = 6  // Import
+	WebResourcesActivityActivityIDExport  = 7  // Export
+	WebResourcesActivityActivityIDShare   = 8  // Share
+	WebResourcesActivityActivityIDOther   = 99 // Other
+)
+
+// WebResourcesActivityCategoryUID values.
+const (
+	WebResourcesActivityCategoryUIDApplicationActivity = 6 // Application Activity
+)
+
+// WebResourcesActivityClassUID values.
+const (
+	WebResourcesActivityClassUIDWebResourcesActivity = 6001 // Web Resources Activity
+)
+
+// WebResourcesActivitySeverityID values.
+const (
+	WebResourcesActivitySeverityIDUnknown       = 0  // Unknown
+	WebResourcesActivitySeverityIDInformational = 1  // Informational
+	WebResourcesActivitySeverityIDLow           = 2  // Low
+	WebResourcesActivitySeverityIDMedium        = 3  // Medium
+	WebResourcesActivitySeverityIDHigh          = 4  // High
+	WebResourcesActivitySeverityIDCritical      = 5  // Critical
+	WebResourcesActivitySeverityIDFatal         = 6  // Fatal
+	WebResourcesActivitySeverityIDOther         = 99 // Other
+)
+
+// WebResourcesActivityStatusID values.
+const (
+	WebResourcesActivityStatusIDUnknown = 0  // Unknown
+	WebResourcesActivityStatusIDSuccess = 1  // Success
+	WebResourcesActivityStatusIDFailure = 2  // Failure
+	WebResourcesActivityStatusIDOther   = 99 // Other
+)
+
+// WebResourcesActivityTypeUID values.
+const (
+	WebResourcesActivityTypeUIDUnknown = 600100 // Web Resources Activity: Unknown
+	WebResourcesActivityTypeUIDCreate  = 600101 // Web Resources Activity: Create
+	WebResourcesActivityTypeUIDRead    = 600102 // Web Resources Activity: Read
+	WebResourcesActivityTypeUIDUpdate  = 600103 // Web Resources Activity: Update
+	WebResourcesActivityTypeUIDDelete  = 600104 // Web Resources Activity: Delete
+	WebResourcesActivityTypeUIDSearch  = 600105 // Web Resources Activity: Search
+	WebResourcesActivityTypeUIDImport  = 600106 // Web Resources Activity: Import
+	WebResourcesActivityTypeUIDExport  = 600107 // Web Resources Activity: Export
+	WebResourcesActivityTypeUIDShare   = 600108 // Web Resources Activity: Share
+	WebResourcesActivityTypeUIDOther   = 600199 // Web Resources Activity: Other
+)
+
+// WinPrefetchQuery class constants.
+const (
+	WinPrefetchQueryClassUID    = 205019
+	WinPrefetchQueryCategoryUID = 5
+)
+
+// WinPrefetchQuery is the OCSF 1.5.0 class "Prefetch Query". Prefetch Query events report information about Windows prefetch files.
+//
+// Deprecated: since OCSF 1.5.0. Use the Evidence Info class with the Query Evidence object populated with File instead.
+type WinPrefetchQuery struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Discovery.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Prefetch Query.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Last Run (recommended): The prefetch file last run time.
+	LastRunTime int64 `json:"last_run_time,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Name (required): The name of the prefetch file that is the target of the query.
+	Name string `json:"name"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Query Info (recommended): The search details associated with the query request.
+	QueryInfo *QueryInfo `json:"query_info,omitempty"`
+	// Query Result (recommended): The result of the query.
+	QueryResult string `json:"query_result,omitempty"`
+	// Query Result ID (required): The normalized identifier of the query result.
+	QueryResultID int `json:"query_result_id"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Run Count (recommended): The prefetch file run count.
+	RunCount int `json:"run_count,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// WinPrefetchQueryActivityID values.
+const (
+	WinPrefetchQueryActivityIDUnknown = 0  // Unknown
+	WinPrefetchQueryActivityIDQuery   = 1  // Query
+	WinPrefetchQueryActivityIDOther   = 99 // Other
+)
+
+// WinPrefetchQueryCategoryUID values.
+const (
+	WinPrefetchQueryCategoryUIDDiscovery = 5 // Discovery
+)
+
+// WinPrefetchQueryClassUID values.
+const (
+	WinPrefetchQueryClassUIDPrefetchQuery = 205019 // Prefetch Query
+)
+
+// WinPrefetchQueryQueryResultID values.
+const (
+	WinPrefetchQueryQueryResultIDUnknown      = 0  // Unknown
+	WinPrefetchQueryQueryResultIDExists       = 1  // Exists
+	WinPrefetchQueryQueryResultIDPartial      = 2  // Partial
+	WinPrefetchQueryQueryResultIDDoesNotExist = 3  // Does not exist
+	WinPrefetchQueryQueryResultIDError        = 4  // Error
+	WinPrefetchQueryQueryResultIDUnsupported  = 5  // Unsupported
+	WinPrefetchQueryQueryResultIDOther        = 99 // Other
+)
+
+// WinPrefetchQuerySeverityID values.
+const (
+	WinPrefetchQuerySeverityIDUnknown       = 0  // Unknown
+	WinPrefetchQuerySeverityIDInformational = 1  // Informational
+	WinPrefetchQuerySeverityIDLow           = 2  // Low
+	WinPrefetchQuerySeverityIDMedium        = 3  // Medium
+	WinPrefetchQuerySeverityIDHigh          = 4  // High
+	WinPrefetchQuerySeverityIDCritical      = 5  // Critical
+	WinPrefetchQuerySeverityIDFatal         = 6  // Fatal
+	WinPrefetchQuerySeverityIDOther         = 99 // Other
+)
+
+// WinPrefetchQueryStatusID values.
+const (
+	WinPrefetchQueryStatusIDUnknown = 0  // Unknown
+	WinPrefetchQueryStatusIDSuccess = 1  // Success
+	WinPrefetchQueryStatusIDFailure = 2  // Failure
+	WinPrefetchQueryStatusIDOther   = 99 // Other
+)
+
+// WinPrefetchQueryTypeUID values.
+const (
+	WinPrefetchQueryTypeUIDUnknown = 20501900 // Prefetch Query: Unknown
+	WinPrefetchQueryTypeUIDQuery   = 20501901 // Prefetch Query: Query
+	WinPrefetchQueryTypeUIDOther   = 20501999 // Prefetch Query: Other
+)
+
+// WinRegistryKeyActivity class constants.
+const (
+	WinRegistryKeyActivityClassUID    = 201001
+	WinRegistryKeyActivityCategoryUID = 1
+)
+
+// WinRegistryKeyActivity is the OCSF 1.5.0 class "Registry Key Activity". Registry Key Activity events report when a process performs an action on a Windows registry key.
+type WinRegistryKeyActivity struct {
+	// Access Mask (recommended): The access mask in a platform-native format.
+	AccessMask int `json:"access_mask,omitempty"`
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Actor (required): The actor that performed the activity on the reg_key object.
+	Actor *Actor `json:"actor,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: System Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Registry Key Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Create Mask (recommended): The original Windows mask that is required to create the object.
+	CreateMask string `json:"create_mask,omitempty"`
+	// Device (required): An addressable device, computer system or host.
+	Device *Device `json:"device,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Open Mask (recommended): The Windows options needed to open a registry key.
+	OpenMask int `json:"open_mask,omitempty"`
+	// Previous Registry Key (recommended): The registry key before the mutation
+	PrevRegKey *WinRegKey `json:"prev_reg_key,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Registry Key (required): The registry key.
+	RegKey *WinRegKey `json:"reg_key,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// WinRegistryKeyActivityActivityID values.
+const (
+	WinRegistryKeyActivityActivityIDUnknown     = 0  // Unknown
+	WinRegistryKeyActivityActivityIDCreate      = 1  // Create
+	WinRegistryKeyActivityActivityIDRead        = 2  // Read
+	WinRegistryKeyActivityActivityIDModify      = 3  // Modify
+	WinRegistryKeyActivityActivityIDDelete      = 4  // Delete
+	WinRegistryKeyActivityActivityIDRename      = 5  // Rename
+	WinRegistryKeyActivityActivityIDSetSecurity = 6  // Set Security
+	WinRegistryKeyActivityActivityIDRestore     = 7  // Restore
+	WinRegistryKeyActivityActivityIDImport      = 8  // Import
+	WinRegistryKeyActivityActivityIDExport      = 9  // Export
+	WinRegistryKeyActivityActivityIDOther       = 99 // Other
+)
+
+// WinRegistryKeyActivityCategoryUID values.
+const (
+	WinRegistryKeyActivityCategoryUIDSystemActivity = 1 // System Activity
+)
+
+// WinRegistryKeyActivityClassUID values.
+const (
+	WinRegistryKeyActivityClassUIDRegistryKeyActivity = 201001 // Registry Key Activity
+)
+
+// WinRegistryKeyActivitySeverityID values.
+const (
+	WinRegistryKeyActivitySeverityIDUnknown       = 0  // Unknown
+	WinRegistryKeyActivitySeverityIDInformational = 1  // Informational
+	WinRegistryKeyActivitySeverityIDLow           = 2  // Low
+	WinRegistryKeyActivitySeverityIDMedium        = 3  // Medium
+	WinRegistryKeyActivitySeverityIDHigh          = 4  // High
+	WinRegistryKeyActivitySeverityIDCritical      = 5  // Critical
+	WinRegistryKeyActivitySeverityIDFatal         = 6  // Fatal
+	WinRegistryKeyActivitySeverityIDOther         = 99 // Other
+)
+
+// WinRegistryKeyActivityStatusID values.
+const (
+	WinRegistryKeyActivityStatusIDUnknown = 0  // Unknown
+	WinRegistryKeyActivityStatusIDSuccess = 1  // Success
+	WinRegistryKeyActivityStatusIDFailure = 2  // Failure
+	WinRegistryKeyActivityStatusIDOther   = 99 // Other
+)
+
+// WinRegistryKeyActivityTypeUID values.
+const (
+	WinRegistryKeyActivityTypeUIDUnknown     = 20100100 // Registry Key Activity: Unknown
+	WinRegistryKeyActivityTypeUIDCreate      = 20100101 // Registry Key Activity: Create
+	WinRegistryKeyActivityTypeUIDRead        = 20100102 // Registry Key Activity: Read
+	WinRegistryKeyActivityTypeUIDModify      = 20100103 // Registry Key Activity: Modify
+	WinRegistryKeyActivityTypeUIDDelete      = 20100104 // Registry Key Activity: Delete
+	WinRegistryKeyActivityTypeUIDRename      = 20100105 // Registry Key Activity: Rename
+	WinRegistryKeyActivityTypeUIDSetSecurity = 20100106 // Registry Key Activity: Set Security
+	WinRegistryKeyActivityTypeUIDRestore     = 20100107 // Registry Key Activity: Restore
+	WinRegistryKeyActivityTypeUIDImport      = 20100108 // Registry Key Activity: Import
+	WinRegistryKeyActivityTypeUIDExport      = 20100109 // Registry Key Activity: Export
+	WinRegistryKeyActivityTypeUIDOther       = 20100199 // Registry Key Activity: Other
+)
+
+// WinRegistryKeyQuery class constants.
+const (
+	WinRegistryKeyQueryClassUID    = 205004
+	WinRegistryKeyQueryCategoryUID = 5
+)
+
+// WinRegistryKeyQuery is the OCSF 1.5.0 class "Registry Key Query". Registry Key Query events report information about discovered Windows registry keys.
+//
+// Deprecated: since OCSF 1.5.0. Use the Evidence Info class with the Query Evidence object populated with Registry Key instead.
+type WinRegistryKeyQuery struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Discovery.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Registry Key Query.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Query Info (recommended): The search details associated with the query request.
+	QueryInfo *QueryInfo `json:"query_info,omitempty"`
+	// Query Result (recommended): The result of the query.
+	QueryResult string `json:"query_result,omitempty"`
+	// Query Result ID (required): The normalized identifier of the query result.
+	QueryResultID int `json:"query_result_id"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Registry Key (required): The registry key that pertains to the event.
+	RegKey *WinRegKey `json:"reg_key,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// WinRegistryKeyQueryActivityID values.
+const (
+	WinRegistryKeyQueryActivityIDUnknown = 0  // Unknown
+	WinRegistryKeyQueryActivityIDQuery   = 1  // Query
+	WinRegistryKeyQueryActivityIDOther   = 99 // Other
+)
+
+// WinRegistryKeyQueryCategoryUID values.
+const (
+	WinRegistryKeyQueryCategoryUIDDiscovery = 5 // Discovery
+)
+
+// WinRegistryKeyQueryClassUID values.
+const (
+	WinRegistryKeyQueryClassUIDRegistryKeyQuery = 205004 // Registry Key Query
+)
+
+// WinRegistryKeyQueryQueryResultID values.
+const (
+	WinRegistryKeyQueryQueryResultIDUnknown      = 0  // Unknown
+	WinRegistryKeyQueryQueryResultIDExists       = 1  // Exists
+	WinRegistryKeyQueryQueryResultIDPartial      = 2  // Partial
+	WinRegistryKeyQueryQueryResultIDDoesNotExist = 3  // Does not exist
+	WinRegistryKeyQueryQueryResultIDError        = 4  // Error
+	WinRegistryKeyQueryQueryResultIDUnsupported  = 5  // Unsupported
+	WinRegistryKeyQueryQueryResultIDOther        = 99 // Other
+)
+
+// WinRegistryKeyQuerySeverityID values.
+const (
+	WinRegistryKeyQuerySeverityIDUnknown       = 0  // Unknown
+	WinRegistryKeyQuerySeverityIDInformational = 1  // Informational
+	WinRegistryKeyQuerySeverityIDLow           = 2  // Low
+	WinRegistryKeyQuerySeverityIDMedium        = 3  // Medium
+	WinRegistryKeyQuerySeverityIDHigh          = 4  // High
+	WinRegistryKeyQuerySeverityIDCritical      = 5  // Critical
+	WinRegistryKeyQuerySeverityIDFatal         = 6  // Fatal
+	WinRegistryKeyQuerySeverityIDOther         = 99 // Other
+)
+
+// WinRegistryKeyQueryStatusID values.
+const (
+	WinRegistryKeyQueryStatusIDUnknown = 0  // Unknown
+	WinRegistryKeyQueryStatusIDSuccess = 1  // Success
+	WinRegistryKeyQueryStatusIDFailure = 2  // Failure
+	WinRegistryKeyQueryStatusIDOther   = 99 // Other
+)
+
+// WinRegistryKeyQueryTypeUID values.
+const (
+	WinRegistryKeyQueryTypeUIDUnknown = 20500400 // Registry Key Query: Unknown
+	WinRegistryKeyQueryTypeUIDQuery   = 20500401 // Registry Key Query: Query
+	WinRegistryKeyQueryTypeUIDOther   = 20500499 // Registry Key Query: Other
+)
+
+// WinRegistryValueActivity class constants.
+const (
+	WinRegistryValueActivityClassUID    = 201002
+	WinRegistryValueActivityCategoryUID = 1
+)
+
+// WinRegistryValueActivity is the OCSF 1.5.0 class "Registry Value Activity". Registry Value Activity events reports when a process performs an action on a Windows registry value.
+type WinRegistryValueActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Actor (required): The actor that performed the activity on the reg_value object.
+	Actor *Actor `json:"actor,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: System Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Registry Value Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Device (required): An addressable device, computer system or host.
+	Device *Device `json:"device,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Previous Registry Value (optional): The registry value before the mutation
+	PrevRegValue *WinRegValue `json:"prev_reg_value,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Registry Value (required): The registry value.
+	RegValue *WinRegValue `json:"reg_value,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// WinRegistryValueActivityActivityID values.
+const (
+	WinRegistryValueActivityActivityIDUnknown = 0  // Unknown
+	WinRegistryValueActivityActivityIDGet     = 1  // Get
+	WinRegistryValueActivityActivityIDSet     = 2  // Set
+	WinRegistryValueActivityActivityIDModify  = 3  // Modify
+	WinRegistryValueActivityActivityIDDelete  = 4  // Delete
+	WinRegistryValueActivityActivityIDOther   = 99 // Other
+)
+
+// WinRegistryValueActivityCategoryUID values.
+const (
+	WinRegistryValueActivityCategoryUIDSystemActivity = 1 // System Activity
+)
+
+// WinRegistryValueActivityClassUID values.
+const (
+	WinRegistryValueActivityClassUIDRegistryValueActivity = 201002 // Registry Value Activity
+)
+
+// WinRegistryValueActivitySeverityID values.
+const (
+	WinRegistryValueActivitySeverityIDUnknown       = 0  // Unknown
+	WinRegistryValueActivitySeverityIDInformational = 1  // Informational
+	WinRegistryValueActivitySeverityIDLow           = 2  // Low
+	WinRegistryValueActivitySeverityIDMedium        = 3  // Medium
+	WinRegistryValueActivitySeverityIDHigh          = 4  // High
+	WinRegistryValueActivitySeverityIDCritical      = 5  // Critical
+	WinRegistryValueActivitySeverityIDFatal         = 6  // Fatal
+	WinRegistryValueActivitySeverityIDOther         = 99 // Other
+)
+
+// WinRegistryValueActivityStatusID values.
+const (
+	WinRegistryValueActivityStatusIDUnknown = 0  // Unknown
+	WinRegistryValueActivityStatusIDSuccess = 1  // Success
+	WinRegistryValueActivityStatusIDFailure = 2  // Failure
+	WinRegistryValueActivityStatusIDOther   = 99 // Other
+)
+
+// WinRegistryValueActivityTypeUID values.
+const (
+	WinRegistryValueActivityTypeUIDUnknown = 20100200 // Registry Value Activity: Unknown
+	WinRegistryValueActivityTypeUIDGet     = 20100201 // Registry Value Activity: Get
+	WinRegistryValueActivityTypeUIDSet     = 20100202 // Registry Value Activity: Set
+	WinRegistryValueActivityTypeUIDModify  = 20100203 // Registry Value Activity: Modify
+	WinRegistryValueActivityTypeUIDDelete  = 20100204 // Registry Value Activity: Delete
+	WinRegistryValueActivityTypeUIDOther   = 20100299 // Registry Value Activity: Other
+)
+
+// WinRegistryValueQuery class constants.
+const (
+	WinRegistryValueQueryClassUID    = 205005
+	WinRegistryValueQueryCategoryUID = 5
+)
+
+// WinRegistryValueQuery is the OCSF 1.5.0 class "Registry Value Query". Registry Value Query events report information about discovered Windows registry values.
+//
+// Deprecated: since OCSF 1.5.0. Use the Evidence Info class with the Query Evidence object populated with Registry Value instead.
+type WinRegistryValueQuery struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: Discovery.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Registry Value Query.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Query Info (recommended): The search details associated with the query request.
+	QueryInfo *QueryInfo `json:"query_info,omitempty"`
+	// Query Result (recommended): The result of the query.
+	QueryResult string `json:"query_result,omitempty"`
+	// Query Result ID (required): The normalized identifier of the query result.
+	QueryResultID int `json:"query_result_id"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Registry Value (required): The registry value that pertains to the event.
+	RegValue *WinRegValue `json:"reg_value,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+}
+
+// WinRegistryValueQueryActivityID values.
+const (
+	WinRegistryValueQueryActivityIDUnknown = 0  // Unknown
+	WinRegistryValueQueryActivityIDQuery   = 1  // Query
+	WinRegistryValueQueryActivityIDOther   = 99 // Other
+)
+
+// WinRegistryValueQueryCategoryUID values.
+const (
+	WinRegistryValueQueryCategoryUIDDiscovery = 5 // Discovery
+)
+
+// WinRegistryValueQueryClassUID values.
+const (
+	WinRegistryValueQueryClassUIDRegistryValueQuery = 205005 // Registry Value Query
+)
+
+// WinRegistryValueQueryQueryResultID values.
+const (
+	WinRegistryValueQueryQueryResultIDUnknown      = 0  // Unknown
+	WinRegistryValueQueryQueryResultIDExists       = 1  // Exists
+	WinRegistryValueQueryQueryResultIDPartial      = 2  // Partial
+	WinRegistryValueQueryQueryResultIDDoesNotExist = 3  // Does not exist
+	WinRegistryValueQueryQueryResultIDError        = 4  // Error
+	WinRegistryValueQueryQueryResultIDUnsupported  = 5  // Unsupported
+	WinRegistryValueQueryQueryResultIDOther        = 99 // Other
+)
+
+// WinRegistryValueQuerySeverityID values.
+const (
+	WinRegistryValueQuerySeverityIDUnknown       = 0  // Unknown
+	WinRegistryValueQuerySeverityIDInformational = 1  // Informational
+	WinRegistryValueQuerySeverityIDLow           = 2  // Low
+	WinRegistryValueQuerySeverityIDMedium        = 3  // Medium
+	WinRegistryValueQuerySeverityIDHigh          = 4  // High
+	WinRegistryValueQuerySeverityIDCritical      = 5  // Critical
+	WinRegistryValueQuerySeverityIDFatal         = 6  // Fatal
+	WinRegistryValueQuerySeverityIDOther         = 99 // Other
+)
+
+// WinRegistryValueQueryStatusID values.
+const (
+	WinRegistryValueQueryStatusIDUnknown = 0  // Unknown
+	WinRegistryValueQueryStatusIDSuccess = 1  // Success
+	WinRegistryValueQueryStatusIDFailure = 2  // Failure
+	WinRegistryValueQueryStatusIDOther   = 99 // Other
+)
+
+// WinRegistryValueQueryTypeUID values.
+const (
+	WinRegistryValueQueryTypeUIDUnknown = 20500500 // Registry Value Query: Unknown
+	WinRegistryValueQueryTypeUIDQuery   = 20500501 // Registry Value Query: Query
+	WinRegistryValueQueryTypeUIDOther   = 20500599 // Registry Value Query: Other
+)
+
+// WinWindowsResourceActivity class constants.
+const (
+	WinWindowsResourceActivityClassUID    = 201003
+	WinWindowsResourceActivityCategoryUID = 1
+)
+
+// WinWindowsResourceActivity is the OCSF 1.5.0 class "Windows Resource Activity". Windows Resource Activity events report when a process accesses a Windows managed resource object, successful or otherwise.
+type WinWindowsResourceActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Actor (required): The actor object describes details about the user/role/process that was the source of the activity.
+	Actor *Actor `json:"actor,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: System Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Windows Resource Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Device (required): An addressable device, computer system or host.
+	Device *Device `json:"device,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+	// Windows Resource (required): The Windows resource object that was accessed, such as a mutant or timer.
+	WinResource *WinWinResource `json:"win_resource,omitempty"`
+}
+
+// WinWindowsResourceActivityActivityID values.
+const (
+	WinWindowsResourceActivityActivityIDUnknown = 0  // Unknown
+	WinWindowsResourceActivityActivityIDAccess  = 1  // Access
+	WinWindowsResourceActivityActivityIDOther   = 99 // Other
+)
+
+// WinWindowsResourceActivityCategoryUID values.
+const (
+	WinWindowsResourceActivityCategoryUIDSystemActivity = 1 // System Activity
+)
+
+// WinWindowsResourceActivityClassUID values.
+const (
+	WinWindowsResourceActivityClassUIDWindowsResourceActivity = 201003 // Windows Resource Activity
+)
+
+// WinWindowsResourceActivitySeverityID values.
+const (
+	WinWindowsResourceActivitySeverityIDUnknown       = 0  // Unknown
+	WinWindowsResourceActivitySeverityIDInformational = 1  // Informational
+	WinWindowsResourceActivitySeverityIDLow           = 2  // Low
+	WinWindowsResourceActivitySeverityIDMedium        = 3  // Medium
+	WinWindowsResourceActivitySeverityIDHigh          = 4  // High
+	WinWindowsResourceActivitySeverityIDCritical      = 5  // Critical
+	WinWindowsResourceActivitySeverityIDFatal         = 6  // Fatal
+	WinWindowsResourceActivitySeverityIDOther         = 99 // Other
+)
+
+// WinWindowsResourceActivityStatusID values.
+const (
+	WinWindowsResourceActivityStatusIDUnknown = 0  // Unknown
+	WinWindowsResourceActivityStatusIDSuccess = 1  // Success
+	WinWindowsResourceActivityStatusIDFailure = 2  // Failure
+	WinWindowsResourceActivityStatusIDOther   = 99 // Other
+)
+
+// WinWindowsResourceActivityTypeUID values.
+const (
+	WinWindowsResourceActivityTypeUIDUnknown = 20100300 // Windows Resource Activity: Unknown
+	WinWindowsResourceActivityTypeUIDAccess  = 20100301 // Windows Resource Activity: Access
+	WinWindowsResourceActivityTypeUIDOther   = 20100399 // Windows Resource Activity: Other
+)
+
+// WinWindowsServiceActivity class constants.
+const (
+	WinWindowsServiceActivityClassUID    = 201004
+	WinWindowsServiceActivityCategoryUID = 1
+)
+
+// WinWindowsServiceActivity is the OCSF 1.5.0 class "Windows Service Activity". Windows Service Activity events report when a process interacts with the Service Control Manager.
+type WinWindowsServiceActivity struct {
+	// Activity ID (required): The normalized identifier of the activity that triggered the event.
+	ActivityID int `json:"activity_id"`
+	// Activity (optional): The event activity name, as defined by the activity_id.
+	ActivityName string `json:"activity_name,omitempty"`
+	// Actor (required): The actor object describes details about the user/role/process that was the source of the activity.
+	Actor *Actor `json:"actor,omitempty"`
+	// Category (optional): The event category name, as defined by category_uid value: System Activity.
+	CategoryName string `json:"category_name,omitempty"`
+	// Category ID (required): The category unique identifier of the event.
+	CategoryUID int `json:"category_uid"`
+	// Class (optional): The event class name, as defined by class_uid value: Windows Service Activity.
+	ClassName string `json:"class_name,omitempty"`
+	// Class ID (required): The unique identifier of a class.
+	ClassUID int `json:"class_uid"`
+	// Count (optional): The number of times that events in the same logical group occurred during the event Start Time to End Time period.
+	Count int `json:"count,omitempty"`
+	// Device (required): An addressable device, computer system or host.
+	Device *Device `json:"device,omitempty"`
+	// Duration Milliseconds (optional): The event duration or aggregate time, the amount of time the event covers from start_time to end_time in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end time of a time period, or the time of the most recent event included in the aggregate event.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Enrichments (optional): The additional information from an external data source, which is associated with the event or a finding.
+	Enrichments []Enrichment `json:"enrichments,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Metadata (required): The metadata associated with the event or a finding.
+	Metadata *Metadata `json:"metadata,omitempty"`
+	// Observables (recommended): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Raw Data (optional): The raw event/finding data as received from the source.
+	RawData string `json:"raw_data,omitempty"`
+	// Raw Data Size (optional): The size of the raw data which was transformed into an OCSF event, in bytes.
+	RawDataSize int64 `json:"raw_data_size,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (required): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id"`
+	// Start Time (optional): The start time of a time period, or the time of the least recent event included in the aggregate event.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Status (recommended): The event status, normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (recommended): The event status code, as reported by the event source.For example, in a Windows Failed Authentication event, this would be the value of 'Failure Code', e.g.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Detail (recommended): The status detail contains additional information about the event/finding outcome.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Status ID (recommended): The normalized identifier of the event status.
+	StatusID int `json:"status_id,omitempty"`
+	// Event Time (required): The normalized event occurrence time or the finding creation time.
+	Time int64 `json:"time"`
+	// Timezone Offset (recommended): The number of minutes that the reported event time is ahead or behind UTC, in the range -1,080 to +1,080.
+	TimezoneOffset int `json:"timezone_offset,omitempty"`
+	// Type Name (optional): The event/finding type name, as defined by the type_uid.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (required): The event/finding type ID.
+	TypeUID int64 `json:"type_uid"`
+	// Unmapped Data (optional): The attributes that are not mapped to the event schema.
+	Unmapped map[string]any `json:"unmapped,omitempty"`
+	// Windows Service (required): The Windows service.
+	WinService *WinWinService `json:"win_service,omitempty"`
+}
+
+// WinWindowsServiceActivityActivityID values.
+const (
+	WinWindowsServiceActivityActivityIDUnknown     = 0  // Unknown
+	WinWindowsServiceActivityActivityIDCreate      = 1  // Create
+	WinWindowsServiceActivityActivityIDReconfigure = 2  // Reconfigure
+	WinWindowsServiceActivityActivityIDStart       = 3  // Start
+	WinWindowsServiceActivityActivityIDStop        = 4  // Stop
+	WinWindowsServiceActivityActivityIDPause       = 5  // Pause
+	WinWindowsServiceActivityActivityIDContinue    = 6  // Continue
+	WinWindowsServiceActivityActivityIDDelete      = 7  // Delete
+	WinWindowsServiceActivityActivityIDOther       = 99 // Other
+)
+
+// WinWindowsServiceActivityCategoryUID values.
+const (
+	WinWindowsServiceActivityCategoryUIDSystemActivity = 1 // System Activity
+)
+
+// WinWindowsServiceActivityClassUID values.
+const (
+	WinWindowsServiceActivityClassUIDWindowsServiceActivity = 201004 // Windows Service Activity
+)
+
+// WinWindowsServiceActivitySeverityID values.
+const (
+	WinWindowsServiceActivitySeverityIDUnknown       = 0  // Unknown
+	WinWindowsServiceActivitySeverityIDInformational = 1  // Informational
+	WinWindowsServiceActivitySeverityIDLow           = 2  // Low
+	WinWindowsServiceActivitySeverityIDMedium        = 3  // Medium
+	WinWindowsServiceActivitySeverityIDHigh          = 4  // High
+	WinWindowsServiceActivitySeverityIDCritical      = 5  // Critical
+	WinWindowsServiceActivitySeverityIDFatal         = 6  // Fatal
+	WinWindowsServiceActivitySeverityIDOther         = 99 // Other
+)
+
+// WinWindowsServiceActivityStatusID values.
+const (
+	WinWindowsServiceActivityStatusIDUnknown = 0  // Unknown
+	WinWindowsServiceActivityStatusIDSuccess = 1  // Success
+	WinWindowsServiceActivityStatusIDFailure = 2  // Failure
+	WinWindowsServiceActivityStatusIDOther   = 99 // Other
+)
+
+// WinWindowsServiceActivityTypeUID values.
+const (
+	WinWindowsServiceActivityTypeUIDUnknown     = 20100400 // Windows Service Activity: Unknown
+	WinWindowsServiceActivityTypeUIDCreate      = 20100401 // Windows Service Activity: Create
+	WinWindowsServiceActivityTypeUIDReconfigure = 20100402 // Windows Service Activity: Reconfigure
+	WinWindowsServiceActivityTypeUIDStart       = 20100403 // Windows Service Activity: Start
+	WinWindowsServiceActivityTypeUIDStop        = 20100404 // Windows Service Activity: Stop
+	WinWindowsServiceActivityTypeUIDPause       = 20100405 // Windows Service Activity: Pause
+	WinWindowsServiceActivityTypeUIDContinue    = 20100406 // Windows Service Activity: Continue
+	WinWindowsServiceActivityTypeUIDDelete      = 20100407 // Windows Service Activity: Delete
+	WinWindowsServiceActivityTypeUIDOther       = 20100499 // Windows Service Activity: Other
+)
+
+// Account is the OCSF 1.5.0 object "Account". The Account object contains details about the account that initiated or performed a specific activity within a system or application.
+//
+// Constraint at_least_one: name, uid.
+type Account struct {
+	// Labels (optional): The list of labels associated to the account.
+	Labels []string `json:"labels,omitempty"`
+	// Name (recommended): The name of the account (e.g.
+	Name string `json:"name,omitempty"`
+	// Tags (optional): The list of tags; {key:value} pairs associated to the account.
+	Tags []KeyValueObject `json:"tags,omitempty"`
+	// Type (optional): The account type, normalized to the caption of 'account_type_id'.
+	Type string `json:"type,omitempty"`
+	// Type ID (recommended): The normalized account type identifier.
+	TypeID int `json:"type_id,omitempty"`
+	// Unique ID (recommended): The unique identifier of the account (e.g.
+	UID string `json:"uid,omitempty"`
+}
+
+// AccountTypeID values.
+const (
+	AccountTypeIDUnknown            = 0  // Unknown
+	AccountTypeIDLDAPAccount        = 1  // LDAP Account
+	AccountTypeIDWindowsAccount     = 2  // Windows Account
+	AccountTypeIDAWSIAMUser         = 3  // AWS IAM User
+	AccountTypeIDAWSIAMRole         = 4  // AWS IAM Role
+	AccountTypeIDGCPAccount         = 5  // GCP Account
+	AccountTypeIDAzureADAccount     = 6  // Azure AD Account
+	AccountTypeIDMacOSAccount       = 7  // Mac OS Account
+	AccountTypeIDAppleAccount       = 8  // Apple Account
+	AccountTypeIDLinuxAccount       = 9  // Linux Account
+	AccountTypeIDAWSAccount         = 10 // AWS Account
+	AccountTypeIDGCPProject         = 11 // GCP Project
+	AccountTypeIDOCICompartment     = 12 // OCI Compartment
+	AccountTypeIDAzureSubscription  = 13 // Azure Subscription
+	AccountTypeIDSalesforceAccount  = 14 // Salesforce Account
+	AccountTypeIDGoogleWorkspace    = 15 // Google Workspace
+	AccountTypeIDServicenowInstance = 16 // Servicenow Instance
+	AccountTypeIDM365Tenant         = 17 // M365 Tenant
+	AccountTypeIDEmailAccount       = 18 // Email Account
+	AccountTypeIDOther              = 99 // Other
+)
+
 // Actor is the OCSF 1.5.0 object "Actor". The Actor object contains details about the user, role, application, service, or process that initiated or performed a specific activity.
 //
 // Constraint at_least_one: process, user, invoked_by, session, app_name, app_uid.
-//
-// Not generated (object not in gen.yaml): authorizations (authorization), idp (idp), process (process).
 type Actor struct {
 	// Application Name (optional): The client application or service that initiated the activity.
 	AppName string `json:"app_name,omitempty"`
 	// Application ID (optional): The unique identifier of the client application or service that initiated the activity.
 	AppUID string `json:"app_uid,omitempty"`
+	// Authorization Information (optional): Provides details about an authorization, such as authorization outcome, and any associated policies related to the activity/event.
+	Authorizations []Authorization `json:"authorizations,omitempty"`
+	// Identity Provider (optional): This object describes details about the Identity Provider used.
+	Idp *Idp `json:"idp,omitempty"`
+	// Process (recommended): The process that initiated the activity.
+	Process *Process `json:"process,omitempty"`
 	// Session (optional): The user session from which the activity was initiated.
 	Session *Session `json:"session,omitempty"`
 	// User (recommended): The user that initiated the activity or the user context from which the activity was initiated.
 	User *User `json:"user,omitempty"`
 }
 
-// API is the OCSF 1.5.0 object "API". The API, or Application Programming Interface, object represents information pertaining to an API request and response.
+// Advisory is the OCSF 1.5.0 object "Advisory". The Advisory object represents publicly disclosed cybersecurity vulnerabilities defined in a Security advisory.
+type Advisory struct {
+	// Average Timespan (optional): The average time to patch.
+	AvgTimespan *Timespan `json:"avg_timespan,omitempty"`
+	// Patch Bulletin (optional): The Advisory bulletin identifier.
+	Bulletin string `json:"bulletin,omitempty"`
+	// Classification (optional): The vendors classification of the Advisory.
+	Classification string `json:"classification,omitempty"`
+	// Created Time (recommended): The time when the Advisory record was created.
+	CreatedTime int64 `json:"created_time,omitempty"`
+	// Description (optional): A brief description of the Advisory Record.
+	Desc string `json:"desc,omitempty"`
+	// Install State (recommended): The install state of the Advisory.
+	InstallState string `json:"install_state,omitempty"`
+	// Install State ID (recommended): The normalized install state ID of the Advisory.
+	InstallStateID int `json:"install_state_id,omitempty"`
+	// The patch is superseded. (optional): The Advisory has been replaced by another.
+	IsSuperseded bool `json:"is_superseded,omitempty"`
+	// Modified Time (optional): The time when the Advisory record was last updated.
+	ModifiedTime int64 `json:"modified_time,omitempty"`
+	// OS (recommended): The operating system the Advisory applies to.
+	OS *OS `json:"os,omitempty"`
+	// Product (optional): The product where the vulnerability was discovered.
+	Product *Product `json:"product,omitempty"`
+	// References (recommended): A list of reference URLs with additional information about the vulnerabilities disclosed in the Advisory.
+	References []string `json:"references,omitempty"`
+	// Related CVEs (optional): A list of Common Vulnerabilities and Exposures (CVE) identifiers related to the vulnerabilities disclosed in the Advisory.
+	RelatedCves []CVE `json:"related_cves,omitempty"`
+	// Related CWEs (optional): A list of Common Weakness Enumeration (CWE) identifiers related to the vulnerabilities disclosed in the Advisory.
+	RelatedCwes []CWE `json:"related_cwes,omitempty"`
+	// Size (optional): The size in bytes for the Advisory.
+	Size int64 `json:"size,omitempty"`
+	// Source URL (optional): The Advisory link from the source vendor.
+	SrcURL string `json:"src_url,omitempty"`
+	// Title (recommended): A title or a brief phrase summarizing the Advisory.
+	Title string `json:"title,omitempty"`
+	// Advisory ID (required): The unique identifier assigned to the advisory or disclosed vulnerability, e.g, GHSA-5mrr-rgp6-x4gr.
+	UID string `json:"uid"`
+}
+
+// AdvisoryInstallStateID values.
+const (
+	AdvisoryInstallStateIDUnknown                = 0  // Unknown
+	AdvisoryInstallStateIDInstalled              = 1  // Installed
+	AdvisoryInstallStateIDNotInstalled           = 2  // Not Installed
+	AdvisoryInstallStateIDInstalledPendingReboot = 3  // Installed Pending Reboot
+	AdvisoryInstallStateIDOther                  = 99 // Other
+)
+
+// AffectedCode is the OCSF 1.5.0 object "Affected Code". The Affected Code object describes details about a code block identified as vulnerable.
+type AffectedCode struct {
+	// End Column (recommended): The column number of the last part of the assessed code identified as vulnerable.
+	EndColumn int `json:"end_column,omitempty"`
+	// End Line (recommended): The line number of the last line of code block identified as vulnerable.
+	EndLine int `json:"end_line,omitempty"`
+	// File (required): Details about the file that contains the affected code block.
+	File *File `json:"file,omitempty"`
+	// Owner (optional): Details about the user that owns the affected file.
+	Owner *User `json:"owner,omitempty"`
+	// Remediation Guidance (optional): Describes the recommended remediation steps to address identified issue(s).
+	Remediation *Remediation `json:"remediation,omitempty"`
+	// Related Rule (recommended): Details about the specific rule, e.g., those defined as part of a larger policy, that triggered the finding.
+	Rule *Rule `json:"rule,omitempty"`
+	// Start Column (recommended): The column number of the first part of the assessed code identified as vulnerable.
+	StartColumn int `json:"start_column,omitempty"`
+	// Start Line (recommended): The line number of the first line of code block identified as vulnerable.
+	StartLine int `json:"start_line,omitempty"`
+}
+
+// AffectedPackage is the OCSF 1.5.0 object "Affected Software Package". The Affected Package object describes details about a software package identified as affected by a vulnerability/vulnerabilities.
+type AffectedPackage struct {
+	// Architecture (recommended): Architecture is a shorthand name describing the type of computer hardware the packaged software is meant to run on.
+	Architecture string `json:"architecture,omitempty"`
+	// The product CPE identifier (optional): The Common Platform Enumeration (CPE) name as described by (NIST) For example: cpe:/a:apple:safari:16.2.
+	CpeName string `json:"cpe_name,omitempty"`
+	// Epoch (optional): The software package epoch.
+	Epoch int `json:"epoch,omitempty"`
+	// Fixed In Version (optional): The software package version in which a reported vulnerability was patched/fixed.
+	FixedInVersion string `json:"fixed_in_version,omitempty"`
+	// Hash (optional): Cryptographic hash to identify the binary instance of a software component.
+	Hash *Fingerprint `json:"hash,omitempty"`
+	// Software License (optional): The software license applied to this package.
+	License string `json:"license,omitempty"`
+	// Software License URL (optional): The URL pointing to the license applied on package or software.
+	LicenseURL string `json:"license_url,omitempty"`
+	// Name (required): The software package name.
+	Name string `json:"name"`
+	// Package Manager (optional): The software packager manager utilized to manage a package on a system, e.g.
+	PackageManager string `json:"package_manager,omitempty"`
+	// Package Manager URL (optional): The URL of the package or library at the package manager, or the specific URL or URI of an internal package manager link such as AWS CodeArtifact or Artifactory.
+	PackageManagerURL string `json:"package_manager_url,omitempty"`
+	// Path (optional): The installation path of the affected package.
+	Path string `json:"path,omitempty"`
+	// Package URL (optional): A purl is a URL string used to identify and locate a software package in a mostly universal and uniform way across programming languages, package managers, packaging conventions, tools, APIs and databases.
+	Purl string `json:"purl,omitempty"`
+	// Software Release Details (optional): Release is the number of times a version of the software has been packaged.
+	Release string `json:"release,omitempty"`
+	// Remediation Guidance (optional): Describes the recommended remediation steps to address identified issue(s).
+	Remediation *Remediation `json:"remediation,omitempty"`
+	// Source URL (optional): The link to the specific library or package such as within GitHub, this is different from the link to the package manager where the library or package is hosted.
+	SrcURL string `json:"src_url,omitempty"`
+	// Type (optional): The type of software package, normalized to the caption of the type_id value.
+	Type string `json:"type,omitempty"`
+	// Type ID (recommended): The type of software package.
+	TypeID int `json:"type_id,omitempty"`
+	// Package UID (optional): A unique identifier for the package or library reported by the source tool.
+	UID string `json:"uid,omitempty"`
+	// Vendor Name (optional): The name of the vendor who published the software package.
+	VendorName string `json:"vendor_name,omitempty"`
+	// Version (required): The software package version.
+	Version string `json:"version"`
+}
+
+// AffectedPackageTypeID values.
+const (
+	AffectedPackageTypeIDUnknown         = 0  // Unknown
+	AffectedPackageTypeIDApplication     = 1  // Application
+	AffectedPackageTypeIDOperatingSystem = 2  // Operating System
+	AffectedPackageTypeIDOther           = 99 // Other
+)
+
+// Agent is the OCSF 1.5.0 object "Agent". An Agent (also known as a Sensor) is typically installed on an Operating System (OS) and serves as a specialized software component that can be designed to monitor, detect, collect, archive, or take action.
 //
-// Not generated (object not in gen.yaml): group (group), request (request), response (response).
+// Constraint at_least_one: uid, name.
+type Agent struct {
+	// Agent Name (recommended): The name of the agent or sensor.
+	Name string `json:"name,omitempty"`
+	// Agent Policies (optional): Describes the various policies that may be applied or enforced by an agent or sensor.
+	Policies []Policy `json:"policies,omitempty"`
+	// Agent Type (optional): The normalized caption of the type_id value for the agent or sensor.
+	Type string `json:"type,omitempty"`
+	// Type ID (recommended): The normalized representation of an agent or sensor.
+	TypeID int `json:"type_id,omitempty"`
+	// Agent ID (recommended): The UID of the agent or sensor, sometimes known as a Sensor ID or aid.
+	UID string `json:"uid,omitempty"`
+	// Alternate Agent ID (optional): An alternative or contextual identifier for the agent or sensor, such as a configuration, organization, or license UID.
+	UIDAlt string `json:"uid_alt,omitempty"`
+	// Vendor Name (optional): The company or author who created the agent or sensor.
+	VendorName string `json:"vendor_name,omitempty"`
+	// Agent Version (optional): The semantic version of the agent or sensor, e.g., 7.101.50.0.
+	Version string `json:"version,omitempty"`
+}
+
+// AgentTypeID values.
+const (
+	AgentTypeIDUnknown                            = 0  // Unknown
+	AgentTypeIDEndpointDetectionAndResponse       = 1  // Endpoint Detection and Response
+	AgentTypeIDDataLossPrevention                 = 2  // Data Loss Prevention
+	AgentTypeIDBackupRecovery                     = 3  // Backup & Recovery
+	AgentTypeIDPerformanceMonitoringObservability = 4  // Performance Monitoring & Observability
+	AgentTypeIDVulnerabilityManagement            = 5  // Vulnerability Management
+	AgentTypeIDLogForwarding                      = 6  // Log Forwarding
+	AgentTypeIDMobileDeviceManagement             = 7  // Mobile Device Management
+	AgentTypeIDConfigurationManagement            = 8  // Configuration Management
+	AgentTypeIDRemoteAccess                       = 9  // Remote Access
+	AgentTypeIDOther                              = 99 // Other
+)
+
+// Aircraft is the OCSF 1.5.0 object "Aircraft". The Aircraft object represents any aircraft or otherwise airborne asset such as an unmanned system, airplane, balloon, spacecraft, or otherwise.
+//
+// Constraint at_least_one: name, serial_number, uid, uid_alt.
+type Aircraft struct {
+	// Geo Location (recommended): The detailed geographical location usually associated with an IP address.
+	Location *Location `json:"location,omitempty"`
+	// Model (optional): The model name of the aircraft or unmanned system.
+	Model string `json:"model,omitempty"`
+	// Name (recommended): The name of the aircraft, such as the such as the flight name or callsign.
+	Name string `json:"name,omitempty"`
+	// Serial Number (optional): The serial number of the aircraft.
+	SerialNumber string `json:"serial_number,omitempty"`
+	// Speed (optional): Ground speed of flight.
+	Speed string `json:"speed,omitempty"`
+	// Speed Accuracy (optional): Provides quality/containment on horizontal ground speed.
+	SpeedAccuracy string `json:"speed_accuracy,omitempty"`
+	// Track Direction (optional): Direction of flight expressed as a “True North-based” ground track angle.
+	TrackDirection string `json:"track_direction,omitempty"`
+	// Unique ID (recommended): The primary identification identifier for an aircraft, such as the 24-bit International Civil Aviation Organization (ICAO) identifier of the aircraft, as 6 hex digits.
+	UID string `json:"uid,omitempty"`
+	// Alternate ID (optional): A secondary identification identifier for an aircraft, such as the 4-digit squawk (octal representation).
+	UIDAlt string `json:"uid_alt,omitempty"`
+	// Vertical Speed (optional): Vertical speed upward relative to the WGS-84 datum, measured in meters per second.
+	VerticalSpeed string `json:"vertical_speed,omitempty"`
+}
+
+// AnalysisTarget is the OCSF 1.5.0 object "Analysis Target". The analysis target defines the scope of monitored activities, specifying what entity, system or process is analyzed for activity patterns.
+type AnalysisTarget struct {
+	// Name (required): The specific name or identifier of the analysis target, such as the username of a User Account, the name of a Kubernetes Cluster, the identifier of a Network Namespace, or the name of an Application Component.
+	Name string `json:"name"`
+	// Type (optional): The category of the analysis target, such as User Account, Kubernetes Cluster, Network Namespace, or Application Component.
+	Type string `json:"type,omitempty"`
+}
+
+// Analytic is the OCSF 1.5.0 object "Analytic". The Analytic object contains details about the analytic technique used to analyze and derive insights from the data or information that led to the creation of a finding or conclusion.
+//
+// Constraint at_least_one: name, uid.
+type Analytic struct {
+	// Algorithm (optional): The algorithm used by the underlying analytic to generate the finding.
+	Algorithm string `json:"algorithm,omitempty"`
+	// Category (optional): The analytic category.
+	Category string `json:"category,omitempty"`
+	// Description (optional): The description of the analytic that generated the finding.
+	Desc string `json:"desc,omitempty"`
+	// Name (recommended): The name of the analytic that generated the finding.
+	Name string `json:"name,omitempty"`
+	// Type (optional): The analytic type.
+	Type string `json:"type,omitempty"`
+	// Type ID (required): The analytic type ID.
+	TypeID int `json:"type_id"`
+	// Unique ID (recommended): The unique identifier of the analytic that generated the finding.
+	UID string `json:"uid,omitempty"`
+	// Version (optional): The analytic version.
+	Version string `json:"version,omitempty"`
+}
+
+// AnalyticTypeID values.
+const (
+	AnalyticTypeIDUnknown            = 0  // Unknown
+	AnalyticTypeIDRule               = 1  // Rule
+	AnalyticTypeIDBehavioral         = 2  // Behavioral
+	AnalyticTypeIDStatistical        = 3  // Statistical
+	AnalyticTypeIDLearningMLDL       = 4  // Learning (ML/DL)
+	AnalyticTypeIDFingerprinting     = 5  // Fingerprinting
+	AnalyticTypeIDTagging            = 6  // Tagging
+	AnalyticTypeIDKeywordMatch       = 7  // Keyword Match
+	AnalyticTypeIDRegularExpressions = 8  // Regular Expressions
+	AnalyticTypeIDExactDataMatch     = 9  // Exact Data Match
+	AnalyticTypeIDPartialDataMatch   = 10 // Partial Data Match
+	AnalyticTypeIDIndexedDataMatch   = 11 // Indexed Data Match
+	AnalyticTypeIDOther              = 99 // Other
+)
+
+// Anomaly is the OCSF 1.5.0 object "Anomaly". Describes an anomaly or deviation detected in a system.
+type Anomaly struct {
+	// Observation Parameter (required): The specific parameter, metric or property where the anomaly was observed.
+	ObservationParameter string `json:"observation_parameter"`
+	// Observation Type (recommended): The type of analysis methodology used to detect the anomaly.
+	ObservationType string `json:"observation_type,omitempty"`
+	// Observations (required): Details about the observed anomaly or observations that were flagged as anomalous compared to expected baseline behavior.
+	Observations []Observation `json:"observations,omitempty"`
+	// Observed Pattern (recommended): The specific pattern identified within the observation type.
+	ObservedPattern string `json:"observed_pattern,omitempty"`
+}
+
+// AnomalyAnalysis is the OCSF 1.5.0 object "Anomaly Analysis". Describes the analysis of activity patterns and anomalies of target entities to identify potential security threats, performance issues, or other deviations from established baselines.
+type AnomalyAnalysis struct {
+	// Analysis Targets (required): The analysis targets define the scope of monitored activities, specifying what entities, systems or processes are analyzed for activity patterns.
+	AnalysisTargets []AnalysisTarget `json:"analysis_targets,omitempty"`
+	// Anomalies (required): List of detected activities that significantly deviate from the established baselines.
+	Anomalies []Anomaly `json:"anomalies,omitempty"`
+	// Baselines (recommended): List of established patterns representing normal activity that serve as reference points for anomaly detection.
+	Baselines []Baseline `json:"baselines,omitempty"`
+}
+
+// API is the OCSF 1.5.0 object "API". The API, or Application Programming Interface, object represents information pertaining to an API request and response.
 type API struct {
+	// Group (optional): The information pertaining to the API group.
+	Group *Group `json:"group,omitempty"`
 	// Operation (required): Verb/Operation associated with the request
 	Operation string `json:"operation"`
+	// API Request Details (recommended): Details pertaining to the API request.
+	Request *Request `json:"request,omitempty"`
+	// API Response Details (recommended): Details pertaining to the API response.
+	Response *Response `json:"response,omitempty"`
 	// Service (optional): The information pertaining to the API service.
 	Service *Service `json:"service,omitempty"`
 	// Version (optional): The version of the API service.
 	Version string `json:"version,omitempty"`
 }
 
-// AuthFactor is the OCSF 1.5.0 object "Authentication Factor". An Authentication Factor object describes a category of methods used for identity verification in an authentication attempt.
+// Application is the OCSF 1.5.0 object "Application". An Application describes the details for an inventoried application as reported by an Application Security tool or other Developer-centric tooling.
 //
-// Not generated (object not in gen.yaml): device (device).
+// Constraint at_least_one: uid, name.
+type Application struct {
+	// Business Criticality (optional): The criticality of the application as defined by the event source.
+	Criticality string `json:"criticality,omitempty"`
+	// Data (optional): Additional data describing the application.
+	Data any `json:"data,omitempty"`
+	// Application Description (optional): A description or commentary for an application, usually retrieved from an upstream system.
+	Desc string `json:"desc,omitempty"`
+	// Group (optional): The name of the related application or associated resource group.
+	Group *Group `json:"group,omitempty"`
+	// Hostname (optional): The fully qualified name of the application.
+	Hostname string `json:"hostname,omitempty"`
+	// Labels (optional): The list of labels associated to the application.
+	Labels []string `json:"labels,omitempty"`
+	// Application Name (recommended): The name of the application.
+	Name string `json:"name,omitempty"`
+	// Owner (recommended): The identity of the service or user account that owns the application.
+	Owner *User `json:"owner,omitempty"`
+	// Application Relationship (optional): A graph representation showing how this application relates to and interacts with other entities in the environment.
+	ResourceRelationship *Graph `json:"resource_relationship,omitempty"`
+	// Risk Level (optional): The risk level, normalized to the caption of the risk_level_id value.
+	RiskLevel string `json:"risk_level,omitempty"`
+	// Risk Level ID (optional): The normalized risk level id.
+	RiskLevelID int `json:"risk_level_id,omitempty"`
+	// Risk Score (optional): The risk score as reported by the event source.
+	RiskScore int `json:"risk_score,omitempty"`
+	// Related SBOM (optional): The Software Bill of Materials (SBOM) associated with the application
+	Sbom *Sbom `json:"sbom,omitempty"`
+	// Tags (optional): The list of tags; {key:value} pairs associated to the application.
+	Tags []KeyValueObject `json:"tags,omitempty"`
+	// Application Type (optional): The type of application as defined by the event source, e.g., GitHub, Azure Logic App, or Amazon Elastic BeanStalk.
+	Type string `json:"type,omitempty"`
+	// Application ID (recommended): The unique identifier for the application.
+	UID string `json:"uid,omitempty"`
+	// Application Alternative ID (optional): An alternative or contextual identifier for the application, such as a configuration, organization, or license UID.
+	UIDAlt string `json:"uid_alt,omitempty"`
+	// URL (optional): The URL of the application.
+	URL *URL `json:"url,omitempty"`
+	// Application Version (optional): The semantic version of the application, e.g., 1.7.4.
+	Version string `json:"version,omitempty"`
+}
+
+// ApplicationRiskLevelID values.
+const (
+	ApplicationRiskLevelIDInfo     = 0  // Info
+	ApplicationRiskLevelIDLow      = 1  // Low
+	ApplicationRiskLevelIDMedium   = 2  // Medium
+	ApplicationRiskLevelIDHigh     = 3  // High
+	ApplicationRiskLevelIDCritical = 4  // Critical
+	ApplicationRiskLevelIDOther    = 99 // Other
+)
+
+// Assessment is the OCSF 1.5.0 object "Assessment". The Assessment object describes a point-in-time assessment, check, or evaluation of a specific configuration or signal against an asset, entity, person, or otherwise.
+//
+// Constraint at_least_one: name, uid.
+type Assessment struct {
+	// Category (optional): The category that the assessment is part of.
+	Category string `json:"category,omitempty"`
+	// Description (recommended): The description of the assessment criteria, or a description of the specific configuration or signal the assessment is targeting.
+	Desc string `json:"desc,omitempty"`
+	// Meets Criteria (required): Determines whether the assessment against the specific configuration or signal meets the assessments criteria.
+	MeetsCriteria bool `json:"meets_criteria"`
+	// Name (recommended): The name of the configuration or signal being assessed.
+	Name string `json:"name,omitempty"`
+	// Assessment Policy (optional): The details of any policy associated with an assessment.
+	Policy *Policy `json:"policy,omitempty"`
+	// Unique ID (optional): The unique identifier of the configuration or signal being assessed.
+	UID string `json:"uid,omitempty"`
+}
+
+// Attack is the OCSF 1.5.0 object "MITRE ATT&CK® & ATLAS™". The MITRE ATT&CK® & ATLAS™ object describes the tactic, technique, sub-technique & mitigation associated to an attack.
+//
+// Constraint at_least_one: tactic, technique, sub_technique.
+type Attack struct {
+	// MITRE Mitigation (optional): The Mitigation object describes the MITRE ATT&CK® or ATLAS™ Mitigation ID and/or name that is associated to an attack.
+	Mitigation *Mitigation `json:"mitigation,omitempty"`
+	// MITRE Sub-technique (recommended): The Sub-technique object describes the MITRE ATT&CK® or ATLAS™ Sub-technique ID and/or name associated to an attack.
+	SubTechnique *SubTechnique `json:"sub_technique,omitempty"`
+	// MITRE Tactic (recommended): The Tactic object describes the MITRE ATT&CK® or ATLAS™ Tactic ID and/or name that is associated to an attack.
+	Tactic *Tactic `json:"tactic,omitempty"`
+	// MITRE Technique (recommended): The Technique object describes the MITRE ATT&CK® or ATLAS™ Technique ID and/or name associated to an attack.
+	Technique *Technique `json:"technique,omitempty"`
+	// Version (recommended): The ATT&CK® or ATLAS™ Matrix version.
+	Version string `json:"version,omitempty"`
+}
+
+// AuthFactor is the OCSF 1.5.0 object "Authentication Factor". An Authentication Factor object describes a category of methods used for identity verification in an authentication attempt.
 type AuthFactor struct {
+	// Device (recommended): Device used to complete an authentication request.
+	Device *Device `json:"device,omitempty"`
 	// Email Address (optional): The email address used in an email-based authentication factor.
 	EmailAddr string `json:"email_addr,omitempty"`
 	// Factor Type (recommended): The type of authentication factor used in an authentication attempt.
@@ -834,34 +11677,1288 @@ const (
 	AuthFactorFactorTypeIDOther            = 99 // Other
 )
 
+// AuthenticationToken is the OCSF 1.5.0 object "Authentication Token". The Authentication Token object contains the attributes pertaining to an authentication token, ticket, or assertion e.g.
+type AuthenticationToken struct {
+	// Created Time (recommended): The time that the authentication token was created.
+	CreatedTime int64 `json:"created_time,omitempty"`
+	// Encryption Details (recommended): The encryption details of the authentication token.
+	EncryptionDetails *EncryptionDetails `json:"encryption_details,omitempty"`
+	// Expiration Time (optional): The expiration time of the authentication token.
+	ExpirationTime int64 `json:"expiration_time,omitempty"`
+	// Renewable (optional): Indicates whether the authentication token is renewable.
+	IsRenewable bool `json:"is_renewable,omitempty"`
+	// Kerberos Flags (recommended): A bitmask, either in hexadecimal or decimal form, which encodes various attributes or permissions associated with a Kerberos ticket.
+	KerberosFlags string `json:"kerberos_flags,omitempty"`
+	// Type (recommended): The type of the authentication token.
+	Type string `json:"type,omitempty"`
+	// Type ID (recommended): The normalized authentication token type identifier.
+	TypeID int `json:"type_id,omitempty"`
+}
+
+// AuthenticationTokenTypeID values.
+const (
+	AuthenticationTokenTypeIDUnknown              = 0  // Unknown
+	AuthenticationTokenTypeIDTicketGrantingTicket = 1  // Ticket Granting Ticket
+	AuthenticationTokenTypeIDServiceTicket        = 2  // Service Ticket
+	AuthenticationTokenTypeIDIdentityToken        = 3  // Identity Token
+	AuthenticationTokenTypeIDRefreshToken         = 4  // Refresh Token
+	AuthenticationTokenTypeIDSAMLAssertion        = 5  // SAML Assertion
+	AuthenticationTokenTypeIDOther                = 99 // Other
+)
+
+// Authorization is the OCSF 1.5.0 object "Authorization Result". The Authorization Result object provides details about the authorization outcome and associated policies related to activity.
+type Authorization struct {
+	// Authorization Decision/Outcome (recommended): Authorization Result/outcome, e.g.
+	Decision string `json:"decision,omitempty"`
+	// Policy (optional): Details about the Identity/Access management policies that are applicable.
+	Policy *Policy `json:"policy,omitempty"`
+}
+
+// AutonomousSystem is the OCSF 1.5.0 object "Autonomous System". An autonomous system (AS) is a collection of connected Internet Protocol (IP) routing prefixes under the control of one or more network operators on behalf of a single administrative entity or domain that presents a common, clearly defined routing policy to the internet.
+//
+// Constraint at_least_one: number, name.
+type AutonomousSystem struct {
+	// Name (recommended): Organization name for the Autonomous System.
+	Name string `json:"name,omitempty"`
+	// Number (recommended): Unique number that the AS is identified by.
+	Number int `json:"number,omitempty"`
+}
+
+// Baseline is the OCSF 1.5.0 object "Baseline". Describes the baseline or expected behavior of a system, service, or component based on historical observations and measurements.
+type Baseline struct {
+	// Observation Parameter (required): The specific parameter or property being monitored.
+	ObservationParameter string `json:"observation_parameter"`
+	// Observation Type (recommended): The type of analysis being performed to establish baseline behavior.
+	ObservationType string `json:"observation_type,omitempty"`
+	// Observations (required): Collection of actual measured values, data points and observations recorded for this baseline.
+	Observations []Observation `json:"observations,omitempty"`
+	// Observed Pattern (recommended): The specific pattern identified within the observation type.
+	ObservedPattern string `json:"observed_pattern,omitempty"`
+}
+
+// Campaign is the OCSF 1.5.0 object "Campaign". Campaign represent organized efforts by threat actors to achieve malicious objectives over a period, often characterized by shared tactics, techniques, and procedures (TTPs).
+type Campaign struct {
+	// Name (required): The name of a specific campaign associated with a cyber threat.
+	Name string `json:"name"`
+}
+
+// Certificate is the OCSF 1.5.0 object "Digital Certificate". The Digital Certificate, also known as a Public Key Certificate, object contains information about the ownership and usage of a public key.
+type Certificate struct {
+	// Created Time (recommended): The time when the certificate was created.
+	CreatedTime int64 `json:"created_time,omitempty"`
+	// Expiration Time (recommended): The expiration time of the certificate.
+	ExpirationTime int64 `json:"expiration_time,omitempty"`
+	// Fingerprints (recommended): The fingerprint list of the certificate.
+	Fingerprints []Fingerprint `json:"fingerprints,omitempty"`
+	// Certificate Self-Signed (recommended): Denotes whether a digital certificate is self-signed or signed by a known certificate authority (CA).
+	IsSelfSigned bool `json:"is_self_signed,omitempty"`
+	// Issuer Distinguished Name (required): The certificate issuer distinguished name.
+	Issuer string `json:"issuer"`
+	// Subject Alternative Names (optional): The list of subject alternative names that are secured by a specific certificate.
+	Sans []San `json:"sans,omitempty"`
+	// Certificate Serial Number (required): The serial number of the certificate used to create the digital signature.
+	SerialNumber string `json:"serial_number"`
+	// Subject Distinguished Name (recommended): The certificate subject distinguished name.
+	Subject string `json:"subject,omitempty"`
+	// Unique ID (optional): The unique identifier of the certificate.
+	UID string `json:"uid,omitempty"`
+	// Version (recommended): The certificate version.
+	Version string `json:"version,omitempty"`
+}
+
+// Check is the OCSF 1.5.0 object "Check". The check object defines a specific, testable compliance verification point that evaluates a target device against a standard, framework, or custom requirement.
+type Check struct {
+	// Description (optional): The detailed description of the compliance check, explaining the security requirement, vulnerability, or configuration being assessed.
+	Desc string `json:"desc,omitempty"`
+	// Name (recommended): The name or title of the compliance check.
+	Name string `json:"name,omitempty"`
+	// Severity (optional): The severity level as defined in the source document.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (optional): The normalized severity identifier that maps severity levels to standard severity levels.
+	SeverityID int `json:"severity_id,omitempty"`
+	// Compliance Standards: List (recommended): The regulatory or industry standard this check is associated with.
+	Standards []string `json:"standards,omitempty"`
+	// Status (recommended): The resultant status of the compliance check normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status ID (recommended): The normalized status identifier of the compliance check.
+	StatusID int `json:"status_id,omitempty"`
+	// Unique ID (recommended): The unique identifier of the compliance check within its standard or framework.
+	UID string `json:"uid,omitempty"`
+	// Version (optional): The check version.
+	Version string `json:"version,omitempty"`
+}
+
+// CheckSeverityID values.
+const (
+	CheckSeverityIDUnknown       = 0  // Unknown
+	CheckSeverityIDInformational = 1  // Informational
+	CheckSeverityIDLow           = 2  // Low
+	CheckSeverityIDMedium        = 3  // Medium
+	CheckSeverityIDHigh          = 4  // High
+	CheckSeverityIDCritical      = 5  // Critical
+	CheckSeverityIDFatal         = 6  // Fatal
+	CheckSeverityIDOther         = 99 // Other
+)
+
+// CheckStatusID values.
+const (
+	CheckStatusIDUnknown = 0  // Unknown
+	CheckStatusIDPass    = 1  // Pass
+	CheckStatusIDWarning = 2  // Warning
+	CheckStatusIDFail    = 3  // Fail
+	CheckStatusIDOther   = 99 // Other
+)
+
+// CisBenchmark is the OCSF 1.5.0 object "CIS Benchmark". The CIS Benchmark object describes best practices for securely configuring IT systems, software, networks, and cloud infrastructure as defined by the Center for Internet Security.
+//
+// Deprecated: since OCSF 1.5.0. Use the Compliance object with Checks object instead.
+type CisBenchmark struct {
+	// CIS Controls (recommended): The CIS Critical Security Controls is a prioritized set of actions to protect your organization and data from cyber-attack vectors.
+	CisControls []CisControl `json:"cis_controls,omitempty"`
+	// Description (optional): The CIS Benchmark description.
+	Desc string `json:"desc,omitempty"`
+	// Name (required): The CIS Benchmark name.
+	Name string `json:"name"`
+}
+
+// CisBenchmarkResult is the OCSF 1.5.0 object "CIS Benchmark Result". The CIS Benchmark Result object contains information as defined by the Center for Internet Security (CIS) benchmark result.
+//
+// Deprecated: since OCSF 1.5.0. Use the Compliance object with Checks object instead.
+type CisBenchmarkResult struct {
+	// Description (optional): The CIS benchmark description.
+	Desc string `json:"desc,omitempty"`
+	// Name (required): The CIS benchmark name.
+	Name string `json:"name"`
+	// Remediation Guidance (optional): Describes the recommended remediation steps to address identified issue(s).
+	Remediation *Remediation `json:"remediation,omitempty"`
+	// Rule (optional): The CIS benchmark rule.
+	Rule *Rule `json:"rule,omitempty"`
+}
+
+// CisControl is the OCSF 1.5.0 object "CIS Control". The CIS Control (aka Critical Security Control) object describes a prioritized set of actions to protect your organization and data from cyber-attack vectors.
+type CisControl struct {
+	// Description (optional): The CIS Control description.
+	Desc string `json:"desc,omitempty"`
+	// Name (required): The CIS Control name.
+	Name string `json:"name"`
+	// Version (recommended): The CIS Control version.
+	Version string `json:"version,omitempty"`
+}
+
+// CisCsc is the OCSF 1.5.0 object "CIS CSC". The CIS Critical Security Control (CSC) contains information as defined by the Center for Internet Security Critical Security Control (CIS CSC).
+//
+// Deprecated: since OCSF 1.5.0. Use the cis_control object instead.
+type CisCsc struct {
+	// Security Control (required): A Control is prescriptive, prioritized, and simplified set of best practices that one can use to strengthen their cybersecurity posture.
+	Control string `json:"control"`
+	// Version (recommended): The CIS critical security control version.
+	Version string `json:"version,omitempty"`
+}
+
+// ClassifierDetails is the OCSF 1.5.0 object "Classifier Details". The Classifier Details object describes details about the classifier used for data classification.
+type ClassifierDetails struct {
+	// Name (recommended): The name of the classifier.
+	Name string `json:"name,omitempty"`
+	// Type (required): The type of the classifier.
+	Type string `json:"type"`
+	// Unique ID (recommended): The unique identifier of the classifier.
+	UID string `json:"uid,omitempty"`
+}
+
+// Cloud is the OCSF 1.5.0 object "Cloud". The Cloud object contains information about a cloud or Software-as-a-Service account or similar construct, such as AWS Account ID, regions, organizations, folders, compartments, tenants, etc.
+type Cloud struct {
+	// Account (optional): The account object describes details about the account that was the source or target of the activity.
+	Account *Account `json:"account,omitempty"`
+	// Cloud Partition (optional): The canonical cloud partition name to which the region is assigned (e.g.
+	CloudPartition string `json:"cloud_partition,omitempty"`
+	// Organization (optional): Organization and org unit relevant to the event or object.
+	Org *Organization `json:"org,omitempty"`
+	// Provider (required): The unique name of the Cloud services provider, such as AWS, MS Azure, GCP, etc.
+	Provider string `json:"provider"`
+	// Region (recommended): The name of the cloud region, as defined by the cloud provider.
+	Region string `json:"region,omitempty"`
+	// Cloud Availability Zone (optional): The availability zone in the cloud region, as defined by the cloud provider.
+	Zone string `json:"zone,omitempty"`
+}
+
+// Compliance is the OCSF 1.5.0 object "Compliance". The Compliance object contains information about Industry and Regulatory Framework standards, controls and requirements or details about custom assessments utilized in a compliance evaluation.
+type Compliance struct {
+	// Assessments (optional): A list of assessments associated with the compliance requirements evaluation.
+	Assessments []Assessment `json:"assessments,omitempty"`
+	// Category (optional): The category a control framework pertains to, as reported by the source tool, such as Asset Management or Risk Assessment.
+	Category string `json:"category,omitempty"`
+	// Compliance Checks (optional): A list of compliance checks associated with specific industry standards or frameworks.
+	Checks []Check `json:"checks,omitempty"`
+	// Security Control (recommended): A Control is a prescriptive, actionable set of specifications that strengthens device posture.
+	Control string `json:"control,omitempty"`
+	// Control Parameters (optional): The list of control parameters evaluated in a Compliance check.
+	ControlParameters []KeyValueObject `json:"control_parameters,omitempty"`
+	// Description (optional): The description or criteria of a control.
+	Desc string `json:"desc,omitempty"`
+	// Compliance Requirements (optional): The specific compliance requirements being evaluated.
+	Requirements []string `json:"requirements,omitempty"`
+	// Compliance Standards: List (recommended): The regulatory or industry standards being evaluated for compliance.
+	Standards []string `json:"standards,omitempty"`
+	// Status (recommended): The resultant status of the compliance check normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Code (optional): The resultant status code of the compliance check.
+	StatusCode string `json:"status_code,omitempty"`
+	// Status Details (optional): A list of contextual descriptions of the status, status_code values.
+	StatusDetails []string `json:"status_details,omitempty"`
+	// Status ID (recommended): The normalized status identifier of the compliance check.
+	StatusID int `json:"status_id,omitempty"`
+}
+
+// ComplianceStatusID values.
+const (
+	ComplianceStatusIDUnknown = 0  // Unknown
+	ComplianceStatusIDPass    = 1  // Pass
+	ComplianceStatusIDWarning = 2  // Warning
+	ComplianceStatusIDFail    = 3  // Fail
+	ComplianceStatusIDOther   = 99 // Other
+)
+
+// Container is the OCSF 1.5.0 object "Container". The Container object describes an instance of a specific container.
+//
+// Constraint at_least_one: uid, name.
+type Container struct {
+	// Hash (recommended): Commit hash of image created for docker or the SHA256 hash of the container.
+	Hash *Fingerprint `json:"hash,omitempty"`
+	// Image (recommended): The container image used as a template to run the container.
+	Image *Image `json:"image,omitempty"`
+	// Labels (optional): The list of labels associated to the container.
+	Labels []string `json:"labels,omitempty"`
+	// Name (recommended): The container name.
+	Name string `json:"name,omitempty"`
+	// Network Driver (optional): The network driver used by the container.
+	NetworkDriver string `json:"network_driver,omitempty"`
+	// Orchestrator (optional): The orchestrator managing the container, such as ECS, EKS, K8s, or OpenShift.
+	Orchestrator string `json:"orchestrator,omitempty"`
+	// Pod UUID (optional): The unique identifier of the pod (or equivalent) that the container is executing on.
+	PodUUID string `json:"pod_uuid,omitempty"`
+	// Runtime (optional): The backend running the container, such as containerd or cri-o.
+	Runtime string `json:"runtime,omitempty"`
+	// Size (recommended): The size of the container image.
+	Size int64 `json:"size,omitempty"`
+	// Tags (optional): The list of tags; {key:value} pairs associated to the container.
+	Tags []KeyValueObject `json:"tags,omitempty"`
+	// Unique ID (recommended): The full container unique identifier for this instantiation of the container.
+	UID string `json:"uid,omitempty"`
+}
+
+// CVE is the OCSF 1.5.0 object "CVE". The Common Vulnerabilities and Exposures (CVE) object represents publicly disclosed cybersecurity vulnerabilities defined in CVE Program catalog (CVE).
+type CVE struct {
+	// Created Time (recommended): The Record Creation Date identifies when the CVE ID was issued to a CVE Numbering Authority (CNA) or the CVE Record was published on the CVE List.
+	CreatedTime int64 `json:"created_time,omitempty"`
+	// CVSS Score (recommended): The CVSS object details Common Vulnerability Scoring System (CVSS) scores from the advisory that are related to the vulnerability.
+	CVSS []CVSS `json:"cvss,omitempty"`
+	// Description (optional): A brief description of the CVE Record.
+	Desc string `json:"desc,omitempty"`
+	// EPSS (optional): The Exploit Prediction Scoring System (EPSS) object describes the estimated probability a vulnerability will be exploited.
+	Epss *Epss `json:"epss,omitempty"`
+	// Modified Time (optional): The Record Modified Date identifies when the CVE record was last updated.
+	ModifiedTime int64 `json:"modified_time,omitempty"`
+	// Product (optional): The product where the vulnerability was discovered.
+	Product *Product `json:"product,omitempty"`
+	// References (recommended): A list of reference URLs with additional information about the CVE Record.
+	References []string `json:"references,omitempty"`
+	// Related CWEs (optional): Describes the Common Weakness Enumeration (CWE) details related to the CVE Record.
+	RelatedCwes []CWE `json:"related_cwes,omitempty"`
+	// Title (recommended): A title or a brief phrase summarizing the CVE record.
+	Title string `json:"title,omitempty"`
+	// Vulnerability Type (recommended): The vulnerability type as selected from a large dropdown menu during CVE refinement.Most frequently used vulnerability types are: DoS, Code Execution, Overflow, Memory Corruption, Sql Injection, XSS, Directory Traversal, Http Response Splitting, Bypass something, Gain Information, Gain Privileges, CSRF, File Inclusion.
+	Type string `json:"type,omitempty"`
+	// CVE ID (required): The Common Vulnerabilities and Exposures unique number assigned to a specific computer vulnerability.
+	UID string `json:"uid"`
+}
+
+// CVSS is the OCSF 1.5.0 object "CVSS Score". The Common Vulnerability Scoring System (CVSS) object provides a way to capture the principal characteristics of a vulnerability and produce a numerical score reflecting its severity.
+type CVSS struct {
+	// Base Score (required): The CVSS base score.
+	BaseScore float64 `json:"base_score"`
+	// CVSS Depth (recommended): The CVSS depth represents a depth of the equation used to calculate CVSS score.
+	Depth string `json:"depth,omitempty"`
+	// Metrics (optional): The Common Vulnerability Scoring System metrics.
+	Metrics []Metric `json:"metrics,omitempty"`
+	// Overall Score (recommended): The CVSS overall score, impacted by base, temporal, and environmental metrics.
+	OverallScore float64 `json:"overall_score,omitempty"`
+	// Severity (optional): The Common Vulnerability Scoring System (CVSS) Qualitative Severity Rating.
+	Severity string `json:"severity,omitempty"`
+	// Source URL (optional): The source URL for the CVSS score.
+	SrcURL string `json:"src_url,omitempty"`
+	// Vector String (optional): The CVSS vector string is a text representation of a set of CVSS metrics.
+	VectorString string `json:"vector_string,omitempty"`
+	// Vendor Name (recommended): The vendor that provided the CVSS score.
+	VendorName string `json:"vendor_name,omitempty"`
+	// Version (required): The CVSS version.
+	Version string `json:"version"`
+}
+
+// CWE is the OCSF 1.5.0 object "CWE". The CWE object represents a weakness in a software system that can be exploited by a threat actor to perform an attack.
+type CWE struct {
+	// Caption (optional): The caption assigned to the Common Weakness Enumeration unique identifier.
+	Caption string `json:"caption,omitempty"`
+	// Source URL (optional): URL pointing to the CWE Specification.
+	SrcURL string `json:"src_url,omitempty"`
+	// CWE ID (required): The Common Weakness Enumeration unique number assigned to a specific weakness.
+	UID string `json:"uid"`
+}
+
+// D3fTactic is the OCSF 1.5.0 object "MITRE D3FEND™ Tactic". The MITRE D3FEND™ Tactic object describes the tactic ID and/or name that is associated to an attack.
+//
+// Constraint at_least_one: name, uid.
+type D3fTactic struct {
+	// Name (recommended): The tactic name that is associated with the defensive technique.
+	Name string `json:"name,omitempty"`
+	// Source URL (optional): The versioned permalink of the defensive tactic.
+	SrcURL string `json:"src_url,omitempty"`
+	// Unique ID (recommended): The unique identifier of the defensive tactic.
+	UID string `json:"uid,omitempty"`
+}
+
+// D3fTechnique is the OCSF 1.5.0 object "MITRE D3FEND™ Technique". The MITRE D3FEND™ Technique object describes the leaf defensive technique ID and/or name associated to a countermeasure.
+//
+// Constraint at_least_one: name, uid.
+type D3fTechnique struct {
+	// Name (recommended): The name of the defensive technique.
+	Name string `json:"name,omitempty"`
+	// Source URL (optional): The versioned permalink of the defensive technique.
+	SrcURL string `json:"src_url,omitempty"`
+	// Unique ID (recommended): The unique identifier of the defensive technique.
+	UID string `json:"uid,omitempty"`
+}
+
+// D3fend is the OCSF 1.5.0 object "MITRE D3FEND™". The MITRE D3FEND™ object describes the tactic & technique associated with a countermeasure.
+//
+// Constraint at_least_one: d3f_tactic, d3f_technique.
+type D3fend struct {
+	// MITRE D3FEND™ Tactic (recommended): The Tactic object describes the tactic ID and/or name that is associated with a countermeasure.
+	D3fTactic *D3fTactic `json:"d3f_tactic,omitempty"`
+	// MITRE D3FEND™ Technique (recommended): The Technique object describes the technique ID and/or name associated with a countermeasure.
+	D3fTechnique *D3fTechnique `json:"d3f_technique,omitempty"`
+	// Version (recommended): The D3FEND™ Matrix version.
+	Version string `json:"version,omitempty"`
+}
+
+// DataClassification is the OCSF 1.5.0 object "Data Classification". The Data Classification object includes information about data classification levels and data category types.
+//
+// Constraint at_least_one: category_id, confidentiality_id.
+type DataClassification struct {
+	// Category (optional): The name of the data classification category that data matched into, e.g.
+	Category string `json:"category,omitempty"`
+	// Category ID (recommended): The normalized identifier of the data classification category.
+	CategoryID int `json:"category_id,omitempty"`
+	// Classifier Details (recommended): Describes details about the classifier used for data classification.
+	ClassifierDetails *ClassifierDetails `json:"classifier_details,omitempty"`
+	// Confidentiality (optional): The file content confidentiality, normalized to the confidentiality_id value.
+	Confidentiality string `json:"confidentiality,omitempty"`
+	// Confidentiality ID (recommended): The normalized identifier of the file content confidentiality indicator.
+	ConfidentialityID int `json:"confidentiality_id,omitempty"`
+	// Discovery Details (optional): Details about the data discovered by classification job.
+	DiscoveryDetails []DiscoveryDetails `json:"discovery_details,omitempty"`
+	// Policy (optional): Details about the data policy that governs data handling and security measures related to classification.
+	Policy *Policy `json:"policy,omitempty"`
+	// Size (optional): Size of the data classified.
+	Size int64 `json:"size,omitempty"`
+	// Source URL (optional): The source URL pointing towards the full classifcation job details.
+	SrcURL string `json:"src_url,omitempty"`
+	// Status (recommended): The resultant status of the classification job normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Details (optional): The contextual description of the status, status_id value.
+	StatusDetails []string `json:"status_details,omitempty"`
+	// Status ID (recommended): The normalized status identifier of the classification job.
+	StatusID int `json:"status_id,omitempty"`
+	// Total (optional): The total count of discovered entities, by the classification job.
+	Total int `json:"total,omitempty"`
+	// Unique ID (optional): The unique identifier of the classification job.
+	UID string `json:"uid,omitempty"`
+}
+
+// DataClassificationCategoryID values.
+const (
+	DataClassificationCategoryIDUnknown                   = 0  // Unknown
+	DataClassificationCategoryIDPersonal                  = 1  // Personal
+	DataClassificationCategoryIDGovernmental              = 2  // Governmental
+	DataClassificationCategoryIDFinancial                 = 3  // Financial
+	DataClassificationCategoryIDBusiness                  = 4  // Business
+	DataClassificationCategoryIDMilitaryAndLawEnforcement = 5  // Military and Law Enforcement
+	DataClassificationCategoryIDSecurity                  = 6  // Security
+	DataClassificationCategoryIDOther                     = 99 // Other
+)
+
+// DataClassificationConfidentialityID values.
+const (
+	DataClassificationConfidentialityIDUnknown         = 0  // Unknown
+	DataClassificationConfidentialityIDNotConfidential = 1  // Not Confidential
+	DataClassificationConfidentialityIDConfidential    = 2  // Confidential
+	DataClassificationConfidentialityIDSecret          = 3  // Secret
+	DataClassificationConfidentialityIDTopSecret       = 4  // Top Secret
+	DataClassificationConfidentialityIDPrivate         = 5  // Private
+	DataClassificationConfidentialityIDRestricted      = 6  // Restricted
+	DataClassificationConfidentialityIDOther           = 99 // Other
+)
+
+// DataClassificationStatusID values.
+const (
+	DataClassificationStatusIDUnknown  = 0  // Unknown
+	DataClassificationStatusIDComplete = 1  // Complete
+	DataClassificationStatusIDPartial  = 2  // Partial
+	DataClassificationStatusIDFail     = 3  // Fail
+	DataClassificationStatusIDOther    = 99 // Other
+)
+
+// DataSecurity is the OCSF 1.5.0 object "Data Security". The Data Security object describes the characteristics, techniques and content of a Data Loss Prevention (DLP), Data Loss Detection (DLD), Data Classification, or similar tools' finding, alert, or detection mechanism(s).
+//
+// Constraint at_least_one: data_lifecycle_state_id, detection_pattern, detection_system_id, policy.
+type DataSecurity struct {
+	// Category (optional): The name of the data classification category that data matched into, e.g.
+	Category string `json:"category,omitempty"`
+	// Category ID (recommended): The normalized identifier of the data classification category.
+	CategoryID int `json:"category_id,omitempty"`
+	// Classifier Details (recommended): Describes details about the classifier used for data classification.
+	ClassifierDetails *ClassifierDetails `json:"classifier_details,omitempty"`
+	// Confidentiality (optional): The file content confidentiality, normalized to the confidentiality_id value.
+	Confidentiality string `json:"confidentiality,omitempty"`
+	// Confidentiality ID (recommended): The normalized identifier of the file content confidentiality indicator.
+	ConfidentialityID int `json:"confidentiality_id,omitempty"`
+	// Data Lifecycle State (optional): The name of the stage or state that the data was in.
+	DataLifecycleState string `json:"data_lifecycle_state,omitempty"`
+	// Data Lifecycle State ID (recommended): The stage or state that the data was in when it was assessed or scanned by a data security tool.
+	DataLifecycleStateID int `json:"data_lifecycle_state_id,omitempty"`
+	// Detection Pattern (recommended): Specific pattern, algorithm, fingerprint, or model used for detection.
+	DetectionPattern string `json:"detection_pattern,omitempty"`
+	// Detection System (optional): The name of the type of data security tool or system that the finding, detection, or alert originated from.
+	DetectionSystem string `json:"detection_system,omitempty"`
+	// Detection System ID (recommended): The type of data security tool or system that the finding, detection, or alert originated from.
+	DetectionSystemID int `json:"detection_system_id,omitempty"`
+	// Discovery Details (optional): Details about the data discovered by classification job.
+	DiscoveryDetails []DiscoveryDetails `json:"discovery_details,omitempty"`
+	// Pattern Match (optional): A text, binary, file name, or datastore that matched against a detection rule.
+	PatternMatch string `json:"pattern_match,omitempty"`
+	// Policy (recommended): Details about the policy that triggered the finding.
+	Policy *Policy `json:"policy,omitempty"`
+	// Size (optional): Size of the data classified.
+	Size int64 `json:"size,omitempty"`
+	// Source URL (optional): The source URL pointing towards the full classifcation job details.
+	SrcURL string `json:"src_url,omitempty"`
+	// Status (recommended): The resultant status of the classification job normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Details (optional): The contextual description of the status, status_id value.
+	StatusDetails []string `json:"status_details,omitempty"`
+	// Status ID (recommended): The normalized status identifier of the classification job.
+	StatusID int `json:"status_id,omitempty"`
+	// Total (optional): The total count of discovered entities, by the classification job.
+	Total int `json:"total,omitempty"`
+	// Unique ID (optional): The unique identifier of the classification job.
+	UID string `json:"uid,omitempty"`
+}
+
+// DataSecurityCategoryID values.
+const (
+	DataSecurityCategoryIDUnknown                   = 0  // Unknown
+	DataSecurityCategoryIDPersonal                  = 1  // Personal
+	DataSecurityCategoryIDGovernmental              = 2  // Governmental
+	DataSecurityCategoryIDFinancial                 = 3  // Financial
+	DataSecurityCategoryIDBusiness                  = 4  // Business
+	DataSecurityCategoryIDMilitaryAndLawEnforcement = 5  // Military and Law Enforcement
+	DataSecurityCategoryIDSecurity                  = 6  // Security
+	DataSecurityCategoryIDOther                     = 99 // Other
+)
+
+// DataSecurityConfidentialityID values.
+const (
+	DataSecurityConfidentialityIDUnknown         = 0  // Unknown
+	DataSecurityConfidentialityIDNotConfidential = 1  // Not Confidential
+	DataSecurityConfidentialityIDConfidential    = 2  // Confidential
+	DataSecurityConfidentialityIDSecret          = 3  // Secret
+	DataSecurityConfidentialityIDTopSecret       = 4  // Top Secret
+	DataSecurityConfidentialityIDPrivate         = 5  // Private
+	DataSecurityConfidentialityIDRestricted      = 6  // Restricted
+	DataSecurityConfidentialityIDOther           = 99 // Other
+)
+
+// DataSecurityDataLifecycleStateID values.
+const (
+	DataSecurityDataLifecycleStateIDUnknown       = 0  // Unknown
+	DataSecurityDataLifecycleStateIDDataAtRest    = 1  // Data at-Rest
+	DataSecurityDataLifecycleStateIDDataInTransit = 2  // Data in-Transit
+	DataSecurityDataLifecycleStateIDDataInUse     = 3  // Data in-Use
+	DataSecurityDataLifecycleStateIDOther         = 99 // Other
+)
+
+// DataSecurityDetectionSystemID values.
+const (
+	DataSecurityDetectionSystemIDUnknown                       = 0  // Unknown
+	DataSecurityDetectionSystemIDEndpoint                      = 1  // Endpoint
+	DataSecurityDetectionSystemIDDLPGateway                    = 2  // DLP Gateway
+	DataSecurityDetectionSystemIDMobileDeviceManagement        = 3  // Mobile Device Management
+	DataSecurityDetectionSystemIDDataDiscoveryClassification   = 4  // Data Discovery & Classification
+	DataSecurityDetectionSystemIDSecureWebGateway              = 5  // Secure Web Gateway
+	DataSecurityDetectionSystemIDSecureEmailGateway            = 6  // Secure Email Gateway
+	DataSecurityDetectionSystemIDDigitalRightsManagement       = 7  // Digital Rights Management
+	DataSecurityDetectionSystemIDCloudAccessSecurityBroker     = 8  // Cloud Access Security Broker
+	DataSecurityDetectionSystemIDDatabaseActivityMonitoring    = 9  // Database Activity Monitoring
+	DataSecurityDetectionSystemIDApplicationLevelDLP           = 10 // Application-Level DLP
+	DataSecurityDetectionSystemIDDeveloperSecurity             = 11 // Developer Security
+	DataSecurityDetectionSystemIDDataSecurityPostureManagement = 12 // Data Security Posture Management
+	DataSecurityDetectionSystemIDOther                         = 99 // Other
+)
+
+// DataSecurityStatusID values.
+const (
+	DataSecurityStatusIDUnknown  = 0  // Unknown
+	DataSecurityStatusIDComplete = 1  // Complete
+	DataSecurityStatusIDPartial  = 2  // Partial
+	DataSecurityStatusIDFail     = 3  // Fail
+	DataSecurityStatusIDOther    = 99 // Other
+)
+
+// Database is the OCSF 1.5.0 object "Database". The database object is used for databases which are typically datastore services that contain an organized collection of structured and unstructured data or a types of data.
+//
+// Constraint at_least_one: name, uid.
+type Database struct {
+	// Created Time (optional): The time when the database was known to have been created.
+	CreatedTime int64 `json:"created_time,omitempty"`
+	// Description (optional): The description of the database.
+	Desc string `json:"desc,omitempty"`
+	// Groups (optional): The group names to which the database belongs.
+	Groups []Group `json:"groups,omitempty"`
+	// Modified Time (optional): The most recent time when any changes, updates, or modifications were made within the database.
+	ModifiedTime int64 `json:"modified_time,omitempty"`
+	// Name (recommended): The database name, ordinarily as assigned by a database administrator.
+	Name string `json:"name,omitempty"`
+	// Size (optional): The size of the database in bytes.
+	Size int64 `json:"size,omitempty"`
+	// Type (recommended): The database type.
+	Type string `json:"type,omitempty"`
+	// Type ID (required): The normalized identifier of the database type.
+	TypeID int `json:"type_id"`
+	// Unique ID (recommended): The unique identifier of the database.
+	UID string `json:"uid,omitempty"`
+}
+
+// DatabaseTypeID values.
+const (
+	DatabaseTypeIDUnknown        = 0  // Unknown
+	DatabaseTypeIDRelational     = 1  // Relational
+	DatabaseTypeIDNetwork        = 2  // Network
+	DatabaseTypeIDObjectOriented = 3  // Object Oriented
+	DatabaseTypeIDCentralized    = 4  // Centralized
+	DatabaseTypeIDOperational    = 5  // Operational
+	DatabaseTypeIDNoSQL          = 6  // NoSQL
+	DatabaseTypeIDOther          = 99 // Other
+)
+
+// Databucket is the OCSF 1.5.0 object "Databucket". The databucket object is a basic container that holds data, typically organized through the use of data partitions.
+//
+// Constraint at_least_one: name, uid.
+type Databucket struct {
+	// Agent List (optional): A list of agent objects associated with a device, endpoint, or resource.
+	AgentList []Agent `json:"agent_list,omitempty"`
+	// Created Time (optional): The time when the databucket was known to have been created.
+	CreatedTime int64 `json:"created_time,omitempty"`
+	// Criticality (optional): The criticality of the resource as defined by the event source.
+	Criticality string `json:"criticality,omitempty"`
+	// Data (optional): Additional data describing the resource.
+	Data any `json:"data,omitempty"`
+	// Description (optional): The description of the databucket.
+	Desc string `json:"desc,omitempty"`
+	// Encryption Details (optional): The encryption details of the databucket.
+	EncryptionDetails *EncryptionDetails `json:"encryption_details,omitempty"`
+	// File (optional): Details about the file/object within a databucket.
+	File *File `json:"file,omitempty"`
+	// Group (optional): The name of the related resource group.
+	Group *Group `json:"group,omitempty"`
+	// Groups (optional): The group names to which the databucket belongs.
+	Groups []Group `json:"groups,omitempty"`
+	// Hostname (recommended): The fully qualified name of the resource.
+	Hostname string `json:"hostname,omitempty"`
+	// IP Address (recommended): The IP address of the resource, in either IPv4 or IPv6 format.
+	IP string `json:"ip,omitempty"`
+	// Back Ups Configured (optional): Indicates whether the device or resource has a backup enabled, such as an automated snapshot or a cloud backup.
+	IsBackedUp bool `json:"is_backed_up,omitempty"`
+	// Encrypted (optional): Indicates if the databucket is encrypted.
+	IsEncrypted bool `json:"is_encrypted,omitempty"`
+	// Public (recommended): Indicates if the databucket is publicly accessible.
+	IsPublic bool `json:"is_public,omitempty"`
+	// Labels (optional): The list of labels associated to the resource.
+	Labels []string `json:"labels,omitempty"`
+	// Modified Time (optional): The most recent time when any changes, updates, or modifications were made within the databucket.
+	ModifiedTime int64 `json:"modified_time,omitempty"`
+	// Name (recommended): The databucket name.
+	Name string `json:"name,omitempty"`
+	// Namespace (optional): The namespace is useful when similar entities exist that you need to keep separate.
+	Namespace string `json:"namespace,omitempty"`
+	// Owner (recommended): The identity of the service or user account that owns the resource.
+	Owner *User `json:"owner,omitempty"`
+	// Resource Relationship (optional): A graph representation showing how this resource relates to and interacts with other entities in the environment.
+	ResourceRelationship *Graph `json:"resource_relationship,omitempty"`
+	// Size (optional): The size of the databucket in bytes.
+	Size int64 `json:"size,omitempty"`
+	// Tags (optional): The list of tags; {key:value} pairs associated to the resource.
+	Tags []KeyValueObject `json:"tags,omitempty"`
+	// Type (recommended): The databucket type.
+	Type string `json:"type,omitempty"`
+	// Type ID (required): The normalized identifier of the databucket type.
+	TypeID int `json:"type_id"`
+	// Unique ID (recommended): The unique identifier of the databucket.
+	UID string `json:"uid,omitempty"`
+	// Alternate ID (optional): The alternative unique identifier of the resource.
+	UIDAlt string `json:"uid_alt,omitempty"`
+	// Version (optional): The version of the resource.
+	Version string `json:"version,omitempty"`
+}
+
+// DatabucketTypeID values.
+const (
+	DatabucketTypeIDUnknown   = 0  // Unknown
+	DatabucketTypeIDS3        = 1  // S3
+	DatabucketTypeIDAzureBlob = 2  // Azure Blob
+	DatabucketTypeIDGCPBucket = 3  // GCP Bucket
+	DatabucketTypeIDOther     = 99 // Other
+)
+
+// DceRpc is the OCSF 1.5.0 object "DCE/RPC". The DCE/RPC, or Distributed Computing Environment/Remote Procedure Call, object describes the remote procedure call system for distributed computing environments.
+type DceRpc struct {
+	// Command (recommended): The request command (e.g.
+	Command string `json:"command,omitempty"`
+	// Command Response (recommended): The reply to the request command (e.g.
+	CommandResponse string `json:"command_response,omitempty"`
+	// Flags (required): The list of interface flags.
+	Flags []string `json:"flags,omitempty"`
+	// Opnum (recommended): An operation number used to identify a specific remote procedure call (RPC) method or a method in an interface.
+	Opnum int `json:"opnum,omitempty"`
+	// Remote Procedure Call Interface (required): The RPC Interface object describes the details pertaining to the remote procedure call interface.
+	RpcInterface *RpcInterface `json:"rpc_interface,omitempty"`
+}
+
+// Device is the OCSF 1.5.0 object "Device". The Device object represents an addressable computer system or host, which is typically connected to a computer network and participates in the transmission or processing of data within the computer network.
+//
+// Constraint at_least_one: ip, uid, name, hostname, instance_uid, interface_uid, interface_name.
+type Device struct {
+	// Agent List (optional): A list of agent objects associated with a device, endpoint, or resource.
+	AgentList []Agent `json:"agent_list,omitempty"`
+	// Autoscale UID (optional): The unique identifier of the cloud autoscale configuration.
+	AutoscaleUID string `json:"autoscale_uid,omitempty"`
+	// Boot Time (optional): The time the system was booted.
+	BootTime int64 `json:"boot_time,omitempty"`
+	// Boot UID (optional): A unique identifier of the device that changes after every reboot.
+	BootUID string `json:"boot_uid,omitempty"`
+	// Created Time (optional): The time when the device was known to have been created.
+	CreatedTime int64 `json:"created_time,omitempty"`
+	// Description (optional): The description of the device, ordinarily as reported by the operating system.
+	Desc string `json:"desc,omitempty"`
+	// Domain (optional): The network domain where the device resides.
+	Domain string `json:"domain,omitempty"`
+	// EID (optional): An Embedded Identity Document, is a unique serial number that identifies an eSIM-enabled device.
+	Eid string `json:"eid,omitempty"`
+	// First Seen (optional): The initial discovery time of the device.
+	FirstSeenTime int64 `json:"first_seen_time,omitempty"`
+	// Groups (optional): The group names to which the device belongs.
+	Groups []Group `json:"groups,omitempty"`
+	// Hostname (recommended): The device hostname.
+	Hostname string `json:"hostname,omitempty"`
+	// Hardware Info (optional): The endpoint hardware information.
+	HwInfo *DeviceHwInfo `json:"hw_info,omitempty"`
+	// Hypervisor (optional): The name of the hypervisor running on the device.
+	Hypervisor string `json:"hypervisor,omitempty"`
+	// ICCID (optional): The Integrated Circuit Card Identification of a mobile device.
+	Iccid string `json:"iccid,omitempty"`
+	// Image (optional): The image used as a template to run the virtual machine.
+	Image *Image `json:"image,omitempty"`
+	// IMEI List (optional): The International Mobile Equipment Identity values that are associated with the device.
+	ImeiList []string `json:"imei_list,omitempty"`
+	// Instance ID (recommended): The unique identifier of a VM instance.
+	InstanceUID string `json:"instance_uid,omitempty"`
+	// Network Interface Name (recommended): The name of the network interface (e.g.
+	InterfaceName string `json:"interface_name,omitempty"`
+	// Network Interface ID (recommended): The unique identifier of the network interface.
+	InterfaceUID string `json:"interface_uid,omitempty"`
+	// IP Address (optional): The device IP address, in either IPv4 or IPv6 format.
+	IP string `json:"ip,omitempty"`
+	// Back Ups Configured (optional): Indicates whether the device or resource has a backup enabled, such as an automated snapshot or a cloud backup.
+	IsBackedUp bool `json:"is_backed_up,omitempty"`
+	// Compliant Device (optional): The event occurred on a compliant device.
+	IsCompliant bool `json:"is_compliant,omitempty"`
+	// Managed Device (optional): The event occurred on a managed device.
+	IsManaged bool `json:"is_managed,omitempty"`
+	// Mobile Account Active (optional): Indicates whether the device has an active mobile account.
+	IsMobileAccountActive bool `json:"is_mobile_account_active,omitempty"`
+	// Personal Device (optional): The event occurred on a personal device.
+	IsPersonal bool `json:"is_personal,omitempty"`
+	// Shared Device (optional): The event occurred on a shared device.
+	IsShared bool `json:"is_shared,omitempty"`
+	// Supervised Device (optional): The event occurred on a supervised device.
+	IsSupervised bool `json:"is_supervised,omitempty"`
+	// Trusted Device (optional): The event occurred on a trusted device.
+	IsTrusted bool `json:"is_trusted,omitempty"`
+	// Last Seen (optional): The most recent discovery time of the device.
+	LastSeenTime int64 `json:"last_seen_time,omitempty"`
+	// Geo Location (optional): The geographical location of the device.
+	Location *Location `json:"location,omitempty"`
+	// MAC Address (optional): The Media Access Control (MAC) address of the endpoint.
+	MAC string `json:"mac,omitempty"`
+	// MEID (optional): The Mobile Equipment Identifier.
+	Meid string `json:"meid,omitempty"`
+	// Model (optional): The model of the device.
+	Model string `json:"model,omitempty"`
+	// Modified Time (optional): The time when the device was last known to have been modified.
+	ModifiedTime int64 `json:"modified_time,omitempty"`
+	// Name (optional): The alternate device name, ordinarily as assigned by an administrator.
+	Name string `json:"name,omitempty"`
+	// Network Interfaces (optional): The physical or virtual network interfaces that are associated with the device, one for each unique MAC address/IP address/hostname/name combination.Note: The first element of the array is the network information that pertains to the event.
+	NetworkInterfaces []NetworkInterface `json:"network_interfaces,omitempty"`
+	// Organization (optional): Organization and org unit related to the device.
+	Org *Organization `json:"org,omitempty"`
+	// OS (optional): The endpoint operating system.
+	OS *OS `json:"os,omitempty"`
+	// OS Machine UUID (optional): The operating system assigned Machine ID.
+	OSMachineUUID string `json:"os_machine_uuid,omitempty"`
+	// Owner (recommended): The identity of the service or user account that owns the endpoint or was last logged into it.
+	Owner *User `json:"owner,omitempty"`
+	// Region (recommended): The region where the virtual machine is located.
+	Region string `json:"region,omitempty"`
+	// Risk Level (optional): The risk level, normalized to the caption of the risk_level_id value.
+	RiskLevel string `json:"risk_level,omitempty"`
+	// Risk Level ID (optional): The normalized risk level id.
+	RiskLevelID int `json:"risk_level_id,omitempty"`
+	// Risk Score (optional): The risk score as reported by the event source.
+	RiskScore int `json:"risk_score,omitempty"`
+	// Subnet (optional): The subnet mask.
+	Subnet string `json:"subnet,omitempty"`
+	// Subnet UID (optional): The unique identifier of a virtual subnet.
+	SubnetUID string `json:"subnet_uid,omitempty"`
+	// Type (recommended): The device type.
+	Type string `json:"type,omitempty"`
+	// Type ID (required): The device type ID.
+	TypeID int `json:"type_id"`
+	// Unique Device Identifier (optional): The Apple assigned Unique Device Identifier (UDID).
+	Udid string `json:"udid,omitempty"`
+	// Unique ID (recommended): The unique identifier of the device.
+	UID string `json:"uid,omitempty"`
+	// Alternate ID (optional): An alternate unique identifier of the device if any.
+	UIDAlt string `json:"uid_alt,omitempty"`
+	// Vendor Name (recommended): The vendor for the device.
+	VendorName string `json:"vendor_name,omitempty"`
+	// VLAN (optional): The Virtual LAN identifier.
+	VlanUID string `json:"vlan_uid,omitempty"`
+	// VPC UID (optional): The unique identifier of the Virtual Private Cloud (VPC).
+	VpcUID string `json:"vpc_uid,omitempty"`
+	// Network Zone (optional): The network zone or LAN segment.
+	Zone string `json:"zone,omitempty"`
+}
+
+// DeviceRiskLevelID values.
+const (
+	DeviceRiskLevelIDInfo     = 0  // Info
+	DeviceRiskLevelIDLow      = 1  // Low
+	DeviceRiskLevelIDMedium   = 2  // Medium
+	DeviceRiskLevelIDHigh     = 3  // High
+	DeviceRiskLevelIDCritical = 4  // Critical
+	DeviceRiskLevelIDOther    = 99 // Other
+)
+
+// DeviceTypeID values.
+const (
+	DeviceTypeIDUnknown      = 0  // Unknown
+	DeviceTypeIDServer       = 1  // Server
+	DeviceTypeIDDesktop      = 2  // Desktop
+	DeviceTypeIDLaptop       = 3  // Laptop
+	DeviceTypeIDTablet       = 4  // Tablet
+	DeviceTypeIDMobile       = 5  // Mobile
+	DeviceTypeIDVirtual      = 6  // Virtual
+	DeviceTypeIDIOT          = 7  // IOT
+	DeviceTypeIDBrowser      = 8  // Browser
+	DeviceTypeIDFirewall     = 9  // Firewall
+	DeviceTypeIDSwitch       = 10 // Switch
+	DeviceTypeIDHub          = 11 // Hub
+	DeviceTypeIDRouter       = 12 // Router
+	DeviceTypeIDIDS          = 13 // IDS
+	DeviceTypeIDIPS          = 14 // IPS
+	DeviceTypeIDLoadBalancer = 15 // Load Balancer
+	DeviceTypeIDOther        = 99 // Other
+)
+
+// DeviceHwInfo is the OCSF 1.5.0 object "Device Hardware Info". The Device Hardware Information object contains details and specifications of the physical components that make up a device.
+type DeviceHwInfo struct {
+	// BIOS Date (optional): The BIOS date.
+	BiosDate string `json:"bios_date,omitempty"`
+	// BIOS Manufacturer (optional): The BIOS manufacturer.
+	BiosManufacturer string `json:"bios_manufacturer,omitempty"`
+	// BIOS Version (optional): The BIOS version.
+	BiosVer string `json:"bios_ver,omitempty"`
+	// Chassis (optional): The chassis type describes the system enclosure or physical form factor.
+	Chassis string `json:"chassis,omitempty"`
+	// CPU Architecture (optional): The CPU architecture, normalized to the caption of the cpu_architecture_id value.
+	CPUArchitecture string `json:"cpu_architecture,omitempty"`
+	// CPU Architecture ID (optional): The normalized identifier of the CPU architecture.
+	CPUArchitectureID int `json:"cpu_architecture_id,omitempty"`
+	// CPU Bits (optional): The cpu architecture, the number of bits used for addressing in memory.
+	CPUBits int `json:"cpu_bits,omitempty"`
+	// CPU Cores (optional): The number of processor cores in all installed processors.
+	CPUCores int `json:"cpu_cores,omitempty"`
+	// CPU Count (optional): The number of physical processors on a system.
+	CPUCount int `json:"cpu_count,omitempty"`
+	// Processor Speed (optional): The speed of the processor in Mhz.
+	CPUSpeed int `json:"cpu_speed,omitempty"`
+	// Processor Type (optional): The processor type.
+	CPUType string `json:"cpu_type,omitempty"`
+	// Desktop Display (optional): The desktop display affiliated with the event
+	DesktopDisplay *Display `json:"desktop_display,omitempty"`
+	// Keyboard Information (optional): The keyboard detailed information.
+	KeyboardInfo *KeyboardInfo `json:"keyboard_info,omitempty"`
+	// RAM Size (optional): The total amount of installed RAM, in Megabytes.
+	RamSize int `json:"ram_size,omitempty"`
+	// Serial Number (optional): The device manufacturer serial number.
+	SerialNumber string `json:"serial_number,omitempty"`
+	// UUID (optional): The device manufacturer assigned universally unique hardware identifier.
+	UUID string `json:"uuid,omitempty"`
+	// Vendor Name (optional): The device manufacturer.
+	VendorName string `json:"vendor_name,omitempty"`
+}
+
+// DeviceHwInfoCPUArchitectureID values.
+const (
+	DeviceHwInfoCPUArchitectureIDUnknown = 0  // Unknown
+	DeviceHwInfoCPUArchitectureIDX86     = 1  // x86
+	DeviceHwInfoCPUArchitectureIDARM     = 2  // ARM
+	DeviceHwInfoCPUArchitectureIDRISCV   = 3  // RISC-V
+	DeviceHwInfoCPUArchitectureIDOther   = 99 // Other
+)
+
+// DigitalSignature is the OCSF 1.5.0 object "Digital Signature". The Digital Signature object contains information about the cryptographic mechanism used to verify the authenticity, integrity, and origin of the file or application.
+type DigitalSignature struct {
+	// Algorithm (optional): The digital signature algorithm used to create the signature, normalized to the caption of 'algorithm_id'.
+	Algorithm string `json:"algorithm,omitempty"`
+	// Algorithm ID (required): The identifier of the normalized digital signature algorithm.
+	AlgorithmID int `json:"algorithm_id"`
+	// Certificate (recommended): The certificate object containing information about the digital certificate.
+	Certificate *Certificate `json:"certificate,omitempty"`
+	// Created Time (optional): The time when the digital signature was created.
+	CreatedTime int64 `json:"created_time,omitempty"`
+	// Developer UID (optional): The developer ID on the certificate that signed the file.
+	DeveloperUID string `json:"developer_uid,omitempty"`
+	// Message Digest (optional): The message digest attribute contains the fixed length message hash representation and the corresponding hashing algorithm information.
+	Digest *Fingerprint `json:"digest,omitempty"`
+	// State (optional): The digital signature state defines the signature state, normalized to the caption of 'state_id'.
+	State string `json:"state,omitempty"`
+	// State ID (optional): The normalized identifier of the signature state.
+	StateID int `json:"state_id,omitempty"`
+}
+
+// DigitalSignatureAlgorithmID values.
+const (
+	DigitalSignatureAlgorithmIDUnknown      = 0  // Unknown
+	DigitalSignatureAlgorithmIDDSA          = 1  // DSA
+	DigitalSignatureAlgorithmIDRSA          = 2  // RSA
+	DigitalSignatureAlgorithmIDECDSA        = 3  // ECDSA
+	DigitalSignatureAlgorithmIDAuthenticode = 4  // Authenticode
+	DigitalSignatureAlgorithmIDOther        = 99 // Other
+)
+
+// DigitalSignatureStateID values.
+const (
+	DigitalSignatureStateIDUnknown   = 0  // Unknown
+	DigitalSignatureStateIDValid     = 1  // Valid
+	DigitalSignatureStateIDExpired   = 2  // Expired
+	DigitalSignatureStateIDRevoked   = 3  // Revoked
+	DigitalSignatureStateIDSuspended = 4  // Suspended
+	DigitalSignatureStateIDPending   = 5  // Pending
+	DigitalSignatureStateIDOther     = 99 // Other
+)
+
+// DiscoveryDetails is the OCSF 1.5.0 object "Discovery Details". The Discovery Details object describes results of a discovery task/job.
+type DiscoveryDetails struct {
+	// Count (recommended): The number of discovered entities of the specified type.
+	Count int `json:"count,omitempty"`
+	// Occurrences (optional): Details about where in the target entity, specified information was discovered.
+	Occurrences []OccurrenceDetails `json:"occurrences,omitempty"`
+	// Type (recommended): The specific type of information that was discovered.
+	Type string `json:"type,omitempty"`
+	// Value (optional): Optionally, the specific value of discovered information.
+	Value string `json:"value,omitempty"`
+}
+
+// Display is the OCSF 1.5.0 object "Display". The Display object contains information about the physical or virtual display connected to a computer system.
+type Display struct {
+	// Color Depth (optional): The numeric color depth.
+	ColorDepth int `json:"color_depth,omitempty"`
+	// Physical Height (optional): The numeric physical height of display.
+	PhysicalHeight int `json:"physical_height,omitempty"`
+	// Physical Orientation (optional): The numeric physical orientation of display.
+	PhysicalOrientation int `json:"physical_orientation,omitempty"`
+	// Physical Width (optional): The numeric physical width of display.
+	PhysicalWidth int `json:"physical_width,omitempty"`
+	// Scale Factor (optional): The numeric scale factor of display.
+	ScaleFactor int `json:"scale_factor,omitempty"`
+}
+
+// DNSAnswer is the OCSF 1.5.0 object "DNS Answer". The DNS Answer object represents a specific response provided by the Domain Name System (DNS) when querying for information about a domain or performing a DNS operation.
+type DNSAnswer struct {
+	// Resource Record Class (recommended): The class of DNS data contained in this resource record.
+	Class string `json:"class,omitempty"`
+	// DNS Header Flags (recommended): The list of DNS answer header flag IDs.
+	FlagIds []int `json:"flag_ids,omitempty"`
+	// DNS Header Flags (optional): The list of DNS answer header flags.
+	Flags []string `json:"flags,omitempty"`
+	// Packet UID (recommended): The DNS packet identifier assigned by the program that generated the query.
+	PacketUID int `json:"packet_uid,omitempty"`
+	// DNS RData (required): The data describing the DNS resource.
+	Rdata string `json:"rdata"`
+	// TTL (recommended): The time interval that the resource record may be cached.
+	TTL int `json:"ttl,omitempty"`
+	// Resource Record Type (recommended): The type of data contained in this resource record.
+	Type string `json:"type,omitempty"`
+}
+
+// DNSQuery is the OCSF 1.5.0 object "DNS Query". The DNS query object represents a specific request made to the Domain Name System (DNS) to retrieve information about a domain or perform a DNS operation.
+type DNSQuery struct {
+	// Resource Record Class (recommended): The class of resource records being queried.
+	Class string `json:"class,omitempty"`
+	// Hostname (required): The hostname or domain being queried.
+	Hostname string `json:"hostname"`
+	// DNS Opcode (optional): The DNS opcode specifies the type of the query message.
+	Opcode string `json:"opcode,omitempty"`
+	// DNS Opcode ID (recommended): The DNS opcode ID specifies the normalized query message type as defined in RFC-5395.
+	OpcodeID int `json:"opcode_id,omitempty"`
+	// Packet UID (recommended): The DNS packet identifier assigned by the program that generated the query.
+	PacketUID int `json:"packet_uid,omitempty"`
+	// Resource Record Type (recommended): The type of resource records being queried.
+	Type string `json:"type,omitempty"`
+}
+
+// DNSQueryOpcodeID values.
+const (
+	DNSQueryOpcodeIDQuery        = 0  // Query
+	DNSQueryOpcodeIDInverseQuery = 1  // Inverse Query
+	DNSQueryOpcodeIDStatus       = 2  // Status
+	DNSQueryOpcodeIDReserved     = 3  // Reserved
+	DNSQueryOpcodeIDNotify       = 4  // Notify
+	DNSQueryOpcodeIDUpdate       = 5  // Update
+	DNSQueryOpcodeIDDSOMessage   = 6  // DSO Message
+	DNSQueryOpcodeIDOther        = 99 // Other
+)
+
+// DomainContact is the OCSF 1.5.0 object "Domain Contact". The contact information related to a domain registration, e.g., registrant, administrator, abuse, billing, or technical contact.
+type DomainContact struct {
+	// Contact Email (recommended): The user's primary email address.
+	EmailAddr string `json:"email_addr,omitempty"`
+	// Contact Location Information (recommended): Location details for the contract such as the city, state/province, country, etc.
+	Location *Location `json:"location,omitempty"`
+	// Name (optional): The individual or organization name for the contact.
+	Name string `json:"name,omitempty"`
+	// Phone Number (optional): The number associated with the phone.
+	PhoneNumber string `json:"phone_number,omitempty"`
+	// Domain Contact Type (optional): The Domain Contact type, normalized to the caption of the type_id value.
+	Type string `json:"type,omitempty"`
+	// Domain Contact Type ID (required): The normalized domain contact type ID.
+	TypeID int `json:"type_id"`
+	// Unique ID (optional): The unique identifier of the contact information, typically provided in WHOIS information.
+	UID string `json:"uid,omitempty"`
+}
+
+// DomainContactTypeID values.
+const (
+	DomainContactTypeIDUnknown        = 0  // Unknown
+	DomainContactTypeIDRegistrant     = 1  // Registrant
+	DomainContactTypeIDAdministrative = 2  // Administrative
+	DomainContactTypeIDTechnical      = 3  // Technical
+	DomainContactTypeIDBilling        = 4  // Billing
+	DomainContactTypeIDAbuse          = 5  // Abuse
+	DomainContactTypeIDOther          = 99 // Other
+)
+
+// Edge is the OCSF 1.5.0 object "Edge". Represents a connection or relationship between two nodes in a graph.
+//
+// Constraint at_least_one: name, uid.
+type Edge struct {
+	// Data (optional): Additional data about the edge such as weight, distance, or custom properties.
+	Data any `json:"data,omitempty"`
+	// Directed (optional): Indicates whether the edge is (true) or undirected (false).
+	IsDirected bool `json:"is_directed,omitempty"`
+	// Name (recommended): The human-readable name or label for the edge.
+	Name string `json:"name,omitempty"`
+	// Relation (recommended): The type of relationship between nodes (e.g.
+	Relation string `json:"relation,omitempty"`
+	// Source (required): The unique identifier of the node where the edge originates.
+	Source string `json:"source"`
+	// Target (required): The unique identifier of the node where the edge terminates.
+	Target string `json:"target"`
+	// Unique ID (recommended): Unique identifier of the edge.
+	UID string `json:"uid,omitempty"`
+}
+
+// Email is the OCSF 1.5.0 object "Email". The Email object describes the email metadata such as sender, recipients, and direction, and can include embedded URLs and files.
+//
+// Constraint at_least_one: from, to.
+type Email struct {
+	// Cc (optional): The machine-readable email header Cc values, as defined by RFC 5322.
+	Cc []string `json:"cc,omitempty"`
+	// Cc Mailboxes (optional): The human-readable email header Cc Mailbox values.
+	CcMailboxes []string `json:"cc_mailboxes,omitempty"`
+	// Delivered To (optional): The machine-readable Delivered-To email header values.
+	DeliveredToList []string `json:"delivered_to_list,omitempty"`
+	// Files (optional): The files embedded or attached to the email.
+	Files []File `json:"files,omitempty"`
+	// From (recommended): The machine-readable email header From values, as defined by RFC 5322.
+	From string `json:"from,omitempty"`
+	// From Mailbox (optional): The human-readable email header From Mailbox value.
+	FromMailbox string `json:"from_mailbox,omitempty"`
+	// HTTP Headers (optional): Additional HTTP headers of an HTTP request or response.
+	HTTPHeaders []HTTPHeader `json:"http_headers,omitempty"`
+	// Read (optional): The indication of whether the email has been read.
+	IsRead bool `json:"is_read,omitempty"`
+	// Message UID (recommended): The email header Message-ID value, as defined by RFC 5322.
+	MessageUID string `json:"message_uid,omitempty"`
+	// Raw Header (optional): The email authentication header.
+	RawHeader string `json:"raw_header,omitempty"`
+	// Reply To Mailboxes (optional): The human-readable email header Reply To Mailbox values.
+	ReplyToMailboxes []string `json:"reply_to_mailboxes,omitempty"`
+	// Size (recommended): The size in bytes of the email, including attachments.
+	Size int64 `json:"size,omitempty"`
+	// Subject (recommended): The email header Subject value, as defined by RFC 5322.
+	Subject string `json:"subject,omitempty"`
+	// To (recommended): The machine-readable email header To values, as defined by RFC 5322.
+	To []string `json:"to,omitempty"`
+	// To Mailboxes (optional): The human-readable email header To Mailbox values.
+	ToMailboxes []string `json:"to_mailboxes,omitempty"`
+	// Email Thread UID (recommended): The unique identifier of the email thread.
+	UID string `json:"uid,omitempty"`
+	// URLs (optional): The URLs embedded in the email.
+	Urls []URL `json:"urls,omitempty"`
+	// X-Originating-IP (optional): The X-Originating-IP header identifying the emails originating IP address(es).
+	XOriginatingIP []string `json:"x_originating_ip,omitempty"`
+}
+
+// EmailAuth is the OCSF 1.5.0 object "Email Authentication". The Email Authentication object describes the Sender Policy Framework (SPF), DomainKeys Identified Mail (DKIM) and Domain-based Message Authentication, Reporting and Conformance (DMARC) attributes of an email.
+type EmailAuth struct {
+	// DKIM Status (recommended): The DomainKeys Identified Mail (DKIM) status of the email.
+	Dkim string `json:"dkim,omitempty"`
+	// DKIM Domain (recommended): The DomainKeys Identified Mail (DKIM) signing domain of the email.
+	DkimDomain string `json:"dkim_domain,omitempty"`
+	// DKIM Signature (recommended): The DomainKeys Identified Mail (DKIM) signature used by the sending/receiving system.
+	DkimSignature string `json:"dkim_signature,omitempty"`
+	// DMARC Status (recommended): The Domain-based Message Authentication, Reporting and Conformance (DMARC) status of the email.
+	Dmarc string `json:"dmarc,omitempty"`
+	// DMARC Override (recommended): The Domain-based Message Authentication, Reporting and Conformance (DMARC) override action.
+	DmarcOverride string `json:"dmarc_override,omitempty"`
+	// DMARC Policy (recommended): The Domain-based Message Authentication, Reporting and Conformance (DMARC) policy status.
+	DmarcPolicy string `json:"dmarc_policy,omitempty"`
+	// SPF Status (recommended): The Sender Policy Framework (SPF) status of the email.
+	Spf string `json:"spf,omitempty"`
+}
+
+// EncryptionDetails is the OCSF 1.5.0 object "Encryption Details". Details about the encrytpion methodology utilized.
+type EncryptionDetails struct {
+	// Encryption Algorithm (optional): The encryption algorithm used, normalized to the caption of 'algorithm_id
+	Algorithm string `json:"algorithm,omitempty"`
+	// Encryption Algorithm ID (recommended): The encryption algorithm used.
+	AlgorithmID int `json:"algorithm_id,omitempty"`
+	// Encryption Key Length (optional): The length of the encryption key used.
+	KeyLength int `json:"key_length,omitempty"`
+	// Key UID (optional): The unique identifier of the key used for encrpytion.
+	KeyUID string `json:"key_uid,omitempty"`
+	// Encryption Type (recommended): The type of the encryption used.
+	Type string `json:"type,omitempty"`
+}
+
+// EncryptionDetailsAlgorithmID values.
+const (
+	EncryptionDetailsAlgorithmIDUnknown   = 0  // Unknown
+	EncryptionDetailsAlgorithmIDDES       = 1  // DES
+	EncryptionDetailsAlgorithmIDTripleDES = 2  // TripleDES
+	EncryptionDetailsAlgorithmIDAES       = 3  // AES
+	EncryptionDetailsAlgorithmIDRSA       = 4  // RSA
+	EncryptionDetailsAlgorithmIDECC       = 5  // ECC
+	EncryptionDetailsAlgorithmIDSM2       = 6  // SM2
+	EncryptionDetailsAlgorithmIDOther     = 99 // Other
+)
+
+// Endpoint is the OCSF 1.5.0 object "Endpoint". The Endpoint object describes a physical or virtual device that connects to and exchanges information with a computer network.
+//
+// Constraint at_least_one: ip, uid, name, hostname, instance_uid, interface_uid, interface_name.
+type Endpoint struct {
+	// Agent List (optional): A list of agent objects associated with a device, endpoint, or resource.
+	AgentList []Agent `json:"agent_list,omitempty"`
+	// Domain (optional): The name of the domain that the endpoint belongs to or that corresponds to the endpoint.
+	Domain string `json:"domain,omitempty"`
+	// Hostname (recommended): The fully qualified name of the endpoint.
+	Hostname string `json:"hostname,omitempty"`
+	// Hardware Info (optional): The endpoint hardware information.
+	HwInfo *DeviceHwInfo `json:"hw_info,omitempty"`
+	// Instance ID (recommended): The unique identifier of a VM instance.
+	InstanceUID string `json:"instance_uid,omitempty"`
+	// Network Interface Name (recommended): The name of the network interface (e.g.
+	InterfaceName string `json:"interface_name,omitempty"`
+	// Network Interface ID (recommended): The unique identifier of the network interface.
+	InterfaceUID string `json:"interface_uid,omitempty"`
+	// IP Address (recommended): The IP address of the endpoint, in either IPv4 or IPv6 format.
+	IP string `json:"ip,omitempty"`
+	// Geo Location (optional): The geographical location of the endpoint.
+	Location *Location `json:"location,omitempty"`
+	// MAC Address (optional): The Media Access Control (MAC) address of the endpoint.
+	MAC string `json:"mac,omitempty"`
+	// Name (recommended): The short name of the endpoint.
+	Name string `json:"name,omitempty"`
+	// OS (optional): The endpoint operating system.
+	OS *OS `json:"os,omitempty"`
+	// Owner (recommended): The identity of the service or user account that owns the endpoint or was last logged into it.
+	Owner *User `json:"owner,omitempty"`
+	// Subnet UID (optional): The unique identifier of a virtual subnet.
+	SubnetUID string `json:"subnet_uid,omitempty"`
+	// Type (optional): The endpoint type.
+	Type string `json:"type,omitempty"`
+	// Type ID (recommended): The endpoint type ID.
+	TypeID int `json:"type_id,omitempty"`
+	// Unique ID (recommended): The unique identifier of the endpoint.
+	UID string `json:"uid,omitempty"`
+	// VLAN (optional): The Virtual LAN identifier.
+	VlanUID string `json:"vlan_uid,omitempty"`
+	// VPC UID (optional): The unique identifier of the Virtual Private Cloud (VPC).
+	VpcUID string `json:"vpc_uid,omitempty"`
+	// Network Zone (optional): The network zone or LAN segment.
+	Zone string `json:"zone,omitempty"`
+}
+
+// EndpointTypeID values.
+const (
+	EndpointTypeIDUnknown      = 0  // Unknown
+	EndpointTypeIDServer       = 1  // Server
+	EndpointTypeIDDesktop      = 2  // Desktop
+	EndpointTypeIDLaptop       = 3  // Laptop
+	EndpointTypeIDTablet       = 4  // Tablet
+	EndpointTypeIDMobile       = 5  // Mobile
+	EndpointTypeIDVirtual      = 6  // Virtual
+	EndpointTypeIDIOT          = 7  // IOT
+	EndpointTypeIDBrowser      = 8  // Browser
+	EndpointTypeIDFirewall     = 9  // Firewall
+	EndpointTypeIDSwitch       = 10 // Switch
+	EndpointTypeIDHub          = 11 // Hub
+	EndpointTypeIDRouter       = 12 // Router
+	EndpointTypeIDIDS          = 13 // IDS
+	EndpointTypeIDIPS          = 14 // IPS
+	EndpointTypeIDLoadBalancer = 15 // Load Balancer
+	EndpointTypeIDOther        = 99 // Other
+)
+
+// EndpointConnection is the OCSF 1.5.0 object "Endpoint Connection". The Endpoint Connection object contains information detailing a connection attempt to an endpoint.
+//
+// Constraint at_least_one: network_endpoint, code.
+type EndpointConnection struct {
+	// Response Code (recommended): A numerical response status code providing details about the connection.
+	Code int `json:"code,omitempty"`
+	// Network Endpoint (recommended): Provides characteristics of the network endpoint.
+	NetworkEndpoint *NetworkEndpoint `json:"network_endpoint,omitempty"`
+}
+
+// Enrichment is the OCSF 1.5.0 object "Enrichment". The Enrichment object provides inline enrichment data for specific attributes of interest within an event.
+type Enrichment struct {
+	// Created Time (recommended): The time when the enrichment data was generated.
+	CreatedTime int64 `json:"created_time,omitempty"`
+	// Data (required): The enrichment data associated with the attribute and value.
+	Data any `json:"data"`
+	// Description (optional): A long description of the enrichment data.
+	Desc string `json:"desc,omitempty"`
+	// Name (required): The name of the attribute to which the enriched data pertains.
+	Name string `json:"name"`
+	// Provider (recommended): The enrichment data provider name.
+	Provider string `json:"provider,omitempty"`
+	// Reputation Scores (optional): The reputation of the enrichment data.
+	Reputation *Reputation `json:"reputation,omitempty"`
+	// Short Description (recommended): A short description of the enrichment data.
+	ShortDesc string `json:"short_desc,omitempty"`
+	// Source URL (recommended): The URL of the source of the enrichment data.
+	SrcURL string `json:"src_url,omitempty"`
+	// Type (recommended): The enrichment type.
+	Type string `json:"type,omitempty"`
+	// Value (required): The value of the attribute to which the enriched data pertains.
+	Value string `json:"value"`
+}
+
+// EnvironmentVariable is the OCSF 1.5.0 object "Environment Variable". An environment variable.
+type EnvironmentVariable struct {
+	// Name (required): The name of the environment variable.
+	Name string `json:"name"`
+	// Value (required): The value of the environment variable.
+	Value string `json:"value"`
+}
+
+// Epss is the OCSF 1.5.0 object "EPSS". The Exploit Prediction Scoring System (EPSS) object describes the estimated probability a vulnerability will be exploited.
+type Epss struct {
+	// Created Time (recommended): The timestamp indicating when the EPSS score was calculated.
+	CreatedTime int64 `json:"created_time,omitempty"`
+	// EPSS Percentile (optional): The EPSS score's percentile representing relative importance and ranking of the score in the larger EPSS dataset.
+	Percentile float64 `json:"percentile,omitempty"`
+	// EPPS Score (required): The EPSS score representing the probability [0-1] of exploitation in the wild in the next 30 days (following score publication).
+	Score string `json:"score"`
+	// Version (recommended): The version of the EPSS model used to calculate the score.
+	Version string `json:"version,omitempty"`
+}
+
 // Evidences is the OCSF 1.5.0 object "Evidence Artifacts". A collection of evidence artifacts associated to the activity/activities that triggered a security detection.
 //
 // Constraint at_least_one: actor, api, connection_info, data, database, databucket, device, dst_endpoint, email, file, process, query, src_endpoint, url, user, job, script, reg_key, reg_value, win_service.
-//
-// Not generated (object not in gen.yaml): connection_info (network_connection_info), container (container), database (database), databucket (databucket), device (device), email (email), file (file), http_response (http_response), ja4_fingerprint_list (ja4_fingerprint), job (job), process (process), query (dns_query), reg_key (win/reg_key), reg_value (win/reg_value), resources (resource_details), script (script), tls (tls), url (url), win_service (win/win_service).
 type Evidences struct {
 	// Actor (recommended): Describes details about the user/role/process that was the source of the activity that triggered the detection.
 	Actor *Actor `json:"actor,omitempty"`
 	// API Details (recommended): Describes details about the API call associated to the activity that triggered the detection.
 	API *API `json:"api,omitempty"`
+	// Connection Info (recommended): Describes details about the network connection associated to the activity that triggered the detection.
+	ConnectionInfo *NetworkConnectionInfo `json:"connection_info,omitempty"`
+	// Container (recommended): Describes details about the container associated to the activity that triggered the detection.
+	Container *Container `json:"container,omitempty"`
 	// Data (optional): Additional evidence data that is not accounted for in the specific evidence attributes.
 	Data any `json:"data,omitempty"`
+	// Database (recommended): Describes details about the database associated to the activity that triggered the detection.
+	Database *Database `json:"database,omitempty"`
+	// Databucket (recommended): Describes details about the databucket associated to the activity that triggered the detection.
+	Databucket *Databucket `json:"databucket,omitempty"`
+	// Device (recommended): An addressable device, computer system or host associated to the activity that triggered the detection.
+	Device *Device `json:"device,omitempty"`
 	// Destination Endpoint (recommended): Describes details about the destination of the network activity that triggered the detection.
 	DstEndpoint *NetworkEndpoint `json:"dst_endpoint,omitempty"`
+	// Email (recommended): The email object associated to the activity that triggered the detection.
+	Email *Email `json:"email,omitempty"`
+	// File (recommended): Describes details about the file associated to the activity that triggered the detection.
+	File *File `json:"file,omitempty"`
 	// HTTP Request (recommended): Describes details about the http request associated to the activity that triggered the detection.
 	HTTPRequest *HTTPRequest `json:"http_request,omitempty"`
+	// HTTP Response (recommended): Describes details about the http response associated to the activity that triggered the detection.
+	HTTPResponse *HTTPResponse `json:"http_response,omitempty"`
+	// JA4+ Fingerprints (recommended): Describes details about the JA4+ fingerprints that triggered the detection.
+	JA4FingerprintList []JA4Fingerprint `json:"ja4_fingerprint_list,omitempty"`
+	// Job (recommended): Describes details about the scheduled job that was associated with the activity that triggered the detection.
+	Job *Job `json:"job,omitempty"`
 	// Name (optional): The naming convention or type identifier of the evidence associated with the security detection.
 	Name string `json:"name,omitempty"`
+	// Process (recommended): Describes details about the process associated to the activity that triggered the detection.
+	Process *Process `json:"process,omitempty"`
+	// DNS Query (recommended): Describes details about the DNS query associated to the activity that triggered the detection.
+	Query *DNSQuery `json:"query,omitempty"`
+	// Registry Key (recommended): Describes details about the registry key that triggered the detection.
+	RegKey *WinRegKey `json:"reg_key,omitempty"`
+	// Registry Value (recommended): Describes details about the registry value that triggered the detection.
+	RegValue *WinRegValue `json:"reg_value,omitempty"`
+	// Cloud Resources (recommended): Describes details about the cloud resources directly related to activity that triggered the detection.
+	Resources []ResourceDetails `json:"resources,omitempty"`
+	// Script (recommended): Describes details about the script that was associated with the activity that triggered the detection.
+	Script *Script `json:"script,omitempty"`
 	// Source Endpoint (recommended): Describes details about the source of the network activity that triggered the detection.
 	SrcEndpoint *NetworkEndpoint `json:"src_endpoint,omitempty"`
+	// TLS (recommended): Describes details about the Transport Layer Security (TLS) activity that triggered the detection.
+	TLS *TLS `json:"tls,omitempty"`
 	// Unique ID (optional): The unique identifier of the evidence associated with the security detection.
 	UID string `json:"uid,omitempty"`
+	// URL (recommended): The URL object that pertains to the event or object associated to the activity that triggered the detection.
+	URL *URL `json:"url,omitempty"`
 	// User (recommended): Describes details about the user that was the target or somehow else associated with the activity that triggered the detection.
 	User *User `json:"user,omitempty"`
 	// Verdict (optional): The normalized verdict of the evidence associated with the security detection.
 	Verdict string `json:"verdict,omitempty"`
 	// Verdict ID (optional): The normalized verdict (or status) ID of the evidence associated with the security detection.
 	VerdictID int `json:"verdict_id,omitempty"`
+	// Windows Service (recommended): Describes details about the Windows service that triggered the detection.
+	WinService *WinWinService `json:"win_service,omitempty"`
 }
 
 // EvidencesVerdictID values.
@@ -880,14 +12977,150 @@ const (
 	EvidencesVerdictIDOther             = 99 // Other
 )
 
-// FindingInfo is the OCSF 1.5.0 object "Finding Information". The Finding Information object describes metadata related to a security finding generated by a security tool or system.
+// Extension is the OCSF 1.5.0 object "Schema Extension". The OCSF Schema Extension object provides detailed information about the schema extension used to construct the event.
+type Extension struct {
+	// Name (required): The schema extension name.
+	Name string `json:"name"`
+	// Unique ID (required): The schema extension unique identifier.
+	UID string `json:"uid"`
+	// Version (required): The schema extension version.
+	Version string `json:"version"`
+}
+
+// Feature is the OCSF 1.5.0 object "Feature". The Feature object provides information about the software product feature that generated a specific event.
 //
-// Not generated (object not in gen.yaml): analytic (analytic), attacks (attack), kill_chain (kill_chain_phase), related_analytics (analytic), related_events (related_event), tags (key_value_object), traits (trait).
-type FindingInfo struct {
+// Constraint at_least_one: name, uid.
+type Feature struct {
+	// Name (recommended): The name of the feature.
+	Name string `json:"name,omitempty"`
+	// Unique ID (recommended): The unique identifier of the feature.
+	UID string `json:"uid,omitempty"`
+	// Version (recommended): The version of the feature.
+	Version string `json:"version,omitempty"`
+}
+
+// File is the OCSF 1.5.0 object "File". The File object represents the metadata associated with a file stored in a computer system.
+type File struct {
+	// Accessed Time (optional): The time when the file was last accessed.
+	AccessedTime int64 `json:"accessed_time,omitempty"`
+	// Accessor (optional): The name of the user who last accessed the object.
+	Accessor *User `json:"accessor,omitempty"`
+	// Attributes (optional): The bitmask value that represents the file attributes.
+	Attributes int `json:"attributes,omitempty"`
+	// Company Name (optional): The name of the company that published the file.
+	CompanyName string `json:"company_name,omitempty"`
+	// Confidentiality (optional): The file content confidentiality, normalized to the confidentiality_id value.
+	Confidentiality string `json:"confidentiality,omitempty"`
+	// Confidentiality ID (optional): The normalized identifier of the file content confidentiality indicator.
+	ConfidentialityID int `json:"confidentiality_id,omitempty"`
+	// Created Time (optional): The time when the file was created.
+	CreatedTime int64 `json:"created_time,omitempty"`
+	// Creator (optional): The user that created the file.
+	Creator *User `json:"creator,omitempty"`
+	// Description (optional): The description of the file, as returned by file system.
+	Desc string `json:"desc,omitempty"`
+	// Drive Type (optional): The drive type, normalized to the caption of the drive_type_id value.
+	DriveType string `json:"drive_type,omitempty"`
+	// Drive Type ID (optional): Identifies the type of a disk drive, i.e.
+	DriveTypeID int `json:"drive_type_id,omitempty"`
+	// Encryption Details (optional): The encryption details of the file.
+	EncryptionDetails *EncryptionDetails `json:"encryption_details,omitempty"`
+	// File Extension (recommended): The extension of the file, excluding the leading dot.
+	Ext string `json:"ext,omitempty"`
+	// Hashes (recommended): An array of hash attributes.
+	Hashes []Fingerprint `json:"hashes,omitempty"`
+	// Internal Name (optional): The name of the file as identified within the file itself.
+	InternalName string `json:"internal_name,omitempty"`
+	// Deleted (optional): Indicates if the file was deleted from the filesystem.
+	IsDeleted bool `json:"is_deleted,omitempty"`
+	// Encrypted (optional): Indicates if the file is encrypted.
+	IsEncrypted bool `json:"is_encrypted,omitempty"`
+	// System (optional): The indication of whether the object is part of the operating system.
+	IsSystem bool `json:"is_system,omitempty"`
+	// MIME type (optional): The Multipurpose Internet Mail Extensions (MIME) type of the file, if applicable.
+	MimeType string `json:"mime_type,omitempty"`
+	// Modified Time (optional): The time when the file was last modified.
+	ModifiedTime int64 `json:"modified_time,omitempty"`
+	// Modifier (optional): The user that last modified the file.
+	Modifier *User `json:"modifier,omitempty"`
+	// Name (required): The name of the file.
+	Name string `json:"name"`
+	// Owner (optional): The user that owns the file/object.
+	Owner *User `json:"owner,omitempty"`
+	// Parent Folder (optional): The parent folder in which the file resides.
+	ParentFolder string `json:"parent_folder,omitempty"`
+	// Path (recommended): The full path to the file.
+	Path string `json:"path,omitempty"`
+	// Product (optional): The product that created or installed the file.
+	Product *Product `json:"product,omitempty"`
+	// Security Descriptor (optional): The object security descriptor.
+	SecurityDescriptor string `json:"security_descriptor,omitempty"`
+	// Digital Signature (optional): The digital signature of the file.
+	Signature *DigitalSignature `json:"signature,omitempty"`
+	// Size (optional): The size of data, in bytes.
+	Size int64 `json:"size,omitempty"`
+	// Tags (optional): The list of tags; {key:value} pairs associated to the file.
+	Tags []KeyValueObject `json:"tags,omitempty"`
+	// Type (optional): The file type.
+	Type string `json:"type,omitempty"`
+	// Type ID (required): The file type ID.
+	TypeID int `json:"type_id"`
+	// Unique ID (optional): The unique identifier of the file as defined by the storage system, such the file system file ID.
+	UID string `json:"uid,omitempty"`
+	// File URI (optional): The file URI, such as those reporting by static analysis tools.
+	URI string `json:"uri,omitempty"`
+	// URL (optional): The URL of the file, when applicable.
+	URL *URL `json:"url,omitempty"`
+	// Version (optional): The file version.
+	Version string `json:"version,omitempty"`
+	// Volume (optional): The volume on the storage device where the file is located.
+	Volume string `json:"volume,omitempty"`
+	// Extended Attributes (optional): An unordered collection of zero or more name/value pairs where each pair represents a file or folder extended attribute.For example: Windows alternate data stream attributes (ADS stream name, ADS size, etc.), user-defined or application-defined attributes, ACL, owner, primary group, etc.
+	Xattributes map[string]any `json:"xattributes,omitempty"`
+}
+
+// FileConfidentialityID values.
+const (
+	FileConfidentialityIDUnknown         = 0  // Unknown
+	FileConfidentialityIDNotConfidential = 1  // Not Confidential
+	FileConfidentialityIDConfidential    = 2  // Confidential
+	FileConfidentialityIDSecret          = 3  // Secret
+	FileConfidentialityIDTopSecret       = 4  // Top Secret
+	FileConfidentialityIDPrivate         = 5  // Private
+	FileConfidentialityIDRestricted      = 6  // Restricted
+	FileConfidentialityIDOther           = 99 // Other
+)
+
+// FileDriveTypeID values.
+const (
+	FileDriveTypeIDUnknown   = 0  // Unknown
+	FileDriveTypeIDRemovable = 1  // Removable
+	FileDriveTypeIDFixed     = 2  // Fixed
+	FileDriveTypeIDRemote    = 3  // Remote
+	FileDriveTypeIDCDROM     = 4  // CD-ROM
+	FileDriveTypeIDRAMDisk   = 5  // RAM Disk
+	FileDriveTypeIDOther     = 99 // Other
+)
+
+// FileTypeID values.
+const (
+	FileTypeIDUnknown         = 0  // Unknown
+	FileTypeIDRegularFile     = 1  // Regular File
+	FileTypeIDFolder          = 2  // Folder
+	FileTypeIDCharacterDevice = 3  // Character Device
+	FileTypeIDBlockDevice     = 4  // Block Device
+	FileTypeIDLocalSocket     = 5  // Local Socket
+	FileTypeIDNamedPipe       = 6  // Named Pipe
+	FileTypeIDSymbolicLink    = 7  // Symbolic Link
+	FileTypeIDOther           = 99 // Other
+)
+
+// Finding is the OCSF 1.5.0 object "Finding". The Finding object describes metadata related to a security finding generated by a security tool or system.
+//
+// Deprecated: since OCSF 1.0.0. Use the new finding_info object.
+type Finding struct {
 	// Created Time (optional): The time when the finding was created.
 	CreatedTime int64 `json:"created_time,omitempty"`
-	// Data Sources (optional): A list of data sources utilized in generation of the finding.
-	DataSources []string `json:"data_sources,omitempty"`
 	// Description (optional): The description of the reported finding.
 	Desc string `json:"desc,omitempty"`
 	// First Seen (optional): The time when the finding was first observed.
@@ -898,12 +13131,58 @@ type FindingInfo struct {
 	ModifiedTime int64 `json:"modified_time,omitempty"`
 	// Product (optional): Details about the product that reported the finding.
 	Product *Product `json:"product,omitempty"`
+	// Related Events/Findings (optional): Describes events and/or other findings related to the finding as identified by the security product.
+	RelatedEvents []RelatedEvent `json:"related_events,omitempty"`
+	// Remediation Guidance (optional): Describes the recommended remediation steps to address identified issue(s).
+	Remediation *Remediation `json:"remediation,omitempty"`
+	// Source URL (optional): The URL pointing to the source of the finding.
+	SrcURL string `json:"src_url,omitempty"`
+	// Supporting Data (optional): Additional data supporting a finding as provided by security tool
+	SupportingData any `json:"supporting_data,omitempty"`
+	// Title (required): A title or a brief phrase summarizing the reported finding.
+	Title string `json:"title"`
+	// Types (optional): One or more types of the reported finding.
+	Types []string `json:"types,omitempty"`
+	// Unique ID (required): The unique identifier of the reported finding.
+	UID string `json:"uid"`
+}
+
+// FindingInfo is the OCSF 1.5.0 object "Finding Information". The Finding Information object describes metadata related to a security finding generated by a security tool or system.
+type FindingInfo struct {
+	// Analytic (recommended): The analytic technique used to analyze and derive insights from the data or information that led to the finding or conclusion.
+	Analytic *Analytic `json:"analytic,omitempty"`
+	// MITRE ATT&CK® and ATLAS™ Details (optional): The MITRE ATT&CK® technique and associated tactics related to the finding.
+	Attacks []Attack `json:"attacks,omitempty"`
+	// Created Time (optional): The time when the finding was created.
+	CreatedTime int64 `json:"created_time,omitempty"`
+	// Data Sources (optional): A list of data sources utilized in generation of the finding.
+	DataSources []string `json:"data_sources,omitempty"`
+	// Description (optional): The description of the reported finding.
+	Desc string `json:"desc,omitempty"`
+	// First Seen (optional): The time when the finding was first observed.
+	FirstSeenTime int64 `json:"first_seen_time,omitempty"`
+	// Kill Chain (optional): The Cyber Kill Chain® provides a detailed description of each phase and its associated activities within the broader context of a cyber attack.
+	KillChain []KillChainPhase `json:"kill_chain,omitempty"`
+	// Last Seen (optional): The time when the finding was most recently observed.
+	LastSeenTime int64 `json:"last_seen_time,omitempty"`
+	// Modified Time (optional): The time when the finding was last modified.
+	ModifiedTime int64 `json:"modified_time,omitempty"`
+	// Product (optional): Details about the product that reported the finding.
+	Product *Product `json:"product,omitempty"`
+	// Related Analytics (optional): Other analytics related to this finding.
+	RelatedAnalytics []Analytic `json:"related_analytics,omitempty"`
+	// Related Events/Findings (optional): Describes events and/or other findings related to the finding as identified by the security product.
+	RelatedEvents []RelatedEvent `json:"related_events,omitempty"`
 	// Related Events/Findings Count (optional): Number of related events or findings.
 	RelatedEventsCount int `json:"related_events_count,omitempty"`
 	// Source URL (optional): The URL pointing to the source of the finding.
 	SrcURL string `json:"src_url,omitempty"`
+	// Tags (optional): The list of tags; {key:value} pairs associated with the finding.
+	Tags []KeyValueObject `json:"tags,omitempty"`
 	// Title (recommended): A title or a brief phrase summarizing the reported finding.
 	Title string `json:"title,omitempty"`
+	// Traits (optional): The list of key traits or characteristics extracted from the finding.
+	Traits []Trait `json:"traits,omitempty"`
 	// Types (optional): One or more types of the reported finding.
 	Types []string `json:"types,omitempty"`
 	// Unique ID (required): The unique identifier of the reported finding.
@@ -912,14 +13191,158 @@ type FindingInfo struct {
 	UIDAlt string `json:"uid_alt,omitempty"`
 }
 
-// HTTPRequest is the OCSF 1.5.0 object "HTTP Request". The HTTP Request object represents the attributes of a request made to a web server.
+// Fingerprint is the OCSF 1.5.0 object "Fingerprint". The Fingerprint object provides detailed information about a digital fingerprint, which is a compact representation of data used to identify a longer piece of information, such as a public key or file content.
+type Fingerprint struct {
+	// Algorithm (optional): The hash algorithm used to create the digital fingerprint, normalized to the caption of algorithm_id.
+	Algorithm string `json:"algorithm,omitempty"`
+	// Algorithm ID (required): The identifier of the normalized hash algorithm, which was used to create the digital fingerprint.
+	AlgorithmID int `json:"algorithm_id"`
+	// Value (required): The digital fingerprint value.
+	Value string `json:"value"`
+}
+
+// FingerprintAlgorithmID values.
+const (
+	FingerprintAlgorithmIDUnknown      = 0  // Unknown
+	FingerprintAlgorithmIDMD5          = 1  // MD5
+	FingerprintAlgorithmIDSHA1         = 2  // SHA-1
+	FingerprintAlgorithmIDSHA256       = 3  // SHA-256
+	FingerprintAlgorithmIDSHA512       = 4  // SHA-512
+	FingerprintAlgorithmIDCTPH         = 5  // CTPH
+	FingerprintAlgorithmIDTLSH         = 6  // TLSH
+	FingerprintAlgorithmIDQuickXorHash = 7  // quickXorHash
+	FingerprintAlgorithmIDOther        = 99 // Other
+)
+
+// FirewallRule is the OCSF 1.5.0 object "Firewall Rule". The Firewall Rule object represents a specific rule within a firewall policy or event.
 //
-// Not generated (object not in gen.yaml): http_headers (http_header), url (url).
+// Constraint at_least_one: name, uid.
+type FirewallRule struct {
+	// Category (optional): The rule category.
+	Category string `json:"category,omitempty"`
+	// Condition (optional): The rule trigger condition for the rule.
+	Condition string `json:"condition,omitempty"`
+	// Description (optional): The description of the rule that generated the event.
+	Desc string `json:"desc,omitempty"`
+	// Duration Milliseconds (optional): The rule response time duration, usually used for challenge completion time.
+	Duration int64 `json:"duration,omitempty"`
+	// Match Details (optional): The data in a request that rule matched.
+	MatchDetails []string `json:"match_details,omitempty"`
+	// Match Location (optional): The location of the matched data in the source which resulted in the triggered firewall rule.
+	MatchLocation string `json:"match_location,omitempty"`
+	// Name (recommended): The name of the rule that generated the event.
+	Name string `json:"name,omitempty"`
+	// Rate Limit (optional): The rate limit for a rate-based rule.
+	RateLimit int `json:"rate_limit,omitempty"`
+	// Sensitivity (optional): The sensitivity of the firewall rule in the matched event.
+	Sensitivity string `json:"sensitivity,omitempty"`
+	// Type (optional): The rule type.
+	Type string `json:"type,omitempty"`
+	// Unique ID (recommended): The unique identifier of the rule that generated the event.
+	UID string `json:"uid,omitempty"`
+	// Version (optional): The rule version.
+	Version string `json:"version,omitempty"`
+}
+
+// Graph is the OCSF 1.5.0 object "Graph". A graph data structure representation with nodes and edges.
+//
+// Constraint at_least_one: name, uid.
+type Graph struct {
+	// Description (optional): The graph description - provides additional details about the graph's purpose and contents.
+	Desc string `json:"desc,omitempty"`
+	// Edges (optional): The edges/connections between nodes in the graph - contains the collection of edge objects defining relationships between nodes.
+	Edges []Edge `json:"edges,omitempty"`
+	// Directed (optional): Indicates if the graph is directed (true) or undirected (false).
+	IsDirected bool `json:"is_directed,omitempty"`
+	// Name (recommended): The graph name - a human readable identifier for the graph.
+	Name string `json:"name,omitempty"`
+	// Nodes (required): The nodes/vertices of the graph - contains the collection of node objects that make up the graph.
+	Nodes []Node `json:"nodes,omitempty"`
+	// Query Language (optional): The graph query language, normalized to the caption of the query_language_id value.
+	QueryLanguage string `json:"query_language,omitempty"`
+	// Query Language ID (recommended): The normalized identifier of a graph query language that can be used to interact with the graph.
+	QueryLanguageID int `json:"query_language_id,omitempty"`
+	// Type (optional): The graph type.
+	Type string `json:"type,omitempty"`
+	// Unique ID (recommended): Unique identifier of the graph - a unique ID to reference this specific graph.
+	UID string `json:"uid,omitempty"`
+}
+
+// GraphQueryLanguageID values.
+const (
+	GraphQueryLanguageIDUnknown = 0  // Unknown
+	GraphQueryLanguageIDCypher  = 1  // Cypher
+	GraphQueryLanguageIDGraphQL = 2  // GraphQL
+	GraphQueryLanguageIDGremlin = 3  // Gremlin
+	GraphQueryLanguageIDGQL     = 4  // GQL
+	GraphQueryLanguageIDGCORE   = 5  // G-CORE
+	GraphQueryLanguageIDPGQL    = 6  // PGQL
+	GraphQueryLanguageIDSPARQL  = 7  // SPARQL
+	GraphQueryLanguageIDOther   = 99 // Other
+)
+
+// Group is the OCSF 1.5.0 object "Group". The Group object represents a collection or association of entities, such as users, policies, or devices.
+//
+// Constraint at_least_one: name, uid.
+type Group struct {
+	// Description (optional): The group description.
+	Desc string `json:"desc,omitempty"`
+	// Domain (optional): The domain where the group is defined.
+	Domain string `json:"domain,omitempty"`
+	// Name (recommended): The group name.
+	Name string `json:"name,omitempty"`
+	// Privileges (optional): The group privileges.
+	Privileges []string `json:"privileges,omitempty"`
+	// Account Type (optional): The type of the group or account.
+	Type string `json:"type,omitempty"`
+	// Unique ID (recommended): The unique identifier of the group.
+	UID string `json:"uid,omitempty"`
+}
+
+// Hassh is the OCSF 1.5.0 object "HASSH". The HASSH object contains SSH network fingerprinting values for specific client/server implementations.
+type Hassh struct {
+	// Algorithm (recommended): The concatenation of key exchange, encryption, authentication and compression algorithms (separated by ';').
+	Algorithm string `json:"algorithm,omitempty"`
+	// Fingerprint (required): The hash of the key exchange, encryption, authentication and compression algorithms.
+	Fingerprint *Fingerprint `json:"fingerprint,omitempty"`
+}
+
+// HTTPCookie is the OCSF 1.5.0 object "HTTP Cookie". The HTTP Cookie object, also known as a web cookie or browser cookie, contains details and values pertaining to a small piece of data that a server sends to a user's web browser.
+type HTTPCookie struct {
+	// Domain (optional): The domain name for the server from which the http_cookie is served.
+	Domain string `json:"domain,omitempty"`
+	// Expiration Time (optional): The expiration time of the HTTP cookie.
+	ExpirationTime int64 `json:"expiration_time,omitempty"`
+	// HTTP Only (optional): This attribute prevents the cookie from being accessed via JavaScript.
+	IsHTTPOnly bool `json:"is_http_only,omitempty"`
+	// Secure (optional): The cookie attribute indicates that cookies are sent to the server only when the request is encrypted using the HTTPS protocol.
+	IsSecure bool `json:"is_secure,omitempty"`
+	// Name (required): The HTTP cookie name.
+	Name string `json:"name"`
+	// Path (optional): The path of the HTTP cookie.
+	Path string `json:"path,omitempty"`
+	// SameSite (optional): The cookie attribute that lets servers specify whether/when cookies are sent with cross-site requests.
+	Samesite string `json:"samesite,omitempty"`
+	// Value (required): The HTTP cookie value.
+	Value string `json:"value"`
+}
+
+// HTTPHeader is the OCSF 1.5.0 object "HTTP Header". The HTTP Header object represents the headers sent in an HTTP request or response.
+type HTTPHeader struct {
+	// Name (required): The name of the HTTP header.
+	Name string `json:"name"`
+	// Value (required): The value of the HTTP header.
+	Value string `json:"value"`
+}
+
+// HTTPRequest is the OCSF 1.5.0 object "HTTP Request". The HTTP Request object represents the attributes of a request made to a web server.
 type HTTPRequest struct {
 	// HTTP Arguments (optional): The arguments sent along with the HTTP request.
 	Args string `json:"args,omitempty"`
 	// Request Body Length (optional): The actual length of the HTTP request body, in number of bytes, independent of a potentially existing Content-Length header.
 	BodyLength int `json:"body_length,omitempty"`
+	// HTTP Headers (recommended): Additional HTTP headers of an HTTP request or response.
+	HTTPHeaders []HTTPHeader `json:"http_headers,omitempty"`
 	// HTTP Method (recommended): The HTTP request method indicates the desired action to be performed for a given resource.
 	HTTPMethod string `json:"http_method,omitempty"`
 	// Request Length (optional): The length of the entire HTTP request, in number of bytes.
@@ -928,6 +13351,8 @@ type HTTPRequest struct {
 	Referrer string `json:"referrer,omitempty"`
 	// Unique ID (optional): The unique identifier of the http request.
 	UID string `json:"uid,omitempty"`
+	// URL (recommended): The URL object that pertains to the request.
+	URL *URL `json:"url,omitempty"`
 	// HTTP User-Agent (recommended): The request header that identifies the operating system and web browser.
 	UserAgent string `json:"user_agent,omitempty"`
 	// HTTP Version (recommended): The Hypertext Transfer Protocol (HTTP) version.
@@ -936,16 +13361,520 @@ type HTTPRequest struct {
 	XForwardedFor []string `json:"x_forwarded_for,omitempty"`
 }
 
+// HTTPResponse is the OCSF 1.5.0 object "HTTP Response". The HTTP Response object contains detailed information about the response sent from a web server to the requester.
+type HTTPResponse struct {
+	// Response Body Length (optional): The actual length of the HTTP response body, in number of bytes, independent of a potentially existing Content-Length header.
+	BodyLength int `json:"body_length,omitempty"`
+	// Response Code (required): The Hypertext Transfer Protocol (HTTP) status code returned from the web server to the client.
+	Code int `json:"code"`
+	// HTTP Content Type (optional): The request header that identifies the original media type of the resource (prior to any content encoding applied for sending).
+	ContentType string `json:"content_type,omitempty"`
+	// HTTP Headers (recommended): Additional HTTP headers of an HTTP request or response.
+	HTTPHeaders []HTTPHeader `json:"http_headers,omitempty"`
+	// Latency (optional): The HTTP response latency measured in milliseconds.
+	Latency int `json:"latency,omitempty"`
+	// Response Length (optional): The length of the entire HTTP response, in number of bytes.
+	Length int `json:"length,omitempty"`
+	// Message (optional): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+	// Status (optional): The response status.
+	Status string `json:"status,omitempty"`
+}
+
+// Idp is the OCSF 1.5.0 object "Identity Provider". The Identity Provider object contains detailed information about a provider responsible for creating, maintaining, and managing identity information while offering authentication services to applications.
+//
+// Constraint at_least_one: name, uid.
+type Idp struct {
+	// Authentication Factors (optional): The Authentication Factors object describes the different types of Multi-Factor Authentication (MFA) methods and/or devices supported by the Identity Provider.
+	AuthFactors []AuthFactor `json:"auth_factors,omitempty"`
+	// Domain (optional): The primary domain associated with the Identity Provider.
+	Domain string `json:"domain,omitempty"`
+	// Certificate Fingerprint (optional): The fingerprint of the X.509 certificate used by the Identity Provider.
+	Fingerprint *Fingerprint `json:"fingerprint,omitempty"`
+	// MFA Enforced (optional): The Identity Provider enforces Multi Factor Authentication (MFA).
+	HasMFA bool `json:"has_mfa,omitempty"`
+	// Issuer Details (optional): The unique identifier (often a URL) used by the Identity Provider as its issuer.
+	Issuer string `json:"issuer,omitempty"`
+	// Name (recommended): The name of the Identity Provider.
+	Name string `json:"name,omitempty"`
+	// Supported Protocol (optional): The supported protocol of the Identity Provider.
+	ProtocolName string `json:"protocol_name,omitempty"`
+	// SCIM (optional): The System for Cross-domain Identity Management (SCIM) resource object provides a structured set of attributes related to SCIM protocols used for identity provisioning and management across cloud-based platforms.
+	Scim *Scim `json:"scim,omitempty"`
+	// SSO (optional): The Single Sign-On (SSO) object provides a structure for normalizing SSO attributes, configuration, and/or settings from Identity Providers.
+	Sso *Sso `json:"sso,omitempty"`
+	// State (optional): The configuration state of the Identity Provider, normalized to the caption of the state_id value.
+	State string `json:"state,omitempty"`
+	// State ID (optional): The normalized state ID of the Identity Provider to reflect its configuration or activation status.
+	StateID int `json:"state_id,omitempty"`
+	// Tenant UID (optional): The tenant ID associated with the Identity Provider.
+	TenantUID string `json:"tenant_uid,omitempty"`
+	// Unique ID (recommended): The unique identifier of the Identity Provider.
+	UID string `json:"uid,omitempty"`
+	// Configuration URL (optional): The URL for accessing the configuration or metadata of the Identity Provider.
+	URLString string `json:"url_string,omitempty"`
+}
+
+// IdpStateID values.
+const (
+	IdpStateIDUnknown    = 0  // Unknown
+	IdpStateIDActive     = 1  // Active
+	IdpStateIDSuspended  = 2  // Suspended
+	IdpStateIDDeprecated = 3  // Deprecated
+	IdpStateIDDeleted    = 4  // Deleted
+	IdpStateIDOther      = 99 // Other
+)
+
+// Image is the OCSF 1.5.0 object "Image". The Image object provides a description of a specific Virtual Machine (VM) or Container image.
+type Image struct {
+	// Labels (optional): The list of labels associated to the image.
+	Labels []string `json:"labels,omitempty"`
+	// Name (recommended): The image name.
+	Name string `json:"name,omitempty"`
+	// Path (optional): The full path to the image file.
+	Path string `json:"path,omitempty"`
+	// Tags (optional): The list of tags; {key:value} pairs associated to the image.
+	Tags []KeyValueObject `json:"tags,omitempty"`
+	// Unique ID (required): The unique image ID.
+	UID string `json:"uid"`
+}
+
+// JA4Fingerprint is the OCSF 1.5.0 object "JA4+ Fingerprint". The JA4+ fingerprint object provides detailed fingerprint information about various aspects of network traffic which is both machine and human readable.
+type JA4Fingerprint struct {
+	// JA4 Section A (optional): The 'a' section of the JA4 fingerprint.
+	SectionA string `json:"section_a,omitempty"`
+	// JA4 Section B (optional): The 'b' section of the JA4 fingerprint.
+	SectionB string `json:"section_b,omitempty"`
+	// JA4 Section C (optional): The 'c' section of the JA4 fingerprint.
+	SectionC string `json:"section_c,omitempty"`
+	// JA4 Section D (optional): The 'd' section of the JA4 fingerprint.
+	SectionD string `json:"section_d,omitempty"`
+	// Type (optional): The JA4+ fingerprint type as defined by FoxIO, normalized to the caption of 'type_id'.
+	Type string `json:"type,omitempty"`
+	// Type ID (required): The identifier of the JA4+ fingerprint type.
+	TypeID int `json:"type_id"`
+	// Value (required): The JA4+ fingerprint value.
+	Value string `json:"value"`
+}
+
+// JA4FingerprintTypeID values.
+const (
+	JA4FingerprintTypeIDUnknown      = 0  // Unknown
+	JA4FingerprintTypeIDJA4          = 1  // JA4
+	JA4FingerprintTypeIDJA4Server    = 2  // JA4Server
+	JA4FingerprintTypeIDJA4HTTP      = 3  // JA4HTTP
+	JA4FingerprintTypeIDJA4Latency   = 4  // JA4Latency
+	JA4FingerprintTypeIDJA4X509      = 5  // JA4X509
+	JA4FingerprintTypeIDJA4SSH       = 6  // JA4SSH
+	JA4FingerprintTypeIDJA4TCP       = 7  // JA4TCP
+	JA4FingerprintTypeIDJA4TCPServer = 8  // JA4TCPServer
+	JA4FingerprintTypeIDJA4TCPScan   = 9  // JA4TCPScan
+	JA4FingerprintTypeIDOther        = 99 // Other
+)
+
+// Job is the OCSF 1.5.0 object "Job". The Job object provides information about a scheduled job or task, including its name, command line, and state.
+type Job struct {
+	// Command Line (recommended): The job command line.
+	CmdLine string `json:"cmd_line,omitempty"`
+	// Created Time (recommended): The time when the job was created.
+	CreatedTime int64 `json:"created_time,omitempty"`
+	// Description (recommended): The description of the job.
+	Desc string `json:"desc,omitempty"`
+	// File (required): The file that pertains to the job.
+	File *File `json:"file,omitempty"`
+	// Last Run (recommended): The time when the job was last run.
+	LastRunTime int64 `json:"last_run_time,omitempty"`
+	// Name (required): The name of the job.
+	Name string `json:"name"`
+	// Next Run (optional): The time when the job will next be run.
+	NextRunTime int64 `json:"next_run_time,omitempty"`
+	// Run State (optional): The run state of the job.
+	RunState string `json:"run_state,omitempty"`
+	// Run State ID (recommended): The run state ID of the job.
+	RunStateID int `json:"run_state_id,omitempty"`
+	// User (optional): The user that created the job.
+	User *User `json:"user,omitempty"`
+}
+
+// JobRunStateID values.
+const (
+	JobRunStateIDUnknown = 0  // Unknown
+	JobRunStateIDReady   = 1  // Ready
+	JobRunStateIDQueued  = 2  // Queued
+	JobRunStateIDRunning = 3  // Running
+	JobRunStateIDStopped = 4  // Stopped
+	JobRunStateIDOther   = 99 // Other
+)
+
+// KBArticle is the OCSF 1.5.0 object "KB Article". The KB Article object contains metadata that describes the patch or update.
+type KBArticle struct {
+	// Average Timespan (optional): The average time to patch.
+	AvgTimespan *Timespan `json:"avg_timespan,omitempty"`
+	// Patch Bulletin (optional): The kb article bulletin identifier.
+	Bulletin string `json:"bulletin,omitempty"`
+	// Classification (optional): The vendors classification of the kb article.
+	Classification string `json:"classification,omitempty"`
+	// Created Time (optional): The date the kb article was released by the vendor.
+	CreatedTime int64 `json:"created_time,omitempty"`
+	// Install State (recommended): The install state of the kb article.
+	InstallState string `json:"install_state,omitempty"`
+	// Install State ID (recommended): The normalized install state ID of the kb article.
+	InstallStateID int `json:"install_state_id,omitempty"`
+	// The patch is superseded. (optional): The kb article has been replaced by another.
+	IsSuperseded bool `json:"is_superseded,omitempty"`
+	// OS (recommended): The operating system the kb article applies.
+	OS *OS `json:"os,omitempty"`
+	// Product (optional): The product details the kb article applies.
+	Product *Product `json:"product,omitempty"`
+	// Severity (recommended): The severity of the kb article.
+	Severity string `json:"severity,omitempty"`
+	// Size (optional): The size in bytes for the kb article.
+	Size int64 `json:"size,omitempty"`
+	// Source URL (optional): The kb article link from the source vendor.
+	SrcURL string `json:"src_url,omitempty"`
+	// Title (recommended): The title of the kb article.
+	Title string `json:"title,omitempty"`
+	// Unique ID (required): The unique identifier for the kb article.
+	UID string `json:"uid"`
+}
+
+// KBArticleInstallStateID values.
+const (
+	KBArticleInstallStateIDUnknown                = 0  // Unknown
+	KBArticleInstallStateIDInstalled              = 1  // Installed
+	KBArticleInstallStateIDNotInstalled           = 2  // Not Installed
+	KBArticleInstallStateIDInstalledPendingReboot = 3  // Installed Pending Reboot
+	KBArticleInstallStateIDOther                  = 99 // Other
+)
+
+// Kernel is the OCSF 1.5.0 object "Kernel Resource". The Kernel Resource object provides information about a specific kernel resource, including its name and type.
+type Kernel struct {
+	// System (optional): The indication of whether the object is part of the operating system.
+	IsSystem bool `json:"is_system,omitempty"`
+	// Name (required): The name of the kernel resource.
+	Name string `json:"name"`
+	// Path (optional): The full path of the kernel resource.
+	Path string `json:"path,omitempty"`
+	// System Call (optional): The system call that was invoked.
+	SystemCall string `json:"system_call,omitempty"`
+	// Type (optional): The type of the kernel resource.
+	Type string `json:"type,omitempty"`
+	// Type ID (required): The type of the kernel resource.
+	TypeID int `json:"type_id"`
+}
+
+// KernelTypeID values.
+const (
+	KernelTypeIDUnknown     = 0  // Unknown
+	KernelTypeIDSharedMutex = 1  // Shared Mutex
+	KernelTypeIDSystemCall  = 2  // System Call
+	KernelTypeIDOther       = 99 // Other
+)
+
+// KernelDriver is the OCSF 1.5.0 object "Kernel Extension". The Kernel Extension object describes a kernel driver that has been loaded or unloaded into the operating system (OS) kernel.
+type KernelDriver struct {
+	// File (required): The driver/extension file object.
+	File *File `json:"file,omitempty"`
+}
+
+// KeyValueObject is the OCSF 1.5.0 object "Key:Value object". A generic object allowing to define a {key:value} pair.
+//
+// Constraint at_least_one: value, values.
+type KeyValueObject struct {
+	// Name (required): The name of the key.
+	Name string `json:"name"`
+	// Value (recommended): The value associated to the key.
+	Value string `json:"value,omitempty"`
+	// Values (recommended): Optional, the values associated to the key.
+	Values []string `json:"values,omitempty"`
+}
+
+// KeyboardInfo is the OCSF 1.5.0 object "Keyboard Information". The Keyboard Information object contains details and attributes related to a computer or device keyboard.
+type KeyboardInfo struct {
+	// Function Keys (optional): The number of function keys on client keyboard.
+	FunctionKeys int `json:"function_keys,omitempty"`
+	// IME (optional): The Input Method Editor (IME) file name.
+	Ime string `json:"ime,omitempty"`
+	// Keyboard Layout (optional): The keyboard locale identifier name (e.g., en-US).
+	KeyboardLayout string `json:"keyboard_layout,omitempty"`
+	// Keyboard Subtype (optional): The keyboard numeric code.
+	KeyboardSubtype int `json:"keyboard_subtype,omitempty"`
+	// Keyboard Type (optional): The keyboard type (e.g., xt, ico).
+	KeyboardType string `json:"keyboard_type,omitempty"`
+}
+
+// KillChainPhase is the OCSF 1.5.0 object "Kill Chain Phase". The Kill Chain Phase object represents a single phase of a cyber attack, including the initial reconnaissance and planning stages up to the final objective of the attacker.
+type KillChainPhase struct {
+	// Kill Chain Phase (recommended): The cyber kill chain phase.
+	Phase string `json:"phase,omitempty"`
+	// Kill Chain Phase ID (required): The cyber kill chain phase identifier.
+	PhaseID int `json:"phase_id"`
+}
+
+// KillChainPhasePhaseID values.
+const (
+	KillChainPhasePhaseIDUnknown             = 0  // Unknown
+	KillChainPhasePhaseIDReconnaissance      = 1  // Reconnaissance
+	KillChainPhasePhaseIDWeaponization       = 2  // Weaponization
+	KillChainPhasePhaseIDDelivery            = 3  // Delivery
+	KillChainPhasePhaseIDExploitation        = 4  // Exploitation
+	KillChainPhasePhaseIDInstallation        = 5  // Installation
+	KillChainPhasePhaseIDCommandControl      = 6  // Command & Control
+	KillChainPhasePhaseIDActionsOnObjectives = 7  // Actions on Objectives
+	KillChainPhasePhaseIDOther               = 99 // Other
+)
+
+// LDAPPerson is the OCSF 1.5.0 object "LDAP Person". The additional LDAP attributes that describe a person.
+type LDAPPerson struct {
+	// Cost Center (optional): The cost center associated with the user.
+	CostCenter string `json:"cost_center,omitempty"`
+	// Created Time (optional): The timestamp when the user was created.
+	CreatedTime int64 `json:"created_time,omitempty"`
+	// Deleted Time (optional): The timestamp when the user was deleted.
+	DeletedTime int64 `json:"deleted_time,omitempty"`
+	// Display Name (optional): The display name of the LDAP person.
+	DisplayName string `json:"display_name,omitempty"`
+	// Email Addresses (optional): A list of additional email addresses for the user.
+	EmailAddrs []string `json:"email_addrs,omitempty"`
+	// Employee ID (optional): The employee identifier assigned to the user by the organization.
+	EmployeeUID string `json:"employee_uid,omitempty"`
+	// Given Name (optional): The given or first name of the user.
+	GivenName string `json:"given_name,omitempty"`
+	// Hire Time (optional): The timestamp when the user was or will be hired by the organization.
+	HireTime int64 `json:"hire_time,omitempty"`
+	// Job Title (optional): The user's job title.
+	JobTitle string `json:"job_title,omitempty"`
+	// Labels (optional): The labels associated with the user.
+	Labels []string `json:"labels,omitempty"`
+	// Last Login (optional): The last time when the user logged in.
+	LastLoginTime int64 `json:"last_login_time,omitempty"`
+	// LDAP Common Name (optional): The LDAP and X.500 commonName attribute, typically the full name of the person.
+	LDAPCn string `json:"ldap_cn,omitempty"`
+	// LDAP Distinguished Name (optional): The X.500 Distinguished Name (DN) is a structured string that uniquely identifies an entry, such as a user, in an X.500 directory service For example, cn=John Doe,ou=People,dc=example,dc=com.
+	LDAPDn string `json:"ldap_dn,omitempty"`
+	// Leave Time (optional): The timestamp when the user left or will be leaving the organization.
+	LeaveTime int64 `json:"leave_time,omitempty"`
+	// Geo Location (optional): The geographical location associated with a user.
+	Location *Location `json:"location,omitempty"`
+	// Manager (optional): The user's manager.
+	Manager *User `json:"manager,omitempty"`
+	// Modified Time (optional): The timestamp when the user entry was last modified.
+	ModifiedTime int64 `json:"modified_time,omitempty"`
+	// Office Location (optional): The primary office location associated with the user.
+	OfficeLocation string `json:"office_location,omitempty"`
+	// Telephone Number (optional): The telephone number of the user.
+	PhoneNumber string `json:"phone_number,omitempty"`
+	// Surname (optional): The last or family name for the user.
+	Surname string `json:"surname,omitempty"`
+	// Tags (optional): The list of tags; {key:value} pairs associated to the user.
+	Tags []KeyValueObject `json:"tags,omitempty"`
+}
+
+// LoadBalancer is the OCSF 1.5.0 object "Load Balancer". The load balancer object describes the load balancer entity and contains additional information regarding the distribution of traffic across a network.
+//
+// Constraint at_least_one: name, uid.
+type LoadBalancer struct {
+	// Classification (optional): The request classification as defined by the load balancer.
+	Classification string `json:"classification,omitempty"`
+	// Response Code (recommended): The numeric response status code detailing the connection from the load balancer to the destination target.
+	Code int `json:"code,omitempty"`
+	// Destination Endpoint (recommended): The destination to which the load balancer is distributing traffic.
+	DstEndpoint *NetworkEndpoint `json:"dst_endpoint,omitempty"`
+	// Endpoint Connections (recommended): An object detailing the load balancer connection attempts and responses.
+	EndpointConnections []EndpointConnection `json:"endpoint_connections,omitempty"`
+	// Error Message (optional): The load balancer error message.
+	ErrorMessage string `json:"error_message,omitempty"`
+	// IP Address (optional): The IP address of the load balancer node that handled the client request.
+	IP string `json:"ip,omitempty"`
+	// Message (optional): The load balancer message.
+	Message string `json:"message,omitempty"`
+	// Metrics (optional): General purpose metrics associated with the load balancer.
+	Metrics []Metric `json:"metrics,omitempty"`
+	// Name (recommended): The name of the load balancer.
+	Name string `json:"name,omitempty"`
+	// Status Detail (optional): The status detail contains additional status information about the load balancer distribution event.
+	StatusDetail string `json:"status_detail,omitempty"`
+	// Unique ID (recommended): The unique identifier for the load balancer.
+	UID string `json:"uid,omitempty"`
+}
+
+// Location is the OCSF 1.5.0 object "Geo Location". The Geo Location object describes a geographical location, usually associated with an IP address.
+//
+// Constraint at_least_one: city, country, postal_code, region.
+type Location struct {
+	// Aerial Height (optional): Expressed as either height above takeoff location or height above ground level (AGL) for a UAS current location.
+	AerialHeight string `json:"aerial_height,omitempty"`
+	// City (recommended): The name of the city.
+	City string `json:"city,omitempty"`
+	// Continent (recommended): The name of the continent.
+	Continent string `json:"continent,omitempty"`
+	// Country (recommended): The ISO 3166-1 Alpha-2 country code.Note: The two letter country code should be capitalized.
+	Country string `json:"country,omitempty"`
+	// Description (optional): The description of the geographical location.
+	Desc string `json:"desc,omitempty"`
+	// Geodetic Altitude (optional): The aircraft distance above or below the ellipsoid as measured along a line that passes through the aircraft and is normal to the surface of the WGS-84 ellipsoid.
+	GeodeticAltitude string `json:"geodetic_altitude,omitempty"`
+	// Geodetic Vertical Accuracy (optional): Provides quality/containment on geodetic altitude.
+	GeodeticVerticalAccuracy string `json:"geodetic_vertical_accuracy,omitempty"`
+	// Geohash (optional): Geohash of the geo-coordinates (latitude and longitude).Geohashing is a geocoding system used to encode geographic coordinates in decimal degrees, to a single string.
+	Geohash string `json:"geohash,omitempty"`
+	// Horizontal Accuracy (optional): Provides quality/containment on horizontal position.
+	HorizontalAccuracy string `json:"horizontal_accuracy,omitempty"`
+	// On Premises (optional): The indication of whether the location is on premises.
+	IsOnPremises bool `json:"is_on_premises,omitempty"`
+	// Latitude (optional): The geographical Latitude coordinate represented in Decimal Degrees (DD).
+	Lat float64 `json:"lat,omitempty"`
+	// Longitude (optional): The geographical Longitude coordinate represented in Decimal Degrees (DD).
+	Long float64 `json:"long,omitempty"`
+	// Postal Code (optional): The postal code of the location.
+	PostalCode string `json:"postal_code,omitempty"`
+	// Pressure Altitude (optional): The uncorrected barometric pressure altitude (based on reference standard 29.92 inHg, 1013.25 mb) provides a reference for algorithms that utilize 'altitude deltas' between aircraft.
+	PressureAltitude string `json:"pressure_altitude,omitempty"`
+	// Provider (optional): The provider of the geographical location data.
+	Provider string `json:"provider,omitempty"`
+	// Region (optional): The alphanumeric code that identifies the principal subdivision (e.g.
+	Region string `json:"region,omitempty"`
+}
+
+// Logger is the OCSF 1.5.0 object "Logger". The Logger object represents the device and product where events are stored with times for receipt and transmission.
+//
+// Constraint at_least_one: name, uid.
+type Logger struct {
+	// Device (recommended): The device where the events are logged.
+	Device *Device `json:"device,omitempty"`
+	// Event UID (optional): The unique identifier of the event assigned by the logger.
+	EventUID string `json:"event_uid,omitempty"`
+	// Log Level (optional): The audit level at which an event was generated.
+	LogLevel string `json:"log_level,omitempty"`
+	// Log Name (recommended): The event log name.
+	LogName string `json:"log_name,omitempty"`
+	// Log Provider (recommended): The logging provider or logging service that logged the event.
+	LogProvider string `json:"log_provider,omitempty"`
+	// Log Version (optional): The event log schema version that specifies the format of the original event.
+	LogVersion string `json:"log_version,omitempty"`
+	// Logged Time (recommended): The time when the logging system collected and logged the event.This attribute is distinct from the event time in that event time typically contain the time extracted from the original event.
+	LoggedTime int64 `json:"logged_time,omitempty"`
+	// Name (recommended): The name of the logging product instance.
+	Name string `json:"name,omitempty"`
+	// Product (recommended): The product logging the event.
+	Product *Product `json:"product,omitempty"`
+	// Transmission Time (optional): The time when the event was transmitted from the logging device to it's next destination.
+	TransmitTime int64 `json:"transmit_time,omitempty"`
+	// Unique ID (recommended): The unique identifier of the logging product instance.
+	UID string `json:"uid,omitempty"`
+	// Version (optional): The version of the logging product.
+	Version string `json:"version,omitempty"`
+}
+
+// LongString is the OCSF 1.5.0 object "Long String". This object is a used to capture strings which may be truncated by a security product due to their length.
+type LongString struct {
+	// Is Truncated (optional): Indicates that value has been truncated.
+	IsTruncated bool `json:"is_truncated,omitempty"`
+	// Untruncated Size (optional): The size in bytes of the string represented by value before truncation.
+	UntruncatedSize int `json:"untruncated_size,omitempty"`
+	// Value (required): The string value, truncated if is_truncated is true.
+	Value string `json:"value"`
+}
+
+// Malware is the OCSF 1.5.0 object "Malware". The Malware object describes the classification of known malicious software, which is intentionally designed to cause damage to a computer, server, client, or computer network.
+//
+// Constraint at_least_one: name, uid.
+type Malware struct {
+	// Classification IDs (required): The list of normalized identifiers of the malware classifications.
+	ClassificationIds []int `json:"classification_ids,omitempty"`
+	// Classifications (optional): The list of malware classifications, normalized to the captions of the classification_ids values.
+	Classifications []string `json:"classifications,omitempty"`
+	// CVE List (optional): The list of Common Vulnerabilities and Exposures (CVE) identifiers associated with the malware.
+	Cves []CVE `json:"cves,omitempty"`
+	// Files (optional): The list of file objects representing files that were identified as infected by the malware.
+	Files []File `json:"files,omitempty"`
+	// Name (recommended): The malware name, as reported by the detection engine.
+	Name string `json:"name,omitempty"`
+	// Number of Infected Entities (optional): The number of files that were identified to be infected by the malware.
+	NumInfected int `json:"num_infected,omitempty"`
+	// Provider (recommended): The name or identifier of the security solution or service that provided the malware detection information.
+	Provider string `json:"provider,omitempty"`
+	// Severity (optional): The severity of the malware, normalized to the captions of the severity_id values.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (recommended): The normalized identifier of the malware severity.
+	SeverityID int `json:"severity_id,omitempty"`
+	// Unique ID (recommended): A unique identifier for the specific malware instance, as assigned by the detection engine (e.g., virus signature ID or IPS rule ID).
+	UID string `json:"uid,omitempty"`
+}
+
+// MalwareSeverityID values.
+const (
+	MalwareSeverityIDUnknown       = 0  // Unknown
+	MalwareSeverityIDInformational = 1  // Informational
+	MalwareSeverityIDLow           = 2  // Low
+	MalwareSeverityIDMedium        = 3  // Medium
+	MalwareSeverityIDHigh          = 4  // High
+	MalwareSeverityIDCritical      = 5  // Critical
+	MalwareSeverityIDFatal         = 6  // Fatal
+	MalwareSeverityIDOther         = 99 // Other
+)
+
+// MalwareScanInfo is the OCSF 1.5.0 object "Malware Scan Info". The malware scan information object describes characteristics, metadata of a malware scanning job.
+//
+// Constraint at_least_one: name, uid.
+type MalwareScanInfo struct {
+	// End Time (optional): The timestamp indicating when the scan job completed execution.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Name (recommended): The administrator-supplied or application-generated name of the scan.
+	Name string `json:"name,omitempty"`
+	// Scanned Files (optional): The total number of files analyzed during the scan.
+	NumFiles int `json:"num_files,omitempty"`
+	// Number of Infected Entities (optional): The total number of files identified as infected with malware during the scan.
+	NumInfected int `json:"num_infected,omitempty"`
+	// Number of Volumes (optional): The total number of storage volumes examined during the malware scan.
+	NumVolumes int `json:"num_volumes,omitempty"`
+	// Size (optional): The total size in bytes of all files that were scanned.
+	Size int64 `json:"size,omitempty"`
+	// Start Time (optional): The timestamp indicating when the scan job began execution.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Type (optional): The type of scan.
+	Type string `json:"type,omitempty"`
+	// Type ID (required): The type id of the scan.
+	TypeID int `json:"type_id"`
+	// Scan UID (recommended): The application-defined unique identifier assigned to an instance of a scan.
+	UID string `json:"uid,omitempty"`
+	// Unique Malware Count (optional): The number of unique malware detected across all infected files.
+	UniqueMalwareCount int `json:"unique_malware_count,omitempty"`
+}
+
+// MalwareScanInfoTypeID values.
+const (
+	MalwareScanInfoTypeIDUnknown          = 0  // Unknown
+	MalwareScanInfoTypeIDManual           = 1  // Manual
+	MalwareScanInfoTypeIDScheduled        = 2  // Scheduled
+	MalwareScanInfoTypeIDUpdatedContent   = 3  // Updated Content
+	MalwareScanInfoTypeIDQuarantinedItems = 4  // Quarantined Items
+	MalwareScanInfoTypeIDAttachedMedia    = 5  // Attached Media
+	MalwareScanInfoTypeIDUserLogon        = 6  // User Logon
+	MalwareScanInfoTypeIDELAM             = 7  // ELAM
+	MalwareScanInfoTypeIDOther            = 99 // Other
+)
+
 // ManagedEntity is the OCSF 1.5.0 object "Managed Entity". The Managed Entity object describes the type and version of an entity, such as a user, device, or policy.
 //
 // Constraint at_least_one: name, uid, device, group, org, policy, user.
-//
-// Not generated (object not in gen.yaml): device (device), email (email), group (group), location (location), org (organization), policy (policy).
 type ManagedEntity struct {
 	// Data (optional): The managed entity content as a JSON object.
 	Data any `json:"data,omitempty"`
+	// Device (recommended): An addressable device, computer system or host.
+	Device *Device `json:"device,omitempty"`
+	// Email (recommended): The email object.
+	Email *Email `json:"email,omitempty"`
+	// Group (recommended): The group object associated with an entity such as user, policy, or rule.
+	Group *Group `json:"group,omitempty"`
+	// Geo Location (optional): The detailed geographical location usually associated with an IP address.
+	Location *Location `json:"location,omitempty"`
 	// Name (recommended): The name of the managed entity.
 	Name string `json:"name,omitempty"`
+	// Organization (recommended): Organization and org unit relevant to the event or object.
+	Org *Organization `json:"org,omitempty"`
+	// Policy (recommended): Describes details of a managed policy.
+	Policy *Policy `json:"policy,omitempty"`
 	// Type (recommended): The managed entity type.
 	Type string `json:"type,omitempty"`
 	// Type ID (recommended): The type of the Managed Entity.
@@ -972,8 +13901,6 @@ const (
 )
 
 // Metadata is the OCSF 1.5.0 object "Metadata". The Metadata object describes the metadata associated with the event.
-//
-// Not generated (object not in gen.yaml): extensions (extension), loggers (logger), tags (key_value_object), transformation_info_list (transformation_info).
 type Metadata struct {
 	// Correlation UID (optional): The unique identifier used to correlate events.
 	CorrelationUID string `json:"correlation_uid,omitempty"`
@@ -981,6 +13908,8 @@ type Metadata struct {
 	Debug []string `json:"debug,omitempty"`
 	// Event Code (optional): The Event ID, Code, or Name that the product uses to primarily identify the event.
 	EventCode string `json:"event_code,omitempty"`
+	// Schema Extensions (optional): The schema extensions used to create the event.
+	Extensions []Extension `json:"extensions,omitempty"`
 	// Labels (optional): The list of labels attached to the event.
 	Labels []string `json:"labels,omitempty"`
 	// Log Level (optional): The audit level at which an event was generated.
@@ -993,6 +13922,8 @@ type Metadata struct {
 	LogVersion string `json:"log_version,omitempty"`
 	// Logged Time (optional): The time when the logging system collected and logged the event.This attribute is distinct from the event time in that event time typically contain the time extracted from the original event.
 	LoggedTime int64 `json:"logged_time,omitempty"`
+	// Loggers (optional): An array of Logger objects that describe the devices and logging products between the event source and its eventual destination.
+	Loggers []Logger `json:"loggers,omitempty"`
 	// Modified Time (optional): The time when the event was last modified or enriched.
 	ModifiedTime int64 `json:"modified_time,omitempty"`
 	// Original Time (recommended): The original event time as reported by the event source.
@@ -1005,24 +13936,147 @@ type Metadata struct {
 	Profiles []string `json:"profiles,omitempty"`
 	// Sequence Number (optional): Sequence number of the event.
 	Sequence int `json:"sequence,omitempty"`
+	// Tags (optional): The list of tags; {key:value} pairs associated to the event.
+	Tags []KeyValueObject `json:"tags,omitempty"`
 	// Tenant UID (recommended): The unique tenant identifier.
 	TenantUID string `json:"tenant_uid,omitempty"`
+	// Transformation Info (optional): An array of transformation info that describes the mappings or transforms applied to the data.
+	TransformationInfoList []TransformationInfo `json:"transformation_info_list,omitempty"`
 	// Event UID (optional): The logging system-assigned unique identifier of an event instance.
 	UID string `json:"uid,omitempty"`
 	// Version (required): The version of the OCSF schema, using Semantic Versioning Specification (SemVer).
 	Version string `json:"version"`
 }
 
+// Metric is the OCSF 1.5.0 object "Metric". The Metric object defines a simple name/value pair entity for a metric.
+type Metric struct {
+	// Name (required): The name of the metric.
+	Name string `json:"name"`
+	// Value (required): The value of the metric.
+	Value string `json:"value"`
+}
+
+// Mitigation is the OCSF 1.5.0 object "MITRE Mitigation". The MITRE Mitigation object describes the ATT&CK® or ATLAS™ Mitigation ID and/or name that is associated to an attack.
+//
+// Constraint at_least_one: name, uid.
+type Mitigation struct {
+	// Countermeasures (optional): The D3FEND countermeasures that are associated with the attack technique.
+	Countermeasures []D3fend `json:"countermeasures,omitempty"`
+	// Name (recommended): The Mitigation name that is associated with the attack technique.
+	Name string `json:"name,omitempty"`
+	// Source URL (optional): The versioned permalink of the Mitigation.
+	SrcURL string `json:"src_url,omitempty"`
+	// Unique ID (recommended): The Mitigation ID that is associated with the attack technique.
+	UID string `json:"uid,omitempty"`
+}
+
+// Module is the OCSF 1.5.0 object "Module". The Module object describes the load attributes of a module.
+type Module struct {
+	// Base Address (recommended): The memory address where the module was loaded.
+	BaseAddress string `json:"base_address,omitempty"`
+	// File (recommended): The module file object.
+	File *File `json:"file,omitempty"`
+	// Function Name (optional): The entry-point function of the module.
+	FunctionName string `json:"function_name,omitempty"`
+	// Load Type (optional): The load type, normalized to the caption of the load_type_id value.
+	LoadType string `json:"load_type,omitempty"`
+	// Load Type ID (required): The normalized identifier for how the module was loaded in memory.
+	LoadTypeID int `json:"load_type_id"`
+	// Start Address (recommended): The start address of the execution.
+	StartAddress string `json:"start_address,omitempty"`
+	// Type (recommended): The module type.
+	Type string `json:"type,omitempty"`
+}
+
+// ModuleLoadTypeID values.
+const (
+	ModuleLoadTypeIDUnknown           = 0  // Unknown
+	ModuleLoadTypeIDStandard          = 1  // Standard
+	ModuleLoadTypeIDNonStandard       = 2  // Non Standard
+	ModuleLoadTypeIDShellCode         = 3  // ShellCode
+	ModuleLoadTypeIDMapped            = 4  // Mapped
+	ModuleLoadTypeIDNonStandardBacked = 5  // NonStandard Backed
+	ModuleLoadTypeIDOther             = 99 // Other
+)
+
+// NetworkConnectionInfo is the OCSF 1.5.0 object "Network Connection Information". The Network Connection Information object describes characteristics of an OSI Transport Layer communication, including TCP and UDP.
+type NetworkConnectionInfo struct {
+	// Boundary (optional): The boundary of the connection, normalized to the caption of 'boundary_id'.
+	Boundary string `json:"boundary,omitempty"`
+	// Boundary ID (recommended): The normalized identifier of the boundary of the connection.
+	BoundaryID int `json:"boundary_id,omitempty"`
+	// Community ID (optional): The Community ID of the network connection.
+	CommunityUID string `json:"community_uid,omitempty"`
+	// Direction (optional): The direction of the initiated connection, traffic, or email, normalized to the caption of the direction_id value.
+	Direction string `json:"direction,omitempty"`
+	// Direction ID (required): The normalized identifier of the direction of the initiated connection, traffic, or email.
+	DirectionID int `json:"direction_id"`
+	// Connection Flag History (optional): The Connection Flag History summarizes events in a network connection.
+	FlagHistory string `json:"flag_history,omitempty"`
+	// Protocol Name (recommended): The IP protocol name in lowercase, as defined by the Internet Assigned Numbers Authority (IANA).
+	ProtocolName string `json:"protocol_name,omitempty"`
+	// Protocol Number (recommended): The IP protocol number, as defined by the Internet Assigned Numbers Authority (IANA).
+	ProtocolNum int `json:"protocol_num,omitempty"`
+	// IP Version (optional): The Internet Protocol version.
+	ProtocolVer string `json:"protocol_ver,omitempty"`
+	// IP Version ID (recommended): The Internet Protocol version identifier.
+	ProtocolVerID int `json:"protocol_ver_id,omitempty"`
+	// Session (optional): The authenticated user or service session.
+	Session *Session `json:"session,omitempty"`
+	// TCP Flags (optional): The network connection TCP header flags (i.e., control bits).
+	TCPFlags int `json:"tcp_flags,omitempty"`
+	// Connection UID (recommended): The unique identifier of the connection.
+	UID string `json:"uid,omitempty"`
+}
+
+// NetworkConnectionInfoBoundaryID values.
+const (
+	NetworkConnectionInfoBoundaryIDUnknown               = 0  // Unknown
+	NetworkConnectionInfoBoundaryIDLocalhost             = 1  // Localhost
+	NetworkConnectionInfoBoundaryIDInternal              = 2  // Internal
+	NetworkConnectionInfoBoundaryIDExternal              = 3  // External
+	NetworkConnectionInfoBoundaryIDSameVPC               = 4  // Same VPC
+	NetworkConnectionInfoBoundaryIDInternetVPCGateway    = 5  // Internet/VPC Gateway
+	NetworkConnectionInfoBoundaryIDVirtualPrivateGateway = 6  // Virtual Private Gateway
+	NetworkConnectionInfoBoundaryIDIntraRegionVPC        = 7  // Intra-region VPC
+	NetworkConnectionInfoBoundaryIDInterRegionVPC        = 8  // Inter-region VPC
+	NetworkConnectionInfoBoundaryIDLocalGateway          = 9  // Local Gateway
+	NetworkConnectionInfoBoundaryIDGatewayVPC            = 10 // Gateway VPC
+	NetworkConnectionInfoBoundaryIDInternetGateway       = 11 // Internet Gateway
+	NetworkConnectionInfoBoundaryIDOther                 = 99 // Other
+)
+
+// NetworkConnectionInfoDirectionID values.
+const (
+	NetworkConnectionInfoDirectionIDUnknown  = 0  // Unknown
+	NetworkConnectionInfoDirectionIDInbound  = 1  // Inbound
+	NetworkConnectionInfoDirectionIDOutbound = 2  // Outbound
+	NetworkConnectionInfoDirectionIDLateral  = 3  // Lateral
+	NetworkConnectionInfoDirectionIDOther    = 99 // Other
+)
+
+// NetworkConnectionInfoProtocolVerID values.
+const (
+	NetworkConnectionInfoProtocolVerIDUnknown                      = 0  // Unknown
+	NetworkConnectionInfoProtocolVerIDInternetProtocolVersion4IPv4 = 4  // Internet Protocol version 4 (IPv4)
+	NetworkConnectionInfoProtocolVerIDInternetProtocolVersion6IPv6 = 6  // Internet Protocol version 6 (IPv6)
+	NetworkConnectionInfoProtocolVerIDOther                        = 99 // Other
+)
+
 // NetworkEndpoint is the OCSF 1.5.0 object "Network Endpoint". The Network Endpoint object describes characteristics of a network endpoint.
 //
 // Constraint at_least_one: ip, uid, name, hostname, svc_name, instance_uid, interface_uid, interface_name, domain.
-//
-// Not generated (object not in gen.yaml): agent_list (agent), autonomous_system (autonomous_system), hw_info (device_hw_info), location (location), os (os), proxy_endpoint (network_proxy).
 type NetworkEndpoint struct {
+	// Agent List (optional): A list of agent objects associated with a device, endpoint, or resource.
+	AgentList []Agent `json:"agent_list,omitempty"`
+	// Autonomous System (optional): The Autonomous System details associated with an IP address.
+	AutonomousSystem *AutonomousSystem `json:"autonomous_system,omitempty"`
 	// Domain (optional): The name of the domain that the endpoint belongs to or that corresponds to the endpoint.
 	Domain string `json:"domain,omitempty"`
 	// Hostname (recommended): The fully qualified name of the endpoint.
 	Hostname string `json:"hostname,omitempty"`
+	// Hardware Info (optional): The endpoint hardware information.
+	HwInfo *DeviceHwInfo `json:"hw_info,omitempty"`
 	// Instance ID (recommended): The unique identifier of a VM instance.
 	InstanceUID string `json:"instance_uid,omitempty"`
 	// Network Interface Name (recommended): The name of the network interface (e.g.
@@ -1037,14 +14091,20 @@ type NetworkEndpoint struct {
 	Isp string `json:"isp,omitempty"`
 	// ISP Org (optional): The organization name of the Internet Service Provider (ISP).
 	IspOrg string `json:"isp_org,omitempty"`
+	// Geo Location (optional): The geographical location of the endpoint.
+	Location *Location `json:"location,omitempty"`
 	// MAC Address (optional): The Media Access Control (MAC) address of the endpoint.
 	MAC string `json:"mac,omitempty"`
 	// Name (recommended): The short name of the endpoint.
 	Name string `json:"name,omitempty"`
+	// OS (optional): The endpoint operating system.
+	OS *OS `json:"os,omitempty"`
 	// Owner (recommended): The identity of the service or user account that owns the endpoint or was last logged into it.
 	Owner *User `json:"owner,omitempty"`
 	// Port (recommended): The port used for communication within the network connection.
 	Port int `json:"port,omitempty"`
+	// Proxy Endpoint (optional): The network proxy information pertaining to a specific endpoint.
+	ProxyEndpoint *NetworkProxy `json:"proxy_endpoint,omitempty"`
 	// Subnet UID (optional): The unique identifier of a virtual subnet.
 	SubnetUID string `json:"subnet_uid,omitempty"`
 	// Service Name (recommended): The service name in service-to-service connections.
@@ -1084,14 +14144,646 @@ const (
 	NetworkEndpointTypeIDOther        = 99 // Other
 )
 
+// NetworkInterface is the OCSF 1.5.0 object "Network Interface". The Network Interface object describes the type and associated attributes of a physical or virtual network interface.
+//
+// Constraint at_least_one: ip, mac, name, hostname.
+type NetworkInterface struct {
+	// Hostname (recommended): The hostname associated with the network interface.
+	Hostname string `json:"hostname,omitempty"`
+	// IP Address (recommended): The IP address associated with the network interface.
+	IP string `json:"ip,omitempty"`
+	// MAC Address (recommended): The MAC address of the network interface.
+	MAC string `json:"mac,omitempty"`
+	// Name (recommended): The name of the network interface.
+	Name string `json:"name,omitempty"`
+	// Namespace (optional): The namespace is useful in merger or acquisition situations.
+	Namespace string `json:"namespace,omitempty"`
+	// Subnet Prefix Length (optional): The subnet prefix length determines the number of bits used to represent the network part of the IP address.
+	SubnetPrefix int `json:"subnet_prefix,omitempty"`
+	// Type (optional): The type of network interface.
+	Type string `json:"type,omitempty"`
+	// Type ID (required): The network interface type identifier.
+	TypeID int `json:"type_id"`
+	// Unique ID (optional): The unique identifier for the network interface.
+	UID string `json:"uid,omitempty"`
+}
+
+// NetworkInterfaceTypeID values.
+const (
+	NetworkInterfaceTypeIDUnknown  = 0  // Unknown
+	NetworkInterfaceTypeIDWired    = 1  // Wired
+	NetworkInterfaceTypeIDWireless = 2  // Wireless
+	NetworkInterfaceTypeIDMobile   = 3  // Mobile
+	NetworkInterfaceTypeIDTunnel   = 4  // Tunnel
+	NetworkInterfaceTypeIDOther    = 99 // Other
+)
+
+// NetworkProxy is the OCSF 1.5.0 object "Network Proxy Endpoint". The network proxy endpoint object describes a proxy server, which acts as an intermediary between a client requesting a resource and the server providing that resource.
+//
+// Constraint at_least_one: ip, uid, name, hostname, svc_name, instance_uid, interface_uid, interface_name, domain.
+type NetworkProxy struct {
+	// Agent List (optional): A list of agent objects associated with a device, endpoint, or resource.
+	AgentList []Agent `json:"agent_list,omitempty"`
+	// Autonomous System (optional): The Autonomous System details associated with an IP address.
+	AutonomousSystem *AutonomousSystem `json:"autonomous_system,omitempty"`
+	// Domain (optional): The name of the domain that the endpoint belongs to or that corresponds to the endpoint.
+	Domain string `json:"domain,omitempty"`
+	// Hostname (recommended): The fully qualified name of the endpoint.
+	Hostname string `json:"hostname,omitempty"`
+	// Hardware Info (optional): The endpoint hardware information.
+	HwInfo *DeviceHwInfo `json:"hw_info,omitempty"`
+	// Instance ID (recommended): The unique identifier of a VM instance.
+	InstanceUID string `json:"instance_uid,omitempty"`
+	// Network Interface Name (recommended): The name of the network interface (e.g.
+	InterfaceName string `json:"interface_name,omitempty"`
+	// Network Interface ID (recommended): The unique identifier of the network interface.
+	InterfaceUID string `json:"interface_uid,omitempty"`
+	// Intermediate IP Addresses (optional): The intermediate IP Addresses.
+	IntermediateIps []string `json:"intermediate_ips,omitempty"`
+	// IP Address (recommended): The IP address of the endpoint, in either IPv4 or IPv6 format.
+	IP string `json:"ip,omitempty"`
+	// ISP Name (optional): The name of the Internet Service Provider (ISP).
+	Isp string `json:"isp,omitempty"`
+	// ISP Org (optional): The organization name of the Internet Service Provider (ISP).
+	IspOrg string `json:"isp_org,omitempty"`
+	// Geo Location (optional): The geographical location of the endpoint.
+	Location *Location `json:"location,omitempty"`
+	// MAC Address (optional): The Media Access Control (MAC) address of the endpoint.
+	MAC string `json:"mac,omitempty"`
+	// Name (recommended): The short name of the endpoint.
+	Name string `json:"name,omitempty"`
+	// OS (optional): The endpoint operating system.
+	OS *OS `json:"os,omitempty"`
+	// Owner (recommended): The identity of the service or user account that owns the endpoint or was last logged into it.
+	Owner *User `json:"owner,omitempty"`
+	// Port (recommended): The port used for communication within the network connection.
+	Port int `json:"port,omitempty"`
+	// Proxy Endpoint (optional): The network proxy information pertaining to a specific endpoint.
+	ProxyEndpoint *NetworkProxy `json:"proxy_endpoint,omitempty"`
+	// Subnet UID (optional): The unique identifier of a virtual subnet.
+	SubnetUID string `json:"subnet_uid,omitempty"`
+	// Service Name (recommended): The service name in service-to-service connections.
+	SvcName string `json:"svc_name,omitempty"`
+	// Type (optional): The network endpoint type.
+	Type string `json:"type,omitempty"`
+	// Type ID (recommended): The network endpoint type ID.
+	TypeID int `json:"type_id,omitempty"`
+	// Unique ID (recommended): The unique identifier of the endpoint.
+	UID string `json:"uid,omitempty"`
+	// VLAN (optional): The Virtual LAN identifier.
+	VlanUID string `json:"vlan_uid,omitempty"`
+	// VPC UID (optional): The unique identifier of the Virtual Private Cloud (VPC).
+	VpcUID string `json:"vpc_uid,omitempty"`
+	// Network Zone (optional): The network zone or LAN segment.
+	Zone string `json:"zone,omitempty"`
+}
+
+// NetworkProxyTypeID values.
+const (
+	NetworkProxyTypeIDUnknown      = 0  // Unknown
+	NetworkProxyTypeIDServer       = 1  // Server
+	NetworkProxyTypeIDDesktop      = 2  // Desktop
+	NetworkProxyTypeIDLaptop       = 3  // Laptop
+	NetworkProxyTypeIDTablet       = 4  // Tablet
+	NetworkProxyTypeIDMobile       = 5  // Mobile
+	NetworkProxyTypeIDVirtual      = 6  // Virtual
+	NetworkProxyTypeIDIOT          = 7  // IOT
+	NetworkProxyTypeIDBrowser      = 8  // Browser
+	NetworkProxyTypeIDFirewall     = 9  // Firewall
+	NetworkProxyTypeIDSwitch       = 10 // Switch
+	NetworkProxyTypeIDHub          = 11 // Hub
+	NetworkProxyTypeIDRouter       = 12 // Router
+	NetworkProxyTypeIDIDS          = 13 // IDS
+	NetworkProxyTypeIDIPS          = 14 // IPS
+	NetworkProxyTypeIDLoadBalancer = 15 // Load Balancer
+	NetworkProxyTypeIDOther        = 99 // Other
+)
+
+// NetworkTraffic is the OCSF 1.5.0 object "Network Traffic". The Network Traffic object describes characteristics of network traffic.
+type NetworkTraffic struct {
+	// Total Bytes (recommended): The total number of bytes (in and out).
+	Bytes int64 `json:"bytes,omitempty"`
+	// Bytes In (optional): The number of bytes sent from the destination to the source.
+	BytesIn int64 `json:"bytes_in,omitempty"`
+	// Bytes Missed (optional): Indicates the number of bytes missed, which is representative of packet loss.
+	BytesMissed int64 `json:"bytes_missed,omitempty"`
+	// Bytes Out (optional): The number of bytes sent from the source to the destination.
+	BytesOut int64 `json:"bytes_out,omitempty"`
+	// Chunks (optional): The total number of chunks (in and out).
+	Chunks int64 `json:"chunks,omitempty"`
+	// Chunks In (optional): The number of chunks sent from the destination to the source.
+	ChunksIn int64 `json:"chunks_in,omitempty"`
+	// Chunks Out (optional): The number of chunks sent from the source to the destination.
+	ChunksOut int64 `json:"chunks_out,omitempty"`
+	// Total Packets (recommended): The total number of packets (in and out).
+	Packets int64 `json:"packets,omitempty"`
+	// Packets In (optional): The number of packets sent from the destination to the source.
+	PacketsIn int64 `json:"packets_in,omitempty"`
+	// Packets Out (optional): The number of packets sent from the source to the destination.
+	PacketsOut int64 `json:"packets_out,omitempty"`
+}
+
+// Node is the OCSF 1.5.0 object "Node". Represents a node or a vertex in a graph structure.
+type Node struct {
+	// Data (optional): Additional data about the node stored as key-value pairs.
+	Data any `json:"data,omitempty"`
+	// Description (optional): A human-readable description of the node's purpose or meaning in the graph.
+	Desc string `json:"desc,omitempty"`
+	// Name (recommended): A human-readable name or label for the node.
+	Name string `json:"name,omitempty"`
+	// Type (optional): Categorizes the node into a specific class or type.
+	Type string `json:"type,omitempty"`
+	// Unique ID (required): A unique string or numeric identifier that distinguishes this node from all others in the graph.
+	UID string `json:"uid"`
+}
+
+// Object is the OCSF 1.5.0 object "Object". An unordered collection of attributes.
+type Object struct {
+}
+
+// Observable is the OCSF 1.5.0 object "Observable". The observable object is a pivot element that contains related information found in many places in the event.
+type Observable struct {
+	// Name (recommended): The full name of the observable attribute.
+	Name string `json:"name,omitempty"`
+	// Reputation Scores (optional): Contains the original and normalized reputation scores.
+	Reputation *Reputation `json:"reputation,omitempty"`
+	// Type (optional): The observable value type name.
+	Type string `json:"type,omitempty"`
+	// Type ID (required): The observable value type identifier.
+	TypeID int `json:"type_id"`
+	// Value (optional): The value associated with the observable attribute.
+	Value string `json:"value,omitempty"`
+}
+
+// ObservableTypeID values.
+const (
+	ObservableTypeIDUnknown                   = 0  // Unknown
+	ObservableTypeIDHostname                  = 1  // Hostname
+	ObservableTypeIDIPAddress                 = 2  // IP Address
+	ObservableTypeIDMACAddress                = 3  // MAC Address
+	ObservableTypeIDUserName                  = 4  // User Name
+	ObservableTypeIDEmailAddress              = 5  // Email Address
+	ObservableTypeIDURLString                 = 6  // URL String
+	ObservableTypeIDFileName                  = 7  // File Name
+	ObservableTypeIDHash                      = 8  // Hash
+	ObservableTypeIDProcessName               = 9  // Process Name
+	ObservableTypeIDResourceUID               = 10 // Resource UID
+	ObservableTypeIDPort                      = 11 // Port
+	ObservableTypeIDSubnet                    = 12 // Subnet
+	ObservableTypeIDCommandLine               = 13 // Command Line
+	ObservableTypeIDCountry                   = 14 // Country
+	ObservableTypeIDProcessID                 = 15 // Process ID
+	ObservableTypeIDHTTPUserAgent             = 16 // HTTP User-Agent
+	ObservableTypeIDCWEObjectUid              = 17 // CWE Object: uid
+	ObservableTypeIDCVEObjectUid              = 18 // CVE Object: uid
+	ObservableTypeIDUserCredentialID          = 19 // User Credential ID
+	ObservableTypeIDEndpoint                  = 20 // Endpoint
+	ObservableTypeIDUser                      = 21 // User
+	ObservableTypeIDEmail                     = 22 // Email
+	ObservableTypeIDUniformResourceLocator    = 23 // Uniform Resource Locator
+	ObservableTypeIDFile                      = 24 // File
+	ObservableTypeIDProcess                   = 25 // Process
+	ObservableTypeIDGeoLocation               = 26 // Geo Location
+	ObservableTypeIDContainer                 = 27 // Container
+	ObservableTypeIDRegistryKey               = 28 // Registry Key
+	ObservableTypeIDRegistryValue             = 29 // Registry Value
+	ObservableTypeIDFingerprint               = 30 // Fingerprint
+	ObservableTypeIDUserObjectUid             = 31 // User Object: uid
+	ObservableTypeIDGroupObjectName           = 32 // Group Object: name
+	ObservableTypeIDGroupObjectUid            = 33 // Group Object: uid
+	ObservableTypeIDAccountObjectName         = 34 // Account Object: name
+	ObservableTypeIDAccountObjectUid          = 35 // Account Object: uid
+	ObservableTypeIDScriptContent             = 36 // Script Content
+	ObservableTypeIDSerialNumber              = 37 // Serial Number
+	ObservableTypeIDResourceDetailsObjectName = 38 // Resource Details Object: name
+	ObservableTypeIDProcessEntityObjectUid    = 39 // Process Entity Object: uid
+	ObservableTypeIDEmailObjectSubject        = 40 // Email Object: subject
+	ObservableTypeIDEmailObjectUid            = 41 // Email Object: uid
+	ObservableTypeIDMessageUID                = 42 // Message UID
+	ObservableTypeIDRegistryValueObjectName   = 43 // Registry Value Object: name
+	ObservableTypeIDAdvisoryObjectUid         = 44 // Advisory Object: uid
+	ObservableTypeIDFilePath                  = 45 // File Path
+	ObservableTypeIDRegistryKeyPath           = 46 // Registry Key Path
+	ObservableTypeIDOther                     = 99 // Other
+)
+
+// Observation is the OCSF 1.5.0 object "Observation". A record of an observed value or event that captures the timing and frequency of its occurrence.
+type Observation struct {
+	// Count (recommended): Integer representing the total number of times this specific value/event was observed across all occurrences.
+	Count int `json:"count,omitempty"`
+	// Time Span (recommended): The time window when the value or event was first observed.
+	Timespan *Timespan `json:"timespan,omitempty"`
+	// Value (required): The specific value, event, indicator or data point that was observed and recorded.
+	Value string `json:"value"`
+}
+
+// OccurrenceDetails is the OCSF 1.5.0 object "Occurrence Details". Details about where in the target entity, specified information was discovered.
+//
+// Constraint at_least_one: cell_name, column_name, column_number, end_line, json_path, page_number, record_index_in_array, row_number, start_line.
+type OccurrenceDetails struct {
+	// Cell Name (optional): The cell name/reference in a spreadsheet.
+	CellName string `json:"cell_name,omitempty"`
+	// Column Name (optional): The column name in a spreadsheet, where the information was discovered.
+	ColumnName string `json:"column_name,omitempty"`
+	// Column Number (optional): The column number in a spreadsheet or a plain text document, where the information was discovered.
+	ColumnNumber int `json:"column_number,omitempty"`
+	// End Line (optional): The line number of the last line of the file, where the information was discovered.
+	EndLine int `json:"end_line,omitempty"`
+	// JSON Path (optional): The JSON path of the attribute in a json record, where the information was discovered
+	JSONPath string `json:"json_path,omitempty"`
+	// Page Number (optional): The page number in a document, where the information was discovered.
+	PageNumber int `json:"page_number,omitempty"`
+	// Record Index in Array (optional): The index of the record in the array of records, where the information was discovered.
+	RecordIndexInArray int `json:"record_index_in_array,omitempty"`
+	// Row Number (optional): The row number in a spreadsheet, where the information was discovered.
+	RowNumber int `json:"row_number,omitempty"`
+	// Start Line (optional): The line number of the first line of the file, where the information was discovered.
+	StartLine int `json:"start_line,omitempty"`
+}
+
+// Organization is the OCSF 1.5.0 object "Organization". The Organization object describes characteristics of an organization or company and its division if any.
+//
+// Constraint at_least_one: name, uid.
+type Organization struct {
+	// Name (recommended): The name of the organization, Oracle Cloud Tenancy, Google Cloud Organization, or AWS Organization.
+	Name string `json:"name,omitempty"`
+	// Org Unit Name (recommended): The name of an organizational unit, Google Cloud Folder, or AWS Org Unit.
+	OuName string `json:"ou_name,omitempty"`
+	// Org Unit ID (optional): The unique identifier of an organizational unit, Google Cloud Folder, or AWS Org Unit.
+	OuUID string `json:"ou_uid,omitempty"`
+	// Unique ID (recommended): The unique identifier of the organization, Oracle Cloud Tenancy, Google Cloud Organization, or AWS Organization.
+	UID string `json:"uid,omitempty"`
+}
+
+// OS is the OCSF 1.5.0 object "Operating System (OS)". The Operating System (OS) object describes characteristics of an OS, such as Linux or Windows.
+type OS struct {
+	// OS Build (optional): The operating system build number.
+	Build string `json:"build,omitempty"`
+	// Country (optional): The operating system country code, as defined by the ISO 3166-1 standard (Alpha-2 code).Note: The two letter country code should be capitalized.
+	Country string `json:"country,omitempty"`
+	// The product CPE identifier (optional): The Common Platform Enumeration (CPE) name as described by (NIST) For example: cpe:/a:apple:safari:16.2.
+	CpeName string `json:"cpe_name,omitempty"`
+	// CPU Bits (optional): The cpu architecture, the number of bits used for addressing in memory.
+	CPUBits int `json:"cpu_bits,omitempty"`
+	// OS Edition (optional): The operating system edition.
+	Edition string `json:"edition,omitempty"`
+	// Kernel Release (optional): The kernel release of the operating system.
+	KernelRelease string `json:"kernel_release,omitempty"`
+	// Language (optional): The two letter lower case language codes, as defined by ISO 639-1.
+	Lang string `json:"lang,omitempty"`
+	// Name (required): The operating system name.
+	Name string `json:"name"`
+	// OS Service Pack (optional): The name of the latest Service Pack.
+	SpName string `json:"sp_name,omitempty"`
+	// OS Service Pack Version (optional): The version number of the latest Service Pack.
+	SpVer int `json:"sp_ver,omitempty"`
+	// Type (optional): The type of the operating system.
+	Type string `json:"type,omitempty"`
+	// Type ID (required): The type identifier of the operating system.
+	TypeID int `json:"type_id"`
+	// Version (optional): The version of the OS running on the device that originated the event.
+	Version string `json:"version,omitempty"`
+}
+
+// OSTypeID values.
+const (
+	OSTypeIDUnknown       = 0   // Unknown
+	OSTypeIDOther         = 99  // Other
+	OSTypeIDWindows       = 100 // Windows
+	OSTypeIDWindowsMobile = 101 // Windows Mobile
+	OSTypeIDLinux         = 200 // Linux
+	OSTypeIDAndroid       = 201 // Android
+	OSTypeIDMacOS         = 300 // macOS
+	OSTypeIDIOS           = 301 // iOS
+	OSTypeIDIPadOS        = 302 // iPadOS
+	OSTypeIDSolaris       = 400 // Solaris
+	OSTypeIDAIX           = 401 // AIX
+	OSTypeIDHPUX          = 402 // HP-UX
+)
+
+// Osint is the OCSF 1.5.0 object "OSINT". The OSINT (Open Source Intelligence) object contains details related to an indicator such as the indicator itself, related indicators, geolocation, registrar information, subdomains, analyst commentary, and other contextual information.
+type Osint struct {
+	// Related DNS Answers (optional): Any pertinent DNS answers information related to an indicator or OSINT analysis.
+	Answers []DNSAnswer `json:"answers,omitempty"`
+	// MITRE ATT&CK® and ATLAS™ Details (optional): MITRE ATT&CK Tactics, Techniques, and/or Procedures (TTPs) pertinent to an indicator or OSINT analysis.
+	Attacks []Attack `json:"attacks,omitempty"`
+	// Autonomous System (optional): Any pertinent autonomous system information related to an indicator or OSINT analysis.
+	AutonomousSystem *AutonomousSystem `json:"autonomous_system,omitempty"`
+	// Campaign (optional): The campaign object describes details about the campaign that was the source of the activity.
+	Campaign *Campaign `json:"campaign,omitempty"`
+	// Category (optional): Categorizes the threat indicator based on its functional or operational role.
+	Category string `json:"category,omitempty"`
+	// Analyst Comments (optional): Analyst commentary or source commentary about an indicator or OSINT analysis.
+	Comment string `json:"comment,omitempty"`
+	// Confidence (optional): The confidence of an indicator being malicious and/or pertinent, normalized to the caption of the confidence_id value.
+	Confidence string `json:"confidence,omitempty"`
+	// Confidence ID (recommended): The normalized confidence refers to the accuracy of collected information related to the OSINT or how pertinent an indicator or analysis is to a specific event or finding.
+	ConfidenceID int `json:"confidence_id,omitempty"`
+	// Created Time (optional): The timestamp when the indicator was initially created or identified.
+	CreatedTime int64 `json:"created_time,omitempty"`
+	// Creator (optional): The identifier of the user, system, or organization that contributed the indicator.
+	Creator *User `json:"creator,omitempty"`
+	// Description (optional): A detailed explanation of the indicator, including its context, purpose, and relevance.
+	Desc string `json:"desc,omitempty"`
+	// Detection Pattern (optional): The specific detection pattern or signature associated with the indicator.
+	DetectionPattern string `json:"detection_pattern,omitempty"`
+	// Detection Pattern (optional): The detection pattern type, normalized to the caption of the detection_pattern_type_id value.
+	DetectionPatternType string `json:"detection_pattern_type,omitempty"`
+	// Detection Pattern Type ID (optional): Specifies the type of detection pattern used to identify the associated threat indicator.
+	DetectionPatternTypeID int `json:"detection_pattern_type_id,omitempty"`
+	// Related Email (optional): Any email information pertinent to an indicator or OSINT analysis.
+	Email *Email `json:"email,omitempty"`
+	// Related Email Authentication (optional): Any email authentication information pertinent to an indicator or OSINT analysis.
+	EmailAuth *EmailAuth `json:"email_auth,omitempty"`
+	// Expiration Time (optional): The expiration date of the indicator, after which it is no longer considered reliable.
+	ExpirationTime int64 `json:"expiration_time,omitempty"`
+	// External ID (optional): A unique identifier assigned by an external system for cross-referencing.
+	ExternalUID string `json:"external_uid,omitempty"`
+	// Related File (optional): Any pertinent file information related to an indicator or OSINT analysis.
+	File *File `json:"file,omitempty"`
+	// Intrusion Sets (optional): A grouping of adversarial behaviors and resources believed to be associated with specific threat actors or campaigns.
+	IntrusionSets []string `json:"intrusion_sets,omitempty"`
+	// Kill Chain (optional): Lockheed Martin Kill Chain Phases pertinent to an indicator or OSINT analysis.
+	KillChain []KillChainPhase `json:"kill_chain,omitempty"`
+	// Labels (optional): Tags or keywords associated with the indicator to enhance searchability.
+	Labels []string `json:"labels,omitempty"`
+	// Geo Location (optional): Any pertinent geolocation information related to an indicator or OSINT analysis.
+	Location *Location `json:"location,omitempty"`
+	// Malware (optional): A list of Malware objects, describing details about the identified malware.
+	Malware []Malware `json:"malware,omitempty"`
+	// Modified Time (optional): The timestamp of the last modification or update to the indicator.
+	ModifiedTime int64 `json:"modified_time,omitempty"`
+	// Name (optional): The name is a pointer/reference to an attribute within the OCSF event data.
+	Name string `json:"name,omitempty"`
+	// References (optional): Provides a reference to an external source of information related to the CTI being represented.
+	References []string `json:"references,omitempty"`
+	// Related Analytics (optional): Any analytics related to an indicator or OSINT analysis.
+	RelatedAnalytics []Analytic `json:"related_analytics,omitempty"`
+	// Reputation Scores (optional): Related reputational analysis from third-party engines and analysts for a given indicator or OSINT analysis.
+	Reputation *Reputation `json:"reputation,omitempty"`
+	// Risk Score (optional): A numerical representation of the threat indicator’s risk level.
+	RiskScore int `json:"risk_score,omitempty"`
+	// Related Script Data (optional): Any pertinent script information related to an indicator or OSINT analysis.
+	Script *Script `json:"script,omitempty"`
+	// Severity (optional): Represents the severity level of the threat indicator, typically reflecting its potential impact or damage.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (optional): The normalized severity level of the threat indicator, typically reflecting its potential impact or damage.
+	SeverityID int `json:"severity_id,omitempty"`
+	// Related Digital Signatures (optional): Any digital signatures or hashes related to an indicator or OSINT analysis.
+	Signatures []DigitalSignature `json:"signatures,omitempty"`
+	// Source URL (optional): The source URL of an indicator or OSINT analysis, e.g., a URL back to a TIP, report, or otherwise.
+	SrcURL string `json:"src_url,omitempty"`
+	// Related Subdomains (optional): Any pertinent subdomain information - such as those generated by a Domain Generation Algorithm - related to an indicator or OSINT analysis.
+	Subdomains []string `json:"subdomains,omitempty"`
+	// Related Subnet (optional): A CIDR or network block related to an indicator or OSINT analysis.
+	Subnet string `json:"subnet,omitempty"`
+	// Threat Actor (optional): A threat actor is an individual or group that conducts malicious cyber activities, often with financial, political, or ideological motives.
+	ThreatActor *ThreatActor `json:"threat_actor,omitempty"`
+	// Traffic Light Protocol (recommended): The Traffic Light Protocol was created to facilitate greater sharing of potentially sensitive information and more effective collaboration.
+	Tlp string `json:"tlp,omitempty"`
+	// Type (optional): The OSINT indicator type.
+	Type string `json:"type,omitempty"`
+	// Indicator Type ID (required): The OSINT indicator type ID.
+	TypeID int `json:"type_id"`
+	// Unique ID (optional): The unique identifier for the OSINT object.
+	UID string `json:"uid,omitempty"`
+	// Uploaded Time (optional): The timestamp indicating when the associated indicator or intelligence was added to the system or repository.
+	UploadedTime int64 `json:"uploaded_time,omitempty"`
+	// Indicator (required): The actual indicator value in scope, e.g., a SHA-256 hash hexdigest or a domain name.
+	Value string `json:"value"`
+	// Vendor Name (optional): The vendor name of a tool which generates intelligence or provides indicators.
+	VendorName string `json:"vendor_name,omitempty"`
+	// Related Vulnerabilities (optional): Any vulnerabilities related to an indicator or OSINT analysis.
+	Vulnerabilities []Vulnerability `json:"vulnerabilities,omitempty"`
+	// WHOIS (optional): Any pertinent WHOIS information related to an indicator or OSINT analysis.
+	Whois *Whois `json:"whois,omitempty"`
+}
+
+// OsintConfidenceID values.
+const (
+	OsintConfidenceIDUnknown = 0  // Unknown
+	OsintConfidenceIDLow     = 1  // Low
+	OsintConfidenceIDMedium  = 2  // Medium
+	OsintConfidenceIDHigh    = 3  // High
+	OsintConfidenceIDOther   = 99 // Other
+)
+
+// OsintDetectionPatternTypeID values.
+const (
+	OsintDetectionPatternTypeIDUnknown  = 0  // Unknown
+	OsintDetectionPatternTypeIDSTIX     = 1  // STIX
+	OsintDetectionPatternTypeIDPCRE     = 2  // PCRE
+	OsintDetectionPatternTypeIDSIGMA    = 3  // SIGMA
+	OsintDetectionPatternTypeIDSnort    = 4  // Snort
+	OsintDetectionPatternTypeIDSuricata = 5  // Suricata
+	OsintDetectionPatternTypeIDYARA     = 6  // YARA
+	OsintDetectionPatternTypeIDOther    = 99 // Other
+)
+
+// OsintSeverityID values.
+const (
+	OsintSeverityIDUnknown       = 0  // Unknown
+	OsintSeverityIDInformational = 1  // Informational
+	OsintSeverityIDLow           = 2  // Low
+	OsintSeverityIDMedium        = 3  // Medium
+	OsintSeverityIDHigh          = 4  // High
+	OsintSeverityIDCritical      = 5  // Critical
+	OsintSeverityIDFatal         = 6  // Fatal
+	OsintSeverityIDOther         = 99 // Other
+)
+
+// OsintTypeID values.
+const (
+	OsintTypeIDUnknown            = 0  // Unknown
+	OsintTypeIDIPAddress          = 1  // IP Address
+	OsintTypeIDDomain             = 2  // Domain
+	OsintTypeIDHostname           = 3  // Hostname
+	OsintTypeIDHash               = 4  // Hash
+	OsintTypeIDURL                = 5  // URL
+	OsintTypeIDUserAgent          = 6  // User Agent
+	OsintTypeIDDigitalCertificate = 7  // Digital Certificate
+	OsintTypeIDEmail              = 8  // Email
+	OsintTypeIDEmailAddress       = 9  // Email Address
+	OsintTypeIDVulnerability      = 10 // Vulnerability
+	OsintTypeIDFile               = 11 // File
+	OsintTypeIDRegistryKey        = 12 // Registry Key
+	OsintTypeIDRegistryValue      = 13 // Registry Value
+	OsintTypeIDCommandLine        = 14 // Command Line
+	OsintTypeIDOther              = 99 // Other
+)
+
+// Package is the OCSF 1.5.0 object "Software Package". The Software Package object describes details about a software package.
+type Package struct {
+	// Architecture (recommended): Architecture is a shorthand name describing the type of computer hardware the packaged software is meant to run on.
+	Architecture string `json:"architecture,omitempty"`
+	// The product CPE identifier (optional): The Common Platform Enumeration (CPE) name as described by (NIST) For example: cpe:/a:apple:safari:16.2.
+	CpeName string `json:"cpe_name,omitempty"`
+	// Epoch (optional): The software package epoch.
+	Epoch int `json:"epoch,omitempty"`
+	// Hash (optional): Cryptographic hash to identify the binary instance of a software component.
+	Hash *Fingerprint `json:"hash,omitempty"`
+	// Software License (optional): The software license applied to this package.
+	License string `json:"license,omitempty"`
+	// Software License URL (optional): The URL pointing to the license applied on package or software.
+	LicenseURL string `json:"license_url,omitempty"`
+	// Name (required): The software package name.
+	Name string `json:"name"`
+	// Package Manager (optional): The software packager manager utilized to manage a package on a system, e.g.
+	PackageManager string `json:"package_manager,omitempty"`
+	// Package Manager URL (optional): The URL of the package or library at the package manager, or the specific URL or URI of an internal package manager link such as AWS CodeArtifact or Artifactory.
+	PackageManagerURL string `json:"package_manager_url,omitempty"`
+	// Package URL (optional): A purl is a URL string used to identify and locate a software package in a mostly universal and uniform way across programming languages, package managers, packaging conventions, tools, APIs and databases.
+	Purl string `json:"purl,omitempty"`
+	// Software Release Details (optional): Release is the number of times a version of the software has been packaged.
+	Release string `json:"release,omitempty"`
+	// Source URL (optional): The link to the specific library or package such as within GitHub, this is different from the link to the package manager where the library or package is hosted.
+	SrcURL string `json:"src_url,omitempty"`
+	// Type (optional): The type of software package, normalized to the caption of the type_id value.
+	Type string `json:"type,omitempty"`
+	// Type ID (recommended): The type of software package.
+	TypeID int `json:"type_id,omitempty"`
+	// Package UID (optional): A unique identifier for the package or library reported by the source tool.
+	UID string `json:"uid,omitempty"`
+	// Vendor Name (optional): The name of the vendor who published the software package.
+	VendorName string `json:"vendor_name,omitempty"`
+	// Version (required): The software package version.
+	Version string `json:"version"`
+}
+
+// PackageTypeID values.
+const (
+	PackageTypeIDUnknown         = 0  // Unknown
+	PackageTypeIDApplication     = 1  // Application
+	PackageTypeIDOperatingSystem = 2  // Operating System
+	PackageTypeIDOther           = 99 // Other
+)
+
+// PeripheralDevice is the OCSF 1.5.0 object "Peripheral Device". The peripheral device object describes the identity, vendor and model of a peripheral device.
+//
+// Constraint at_least_one: name, uid.
+type PeripheralDevice struct {
+	// Class (required): The class of the peripheral device.
+	Class string `json:"class"`
+	// Model (recommended): The peripheral device model.
+	Model string `json:"model,omitempty"`
+	// Name (required): The name of the peripheral device.
+	Name string `json:"name"`
+	// Serial Number (recommended): The peripheral device serial number.
+	SerialNumber string `json:"serial_number,omitempty"`
+	// Unique ID (recommended): The unique identifier of the peripheral device.
+	UID string `json:"uid,omitempty"`
+	// Vendor Name (recommended): The peripheral device vendor.
+	VendorName string `json:"vendor_name,omitempty"`
+}
+
+// Policy is the OCSF 1.5.0 object "Policy". The Policy object describes the policies that are applicable.
+//
+// Constraint at_least_one: name, uid.
+type Policy struct {
+	// Data (optional): Additional data about the policy such as the underlying JSON policy itself or other details.
+	Data any `json:"data,omitempty"`
+	// Description (optional): The description of the policy.
+	Desc string `json:"desc,omitempty"`
+	// Group (optional): The policy group.
+	Group *Group `json:"group,omitempty"`
+	// Applied (recommended): A determination if the content of a policy was applied to a target or request, or not.
+	IsApplied bool `json:"is_applied,omitempty"`
+	// Name (recommended): The policy name.
+	Name string `json:"name,omitempty"`
+	// Unique ID (recommended): A unique identifier of the policy instance.
+	UID string `json:"uid,omitempty"`
+	// Version (recommended): The policy version number.
+	Version string `json:"version,omitempty"`
+}
+
+// Process is the OCSF 1.5.0 object "Process". The Process object describes a running instance of a launched program.
+//
+// Constraint at_least_one: pid, uid, cpid.
+type Process struct {
+	// Ancestry (optional): An array of Process Entities describing the extended parentage of this process object.
+	Ancestry []ProcessEntity `json:"ancestry,omitempty"`
+	// Command Line (recommended): The full command line used to launch an application, service, process, or job.
+	CmdLine string `json:"cmd_line,omitempty"`
+	// Common Process Identifier (recommended): A unique process identifier that can be assigned deterministically by multiple system data producers.
+	Cpid string `json:"cpid,omitempty"`
+	// Created Time (recommended): The time when the process was created/started.
+	CreatedTime int64 `json:"created_time,omitempty"`
+	// Environment Variables (optional): Environment variables associated with the process.
+	EnvironmentVariables []EnvironmentVariable `json:"environment_variables,omitempty"`
+	// File (recommended): The process file object.
+	File *File `json:"file,omitempty"`
+	// Integrity (optional): The process integrity level, normalized to the caption of the integrity_id value.
+	Integrity string `json:"integrity,omitempty"`
+	// Integrity Level (optional): The normalized identifier of the process integrity level (Windows only).
+	IntegrityID int `json:"integrity_id,omitempty"`
+	// Loaded Modules (optional): The list of loaded module names.
+	LoadedModules []string `json:"loaded_modules,omitempty"`
+	// Name (recommended): The friendly name of the process, for example: Notepad++.
+	Name string `json:"name,omitempty"`
+	// Parent Process (recommended): The parent process of this process object.
+	ParentProcess *Process `json:"parent_process,omitempty"`
+	// Path (optional): The process file path.
+	Path string `json:"path,omitempty"`
+	// Process ID (recommended): The process identifier, as reported by the operating system.
+	Pid int `json:"pid,omitempty"`
+	// Sandbox (optional): The name of the containment jail (i.e., sandbox).
+	Sandbox string `json:"sandbox,omitempty"`
+	// Session (optional): The user session under which this process is running.
+	Session *Session `json:"session,omitempty"`
+	// Terminated Time (optional): The time when the process was terminated.
+	TerminatedTime int64 `json:"terminated_time,omitempty"`
+	// Thread ID (optional): The Identifier of the thread associated with the event, as returned by the operating system.
+	Tid int `json:"tid,omitempty"`
+	// Unique ID (recommended): A unique identifier for this process assigned by the producer (tool).
+	UID string `json:"uid,omitempty"`
+	// User (recommended): The user under which this process is running.
+	User *User `json:"user,omitempty"`
+	// Working Directory (optional): The working directory of a process.
+	WorkingDirectory string `json:"working_directory,omitempty"`
+	// Extended Attributes (optional): An unordered collection of zero or more name/value pairs that represent a process extended attribute.
+	Xattributes map[string]any `json:"xattributes,omitempty"`
+}
+
+// ProcessIntegrityID values.
+const (
+	ProcessIntegrityIDUnknown   = 0  // Unknown
+	ProcessIntegrityIDUntrusted = 1  // Untrusted
+	ProcessIntegrityIDLow       = 2  // Low
+	ProcessIntegrityIDMedium    = 3  // Medium
+	ProcessIntegrityIDHigh      = 4  // High
+	ProcessIntegrityIDSystem    = 5  // System
+	ProcessIntegrityIDProtected = 6  // Protected
+	ProcessIntegrityIDOther     = 99 // Other
+)
+
+// ProcessEntity is the OCSF 1.5.0 object "Process Entity". The Process Entity object provides critical fields for referencing a process.
+//
+// Constraint at_least_one: cmd_line, name, path, pid, uid, cpid.
+type ProcessEntity struct {
+	// Command Line (recommended): The full command line used to launch an application, service, process, or job.
+	CmdLine string `json:"cmd_line,omitempty"`
+	// Common Process Identifier (recommended): A unique process identifier that can be assigned deterministically by multiple system data producers.
+	Cpid string `json:"cpid,omitempty"`
+	// Created Time (recommended): The time when the process was created/started.
+	CreatedTime int64 `json:"created_time,omitempty"`
+	// Name (recommended): The friendly name of the process, for example: Notepad++.
+	Name string `json:"name,omitempty"`
+	// Path (optional): The process file path.
+	Path string `json:"path,omitempty"`
+	// Process ID (recommended): The process identifier, as reported by the operating system.
+	Pid int `json:"pid,omitempty"`
+	// Unique ID (recommended): A unique identifier for this process assigned by the producer (tool).
+	UID string `json:"uid,omitempty"`
+}
+
 // Product is the OCSF 1.5.0 object "Product". The Product object describes characteristics of a software product.
 //
 // Constraint at_least_one: name, uid.
-//
-// Not generated (object not in gen.yaml): feature (feature).
 type Product struct {
 	// The product CPE identifier (optional): The Common Platform Enumeration (CPE) name as described by (NIST) For example: cpe:/a:apple:safari:16.2.
 	CpeName string `json:"cpe_name,omitempty"`
+	// Feature (optional): The feature that reported the event.
+	Feature *Feature `json:"feature,omitempty"`
 	// Language (optional): The two letter lower case language codes, as defined by ISO 639-1.
 	Lang string `json:"lang,omitempty"`
 	// Name (recommended): The name of the product.
@@ -1108,16 +14800,526 @@ type Product struct {
 	Version string `json:"version,omitempty"`
 }
 
+// QueryEvidence is the OCSF 1.5.0 object "Query Evidence". The specific resulting evidence information that was queried or discovered.
+//
+// Constraint just_one: connection_info, file, folder, group, job, kernel, module, network_interfaces, peripheral_device, process, reg_key, reg_value, service, session, startup_item, user.
+type QueryEvidence struct {
+	// Connection Info (recommended): The network connection information related to a Network Connection query type.
+	ConnectionInfo *NetworkConnectionInfo `json:"connection_info,omitempty"`
+	// File (recommended): The file that is the target of the query when query_type_id indicates a File query.
+	File *File `json:"file,omitempty"`
+	// Folder (recommended): The folder that is the target of the query when query_type_id indicates a Folder query.
+	Folder *File `json:"folder,omitempty"`
+	// Group (recommended): The administrative group that is the target of the query when query_type_id indicates an Admin Group query.
+	Group *Group `json:"group,omitempty"`
+	// Job (recommended): The job object that pertains to the event when query_type_id indicates a Job query.
+	Job *Job `json:"job,omitempty"`
+	// Kernel (recommended): The kernel object that pertains to the event when query_type_id indicates a Kernel query.
+	Kernel *Kernel `json:"kernel,omitempty"`
+	// Module (recommended): The module that pertains to the event when query_type_id indicates a Module query.
+	Module *Module `json:"module,omitempty"`
+	// Network Interfaces (recommended): The physical or virtual network interfaces that are associated with the device when query_type_id indicates a Network Interfaces query.
+	NetworkInterfaces []NetworkInterface `json:"network_interfaces,omitempty"`
+	// Peripheral Device (recommended): The peripheral device that triggered the event when query_type_id indicates a Peripheral Device query.
+	PeripheralDevice *PeripheralDevice `json:"peripheral_device,omitempty"`
+	// Process (recommended): The process that pertains to the event when query_type_id indicates a Process query.
+	Process *Process `json:"process,omitempty"`
+	// Query Type (optional): The normalized caption of query_type_id or the source-specific query type.
+	QueryType string `json:"query_type,omitempty"`
+	// Query Type ID (required): The normalized type of system query performed against a device or system component.
+	QueryTypeID int `json:"query_type_id"`
+	// Registry Key (recommended): The registry key object describes a Windows registry key.
+	RegKey *WinRegKey `json:"reg_key,omitempty"`
+	// Registry Value (recommended): The registry key object describes a Windows registry value.
+	RegValue *WinRegValue `json:"reg_value,omitempty"`
+	// Service (recommended): The service that pertains to the event when query_type_id indicates a Service query.
+	Service *Service `json:"service,omitempty"`
+	// Session (recommended): The authenticated user or service session when query_type_id indicates a Session query.
+	Session *Session `json:"session,omitempty"`
+	// Startup Item (recommended): The startup item object that pertains to the event when query_type_id indicates a Startup Item query.
+	StartupItem *StartupItem `json:"startup_item,omitempty"`
+	// Network Connection State (optional): The state of the socket, normalized to the caption of the state_id value.
+	State string `json:"state,omitempty"`
+	// TCP State ID (optional): The state of the TCP socket for the network connection.
+	TCPStateID int `json:"tcp_state_id,omitempty"`
+	// User (recommended): The user that pertains to the event when query_type_id indicates a User query.
+	User *User `json:"user,omitempty"`
+	// Users (optional): The users that belong to the administrative group when query_type_id indicates a Users query.
+	Users []User `json:"users,omitempty"`
+}
+
+// QueryEvidenceQueryTypeID values.
+const (
+	QueryEvidenceQueryTypeIDUnknown           = 0  // Unknown
+	QueryEvidenceQueryTypeIDKernel            = 1  // Kernel
+	QueryEvidenceQueryTypeIDFile              = 2  // File
+	QueryEvidenceQueryTypeIDFolder            = 3  // Folder
+	QueryEvidenceQueryTypeIDAdminGroup        = 4  // Admin Group
+	QueryEvidenceQueryTypeIDJob               = 5  // Job
+	QueryEvidenceQueryTypeIDModule            = 6  // Module
+	QueryEvidenceQueryTypeIDNetworkConnection = 7  // Network Connection
+	QueryEvidenceQueryTypeIDNetworkInterfaces = 8  // Network Interfaces
+	QueryEvidenceQueryTypeIDPeripheralDevice  = 9  // Peripheral Device
+	QueryEvidenceQueryTypeIDProcess           = 10 // Process
+	QueryEvidenceQueryTypeIDService           = 11 // Service
+	QueryEvidenceQueryTypeIDSession           = 12 // Session
+	QueryEvidenceQueryTypeIDUser              = 13 // User
+	QueryEvidenceQueryTypeIDUsers             = 14 // Users
+	QueryEvidenceQueryTypeIDStartupItem       = 15 // Startup Item
+	QueryEvidenceQueryTypeIDRegistryKey       = 16 // Registry Key
+	QueryEvidenceQueryTypeIDRegistryValue     = 17 // Registry Value
+	QueryEvidenceQueryTypeIDPrefetch          = 18 // Prefetch
+	QueryEvidenceQueryTypeIDOther             = 99 // Other
+)
+
+// QueryEvidenceTCPStateID values.
+const (
+	QueryEvidenceTCPStateIDUnknown     = 0  // Unknown
+	QueryEvidenceTCPStateIDESTABLISHED = 1  // ESTABLISHED
+	QueryEvidenceTCPStateIDSYNSENT     = 2  // SYN-SENT
+	QueryEvidenceTCPStateIDSYNRECEIVED = 3  // SYN-RECEIVED
+	QueryEvidenceTCPStateIDFINWAIT1    = 4  // FIN-WAIT-1
+	QueryEvidenceTCPStateIDFINWAIT2    = 5  // FIN-WAIT-2
+	QueryEvidenceTCPStateIDTIMEWAIT    = 6  // TIME-WAIT
+	QueryEvidenceTCPStateIDCLOSED      = 7  // CLOSED
+	QueryEvidenceTCPStateIDCLOSEWAIT   = 8  // CLOSE-WAIT
+	QueryEvidenceTCPStateIDLASTACK     = 9  // LAST-ACK
+	QueryEvidenceTCPStateIDLISTEN      = 10 // LISTEN
+	QueryEvidenceTCPStateIDCLOSING     = 11 // CLOSING
+)
+
+// QueryInfo is the OCSF 1.5.0 object "Query Information". The query info object holds information related to data access within a datastore.
+//
+// Constraint at_least_one: name, uid.
+type QueryInfo struct {
+	// Total Bytes (optional): The size of the data returned from the query.
+	Bytes int64 `json:"bytes,omitempty"`
+	// Data (optional): The data returned from the query execution.
+	Data any `json:"data,omitempty"`
+	// Name (recommended): The query name for a saved or scheduled query.
+	Name string `json:"name,omitempty"`
+	// Query String (required): A string representing the query code being run.
+	QueryString string `json:"query_string"`
+	// Query Time (optional): The time when the query was run.
+	QueryTime int64 `json:"query_time,omitempty"`
+	// Unique ID (recommended): The unique identifier of the query.
+	UID string `json:"uid,omitempty"`
+}
+
+// RelatedEvent is the OCSF 1.5.0 object "Related Event/Finding". The Related Event object describes an event or another finding related to a finding.
+type RelatedEvent struct {
+	// MITRE ATT&CK® and ATLAS™ Details (optional): An array of MITRE ATT&CK® objects describing identified tactics, techniques & sub-techniques.
+	Attacks []Attack `json:"attacks,omitempty"`
+	// Count (optional): The number of times that activity in the same logical group occurred, as reported by the related Finding.
+	Count int `json:"count,omitempty"`
+	// Created Time (optional): The time when the related event/finding was created.
+	CreatedTime int64 `json:"created_time,omitempty"`
+	// Description (optional): A description of the related event/finding.
+	Desc string `json:"desc,omitempty"`
+	// First Seen (optional): The time when the finding was first observed.
+	FirstSeenTime int64 `json:"first_seen_time,omitempty"`
+	// Kill Chain (optional): The Cyber Kill Chain® provides a detailed description of each phase and its associated activities within the broader context of a cyber attack.
+	KillChain []KillChainPhase `json:"kill_chain,omitempty"`
+	// Last Seen (optional): The time when the finding was most recently observed.
+	LastSeenTime int64 `json:"last_seen_time,omitempty"`
+	// Modified Time (optional): The time when the related event/finding was last modified.
+	ModifiedTime int64 `json:"modified_time,omitempty"`
+	// Observables (optional): The observables associated with the event or a finding.
+	Observables []Observable `json:"observables,omitempty"`
+	// Product (optional): Details about the product that reported the related event/finding.
+	Product *Product `json:"product,omitempty"`
+	// Severity (optional): The event/finding severity, normalized to the caption of the severity_id value.
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (recommended): The normalized identifier of the event/finding severity.The normalized severity is a measurement the effort and expense required to manage and resolve an event or incident.
+	SeverityID int `json:"severity_id,omitempty"`
+	// Tags (optional): The list of tags; {key:value} pairs associated with the related event/finding.
+	Tags []KeyValueObject `json:"tags,omitempty"`
+	// Title (optional): A title or a brief phrase summarizing the related event/finding.
+	Title string `json:"title,omitempty"`
+	// Traits (optional): The list of key traits or characteristics extracted from the related event/finding that influenced or contributed to the overall finding's outcome.
+	Traits []Trait `json:"traits,omitempty"`
+	// Type (optional): The type of the related event/finding.Populate if the related event/finding is NOT in OCSF.
+	Type string `json:"type,omitempty"`
+	// Type Name (optional): The type of the related OCSF event, as defined by type_uid.For example: Process Activity: Launch.Populate if the related event/finding is in OCSF.
+	TypeName string `json:"type_name,omitempty"`
+	// Type ID (recommended): The unique identifier of the related OCSF event type.
+	TypeUID int64 `json:"type_uid,omitempty"`
+	// Unique ID (required): The unique identifier of the related event/finding.
+	UID string `json:"uid"`
+}
+
+// RelatedEventSeverityID values.
+const (
+	RelatedEventSeverityIDUnknown       = 0  // Unknown
+	RelatedEventSeverityIDInformational = 1  // Informational
+	RelatedEventSeverityIDLow           = 2  // Low
+	RelatedEventSeverityIDMedium        = 3  // Medium
+	RelatedEventSeverityIDHigh          = 4  // High
+	RelatedEventSeverityIDCritical      = 5  // Critical
+	RelatedEventSeverityIDFatal         = 6  // Fatal
+	RelatedEventSeverityIDOther         = 99 // Other
+)
+
+// Remediation is the OCSF 1.5.0 object "Remediation". The Remediation object describes the recommended remediation steps to address identified issue(s).
+type Remediation struct {
+	// CIS Controls (optional): An array of Center for Internet Security (CIS) Controls that can be optionally mapped to provide additional remediation details.
+	CisControls []CisControl `json:"cis_controls,omitempty"`
+	// Description (required): The description of the remediation strategy.
+	Desc string `json:"desc"`
+	// Knowledgebase Articles (optional): A list of KB articles or patches related to an endpoint.
+	KBArticleList []KBArticle `json:"kb_article_list,omitempty"`
+	// References (optional): A list of supporting URL/s, references that help describe the remediation strategy.
+	References []string `json:"references,omitempty"`
+}
+
+// Reputation is the OCSF 1.5.0 object "Reputation". The Reputation object describes the reputation/risk score of an entity (e.g.
+type Reputation struct {
+	// Reputation Score (required): The reputation score as reported by the event source.
+	BaseScore float64 `json:"base_score"`
+	// Provider (recommended): The provider of the reputation information.
+	Provider string `json:"provider,omitempty"`
+	// Reputation Score (optional): The reputation score, normalized to the caption of the score_id value.
+	Score string `json:"score,omitempty"`
+	// Reputation Score ID (required): The normalized reputation score identifier.
+	ScoreID int `json:"score_id"`
+}
+
+// ReputationScoreID values.
+const (
+	ReputationScoreIDUnknown           = 0  // Unknown
+	ReputationScoreIDVerySafe          = 1  // Very Safe
+	ReputationScoreIDSafe              = 2  // Safe
+	ReputationScoreIDProbablySafe      = 3  // Probably Safe
+	ReputationScoreIDLeansSafe         = 4  // Leans Safe
+	ReputationScoreIDMayNotBeSafe      = 5  // May not be Safe
+	ReputationScoreIDExerciseCaution   = 6  // Exercise Caution
+	ReputationScoreIDSuspiciousRisky   = 7  // Suspicious/Risky
+	ReputationScoreIDPossiblyMalicious = 8  // Possibly Malicious
+	ReputationScoreIDProbablyMalicious = 9  // Probably Malicious
+	ReputationScoreIDMalicious         = 10 // Malicious
+	ReputationScoreIDOther             = 99 // Other
+)
+
+// Request is the OCSF 1.5.0 object "Request Elements". The Request Elements object describes characteristics of an API request.
+type Request struct {
+	// Containers (optional): When working with containerized applications, the set of containers which write to the standard the output of a particular logging driver.
+	Containers []Container `json:"containers,omitempty"`
+	// Data (optional): The additional data that is associated with the api request.
+	Data any `json:"data,omitempty"`
+	// Flags (optional): The communication flags that are associated with the api request.
+	Flags []string `json:"flags,omitempty"`
+	// Unique ID (required): The unique request identifier.
+	UID string `json:"uid"`
+}
+
+// ResourceDetails is the OCSF 1.5.0 object "Resource Details". The Resource Details object describes details about resources that were affected by the activity/event.
+//
+// Constraint at_least_one: name, uid.
+type ResourceDetails struct {
+	// Agent List (optional): A list of agent objects associated with a device, endpoint, or resource.
+	AgentList []Agent `json:"agent_list,omitempty"`
+	// Created Time (optional): The time when the resource was created.
+	CreatedTime int64 `json:"created_time,omitempty"`
+	// Criticality (optional): The criticality of the resource as defined by the event source.
+	Criticality string `json:"criticality,omitempty"`
+	// Data (optional): Additional data describing the resource.
+	Data any `json:"data,omitempty"`
+	// Group (optional): The name of the related resource group.
+	Group *Group `json:"group,omitempty"`
+	// Hostname (recommended): The fully qualified name of the resource.
+	Hostname string `json:"hostname,omitempty"`
+	// IP Address (recommended): The IP address of the resource, in either IPv4 or IPv6 format.
+	IP string `json:"ip,omitempty"`
+	// Back Ups Configured (optional): Indicates whether the device or resource has a backup enabled, such as an automated snapshot or a cloud backup.
+	IsBackedUp bool `json:"is_backed_up,omitempty"`
+	// Labels (optional): The list of labels associated to the resource.
+	Labels []string `json:"labels,omitempty"`
+	// Modified Time (optional): The time when the resource was last modified.
+	ModifiedTime int64 `json:"modified_time,omitempty"`
+	// Name (recommended): The name of the resource.
+	Name string `json:"name,omitempty"`
+	// Namespace (optional): The namespace is useful when similar entities exist that you need to keep separate.
+	Namespace string `json:"namespace,omitempty"`
+	// Owner (recommended): The identity of the service or user account that owns the resource.
+	Owner *User `json:"owner,omitempty"`
+	// Resource Relationship (optional): A graph representation showing how this resource relates to and interacts with other entities in the environment.
+	ResourceRelationship *Graph `json:"resource_relationship,omitempty"`
+	// Tags (optional): The list of tags; {key:value} pairs associated to the resource.
+	Tags []KeyValueObject `json:"tags,omitempty"`
+	// Type (optional): The resource type as defined by the event source.
+	Type string `json:"type,omitempty"`
+	// Unique ID (recommended): The unique identifier of the resource.
+	UID string `json:"uid,omitempty"`
+	// Alternate ID (optional): The alternative unique identifier of the resource.
+	UIDAlt string `json:"uid_alt,omitempty"`
+	// Version (optional): The version of the resource.
+	Version string `json:"version,omitempty"`
+}
+
+// Response is the OCSF 1.5.0 object "Response Elements". The Response Elements object describes characteristics of an API response.
+type Response struct {
+	// Response Code (recommended): The numeric response sent to a request.
+	Code int `json:"code,omitempty"`
+	// Containers (optional): When working with containerized applications, the set of containers which write to the standard the output of a particular logging driver.
+	Containers []Container `json:"containers,omitempty"`
+	// Data (optional): The additional data that is associated with the api response.
+	Data any `json:"data,omitempty"`
+	// Error Code (recommended): Error Code
+	Error string `json:"error,omitempty"`
+	// Error Message (recommended): Error Message
+	ErrorMessage string `json:"error_message,omitempty"`
+	// Flags (optional): The communication flags that are associated with the api response.
+	Flags []string `json:"flags,omitempty"`
+	// Message (recommended): The description of the event/finding, as defined by the source.
+	Message string `json:"message,omitempty"`
+}
+
+// RpcInterface is the OCSF 1.5.0 object "RPC Interface". The RPC Interface represents the remote procedure call interface used in the DCE/RPC session.
+type RpcInterface struct {
+	// Acknowledgement Reason (recommended): An integer that provides a reason code or additional information about the acknowledgment result.
+	AckReason int `json:"ack_reason,omitempty"`
+	// Acknowledgement Result (recommended): An integer that denotes the acknowledgment result of the DCE/RPC call.
+	AckResult int `json:"ack_result,omitempty"`
+	// UUID (required): The unique identifier of the particular remote procedure or service.
+	UUID string `json:"uuid"`
+	// Version (required): The version of the DCE/RPC protocol being used in the session.
+	Version string `json:"version"`
+}
+
+// Rule is the OCSF 1.5.0 object "Rule". The Rule object describes characteristics of a rule associated with a policy or an event.
+//
+// Constraint at_least_one: name, uid.
+type Rule struct {
+	// Category (optional): The rule category.
+	Category string `json:"category,omitempty"`
+	// Description (optional): The description of the rule that generated the event.
+	Desc string `json:"desc,omitempty"`
+	// Name (recommended): The name of the rule that generated the event.
+	Name string `json:"name,omitempty"`
+	// Type (optional): The rule type.
+	Type string `json:"type,omitempty"`
+	// Unique ID (recommended): The unique identifier of the rule that generated the event.
+	UID string `json:"uid,omitempty"`
+	// Version (optional): The rule version.
+	Version string `json:"version,omitempty"`
+}
+
+// San is the OCSF 1.5.0 object "Subject Alternative Name". The Subject Alternative name (SAN) object describes a SAN secured by a digital certificate
+type San struct {
+	// Name (required): Name of SAN (e.g.
+	Name string `json:"name"`
+	// Type (required): Type descriptor of SAN (e.g.
+	Type string `json:"type"`
+}
+
+// Sbom is the OCSF 1.5.0 object "Software Bill of Materials". The Software Bill of Materials object describes characteristics of a generated SBOM.
+type Sbom struct {
+	// Created Time (recommended): The time when the SBOM was created.
+	CreatedTime int64 `json:"created_time,omitempty"`
+	// Software Package (required): The software package or library that is being discovered or inventoried by an SBOM.
+	Package *Package `json:"package,omitempty"`
+	// Product (recommended): Details about the upstream product that generated the SBOM e.g.
+	Product *Product `json:"product,omitempty"`
+	// Software Components (required): The list of software components used in the software package.
+	SoftwareComponents []SoftwareComponent `json:"software_components,omitempty"`
+	// Type (optional): The type of SBOM, normalized to the caption of the type_id value.
+	Type string `json:"type,omitempty"`
+	// Type ID (recommended): The type of SBOM.
+	TypeID int `json:"type_id,omitempty"`
+	// SBOM ID (optional): A unique identifier for the SBOM or the SBOM generation by a source tool, such as the SPDX metadata.component.bom-ref.
+	UID string `json:"uid,omitempty"`
+	// Version (optional): The specification (spec) version of the particular SBOM, e.g., 1.6.
+	Version string `json:"version,omitempty"`
+}
+
+// SbomTypeID values.
+const (
+	SbomTypeIDUnknown   = 0  // Unknown
+	SbomTypeIDSPDX      = 1  // SPDX
+	SbomTypeIDCycloneDX = 2  // CycloneDX
+	SbomTypeIDSWID      = 3  // SWID
+	SbomTypeIDOther     = 99 // Other
+)
+
+// Scan is the OCSF 1.5.0 object "Scan". The Scan object describes characteristics of a proactive scan.
+//
+// Constraint at_least_one: name, uid.
+type Scan struct {
+	// Name (recommended): The administrator-supplied or application-generated name of the scan.
+	Name string `json:"name,omitempty"`
+	// Type (optional): The type of scan.
+	Type string `json:"type,omitempty"`
+	// Type ID (required): The type id of the scan.
+	TypeID int `json:"type_id"`
+	// Scan UID (recommended): The application-defined unique identifier assigned to an instance of a scan.
+	UID string `json:"uid,omitempty"`
+}
+
+// ScanTypeID values.
+const (
+	ScanTypeIDUnknown          = 0  // Unknown
+	ScanTypeIDManual           = 1  // Manual
+	ScanTypeIDScheduled        = 2  // Scheduled
+	ScanTypeIDUpdatedContent   = 3  // Updated Content
+	ScanTypeIDQuarantinedItems = 4  // Quarantined Items
+	ScanTypeIDAttachedMedia    = 5  // Attached Media
+	ScanTypeIDUserLogon        = 6  // User Logon
+	ScanTypeIDELAM             = 7  // ELAM
+	ScanTypeIDOther            = 99 // Other
+)
+
+// Scim is the OCSF 1.5.0 object "SCIM". The System for Cross-domain Identity Management (SCIM) Configuration object provides a structured set of attributes related to SCIM protocols used for identity provisioning and management across cloud-based platforms.
+type Scim struct {
+	// Auth Protocol (optional): The authorization protocol as defined by the caption of auth_protocol_id.
+	AuthProtocol string `json:"auth_protocol,omitempty"`
+	// Auth Protocol ID (optional): The normalized identifier of the authorization protocol used by the SCIM resource.
+	AuthProtocolID int `json:"auth_protocol_id,omitempty"`
+	// Created Time (optional): When the SCIM resource was added to the service provider.
+	CreatedTime int64 `json:"created_time,omitempty"`
+	// Last Error Message (optional): Message or code associated with the last encountered error.
+	ErrorMessage string `json:"error_message,omitempty"`
+	// SCIM Group Provisioning Enabled (optional): Indicates whether the SCIM resource is configured to provision groups, automatically or otherwise.
+	IsGroupProvisioningEnabled bool `json:"is_group_provisioning_enabled,omitempty"`
+	// SCIM User Provisioning Enabled (optional): Indicates whether the SCIM resource is configured to provision users, automatically or otherwise.
+	IsUserProvisioningEnabled bool `json:"is_user_provisioning_enabled,omitempty"`
+	// Last Sync Time (optional): Timestamp of the most recent successful synchronization.
+	LastRunTime int64 `json:"last_run_time,omitempty"`
+	// Modified Time (optional): The most recent time when the SCIM resource was updated at the service provider.
+	ModifiedTime int64 `json:"modified_time,omitempty"`
+	// Name (recommended): The name of the SCIM resource.
+	Name string `json:"name,omitempty"`
+	// Supported Protocol (optional): The supported protocol for the SCIM resource.
+	ProtocolName string `json:"protocol_name,omitempty"`
+	// Rate Limit (optional): Maximum number of requests allowed by the SCIM resource within a specified time frame to avoid throttling.
+	RateLimit int `json:"rate_limit,omitempty"`
+	// SCIM Group Schema (recommended): SCIM provides a schema for representing groups, identified using the following schema URI: urn:ietf:params:scim:schemas:core:2.0:Group as defined in RFC-7634.
+	ScimGroupSchema any `json:"scim_group_schema,omitempty"`
+	// SCIM User Schema (recommended): SCIM provides a resource type for user resources.
+	ScimUserSchema any `json:"scim_user_schema,omitempty"`
+	// State (optional): The provisioning state of the SCIM resource, normalized to the caption of the state_id value.
+	State string `json:"state,omitempty"`
+	// State ID (optional): The normalized state ID of the SCIM resource to reflect its activation status.
+	StateID int `json:"state_id,omitempty"`
+	// Unique ID (recommended): A unique identifier for a SCIM resource as defined by the service provider.
+	UID string `json:"uid,omitempty"`
+	// External ID (optional): A String that is an identifier for the resource as defined by the provisioning client.
+	UIDAlt string `json:"uid_alt,omitempty"`
+	// SCIM Endpoint URL (optional): The primary URL for SCIM API requests.
+	URLString string `json:"url_string,omitempty"`
+	// Service Provider (optional): Name of the vendor or service provider implementing SCIM.
+	VendorName string `json:"vendor_name,omitempty"`
+	// SCIM Version (recommended): SCIM protocol version supported e.g., SCIM 2.0.
+	Version string `json:"version,omitempty"`
+}
+
+// ScimAuthProtocolID values.
+const (
+	ScimAuthProtocolIDUnknown             = 0  // Unknown
+	ScimAuthProtocolIDNTLM                = 1  // NTLM
+	ScimAuthProtocolIDKerberos            = 2  // Kerberos
+	ScimAuthProtocolIDDigest              = 3  // Digest
+	ScimAuthProtocolIDOpenID              = 4  // OpenID
+	ScimAuthProtocolIDSAML                = 5  // SAML
+	ScimAuthProtocolIDOAUTH20             = 6  // OAUTH 2.0
+	ScimAuthProtocolIDPAP                 = 7  // PAP
+	ScimAuthProtocolIDCHAP                = 8  // CHAP
+	ScimAuthProtocolIDEAP                 = 9  // EAP
+	ScimAuthProtocolIDRADIUS              = 10 // RADIUS
+	ScimAuthProtocolIDBasicAuthentication = 11 // Basic Authentication
+	ScimAuthProtocolIDLDAP                = 12 // LDAP
+	ScimAuthProtocolIDOther               = 99 // Other
+)
+
+// ScimStateID values.
+const (
+	ScimStateIDUnknown = 0  // Unknown
+	ScimStateIDPending = 1  // Pending
+	ScimStateIDActive  = 2  // Active
+	ScimStateIDFailed  = 3  // Failed
+	ScimStateIDDeleted = 4  // Deleted
+	ScimStateIDOther   = 99 // Other
+)
+
+// Script is the OCSF 1.5.0 object "Script". The Script object describes a script or command that can be executed by a shell, script engine, or interpreter.
+type Script struct {
+	// File (optional): Present if this script is associated with a file.
+	File *File `json:"file,omitempty"`
+	// Hashes (recommended): An array of the script's cryptographic hashes.
+	Hashes []Fingerprint `json:"hashes,omitempty"`
+	// Name (optional): Unique identifier for the script or macro, independent of the containing file, used for tracking, auditing, and security analysis.
+	Name string `json:"name,omitempty"`
+	// Parent Unique ID (optional): This attribute relates a sub-script to a parent script having the matching uid attribute.
+	ParentUID string `json:"parent_uid,omitempty"`
+	// Script Content (required): The script content, normalized to UTF-8 encoding irrespective of its original encoding.
+	ScriptContent *LongString `json:"script_content,omitempty"`
+	// Type (optional): The script type, normalized to the caption of the type_id value.
+	Type string `json:"type,omitempty"`
+	// Type ID (required): The normalized script type ID.
+	TypeID int `json:"type_id"`
+	// Unique ID (optional): Some script engines assign a unique ID to each individual execution of a given script.
+	UID string `json:"uid,omitempty"`
+}
+
+// ScriptTypeID values.
+const (
+	ScriptTypeIDUnknown              = 0  // Unknown
+	ScriptTypeIDWindowsCommandPrompt = 1  // Windows Command Prompt
+	ScriptTypeIDPowerShell           = 2  // PowerShell
+	ScriptTypeIDPython               = 3  // Python
+	ScriptTypeIDJavaScript           = 4  // JavaScript
+	ScriptTypeIDVBScript             = 5  // VBScript
+	ScriptTypeIDUnixShell            = 6  // Unix Shell
+	ScriptTypeIDVBA                  = 7  // VBA
+	ScriptTypeIDOther                = 99 // Other
+)
+
+// SecurityState is the OCSF 1.5.0 object "Security State". The Security State object describes the security related state of a managed entity.
+type SecurityState struct {
+	// Security State (optional): The security state, normalized to the caption of the state_id value.
+	State string `json:"state,omitempty"`
+	// Security State ID (recommended): The security state of the managed entity.
+	StateID int `json:"state_id,omitempty"`
+}
+
+// SecurityStateStateID values.
+const (
+	SecurityStateStateIDUnknown                      = 0  // Unknown
+	SecurityStateStateIDMissingOrOutdatedContent     = 1  // Missing or outdated content
+	SecurityStateStateIDPolicyMismatch               = 2  // Policy mismatch
+	SecurityStateStateIDInNetworkQuarantine          = 3  // In network quarantine
+	SecurityStateStateIDProtectionOff                = 4  // Protection off
+	SecurityStateStateIDProtectionMalfunction        = 5  // Protection malfunction
+	SecurityStateStateIDProtectionNotLicensed        = 6  // Protection not licensed
+	SecurityStateStateIDUnremediatedThreat           = 7  // Unremediated threat
+	SecurityStateStateIDSuspiciousReputation         = 8  // Suspicious reputation
+	SecurityStateStateIDRebootPending                = 9  // Reboot pending
+	SecurityStateStateIDContentIsLocked              = 10 // Content is locked
+	SecurityStateStateIDNotInstalled                 = 11 // Not installed
+	SecurityStateStateIDWritableSystemPartition      = 12 // Writable system partition
+	SecurityStateStateIDSafetyNetFailure             = 13 // SafetyNet failure
+	SecurityStateStateIDFailedBootVerify             = 14 // Failed boot verify
+	SecurityStateStateIDModifiedExecutionEnvironment = 15 // Modified execution environment
+	SecurityStateStateIDSELinuxDisabled              = 16 // SELinux disabled
+	SecurityStateStateIDElevatedPrivilegeShell       = 17 // Elevated privilege shell
+	SecurityStateStateIDIOSFileSystemAltered         = 18 // iOS file system altered
+	SecurityStateStateIDOpenRemoteAccess             = 19 // Open remote access
+	SecurityStateStateIDOTAUpdatesDisabled           = 20 // OTA updates disabled
+	SecurityStateStateIDRooted                       = 21 // Rooted
+	SecurityStateStateIDAndroidPartitionModified     = 22 // Android partition modified
+	SecurityStateStateIDComplianceFailure            = 23 // Compliance failure
+	SecurityStateStateIDOther                        = 99 // Other
+)
+
 // Service is the OCSF 1.5.0 object "Service". The Service object describes characteristics of a service, e.g.
 //
 // Constraint at_least_one: name, uid.
-//
-// Not generated (object not in gen.yaml): tags (key_value_object).
 type Service struct {
 	// Labels (optional): The list of labels associated with the service.
 	Labels []string `json:"labels,omitempty"`
 	// Name (recommended): The name of the service.
 	Name string `json:"name,omitempty"`
+	// Tags (optional): The list of tags; {key:value} pairs associated to the service.
+	Tags []KeyValueObject `json:"tags,omitempty"`
 	// Unique ID (recommended): The unique identifier of the service.
 	UID string `json:"uid,omitempty"`
 	// Version (recommended): The version of the service.
@@ -1154,12 +15356,633 @@ type Session struct {
 	UUID string `json:"uuid,omitempty"`
 }
 
+// SoftwareComponent is the OCSF 1.5.0 object "Software Component". The Software Component object describes characteristics of a software component within a software package.
+type SoftwareComponent struct {
+	// Author (recommended): The author(s) who published the software component.
+	Author string `json:"author,omitempty"`
+	// Hash (optional): Cryptographic hash to identify the binary instance of a software component.
+	Hash *Fingerprint `json:"hash,omitempty"`
+	// Software License (optional): The software license applied to this component.
+	License string `json:"license,omitempty"`
+	// Name (required): The software component name.
+	Name string `json:"name"`
+	// Package URL (recommended): The Package URL (PURL) to identify the software component.
+	Purl string `json:"purl,omitempty"`
+	// Related Component (recommended): The package URL (PURL) of the component that this software component has a relationship with.
+	RelatedComponent string `json:"related_component,omitempty"`
+	// Relationship (optional): The relationship between two software components, normalized to the caption of the relationship_id value.
+	Relationship string `json:"relationship,omitempty"`
+	// Relationship ID (recommended): The normalized identifier of the relationship between two software components.
+	RelationshipID int `json:"relationship_id,omitempty"`
+	// Type (optional): The type of software component, normalized to the caption of the type_id value.
+	Type string `json:"type,omitempty"`
+	// Type ID (recommended): The type of software component.
+	TypeID int `json:"type_id,omitempty"`
+	// Version (required): The software component version.
+	Version string `json:"version"`
+}
+
+// SoftwareComponentRelationshipID values.
+const (
+	SoftwareComponentRelationshipIDUnknown   = 0  // Unknown
+	SoftwareComponentRelationshipIDDependsOn = 1  // Depends On
+	SoftwareComponentRelationshipIDOther     = 99 // Other
+)
+
+// SoftwareComponentTypeID values.
+const (
+	SoftwareComponentTypeIDUnknown         = 0  // Unknown
+	SoftwareComponentTypeIDFramework       = 1  // Framework
+	SoftwareComponentTypeIDLibrary         = 2  // Library
+	SoftwareComponentTypeIDOperatingSystem = 3  // Operating System
+	SoftwareComponentTypeIDOther           = 99 // Other
+)
+
+// Span is the OCSF 1.5.0 object "Span". Represents a single unit of work or operation within a distributed trace.
+type Span struct {
+	// Duration Milliseconds (optional): The total time, in milliseconds, that the span represents, calculated as the difference between start_time and end_time.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (required): The end timestamp of the span, essential for identifying latency and performance bottlenecks.
+	EndTime int64 `json:"end_time"`
+	// Message (optional): The message in a span (often refered to as a span event) serves as a way to record significant moments or occurrences during the span's lifecycle.
+	Message string `json:"message,omitempty"`
+	// Operation (optional): Describes an action performed in a span, such as API requests, database queries, or computations.
+	Operation string `json:"operation,omitempty"`
+	// Parent Unique ID (optional): The ID of the parent span for this span object, establishing its relationship in the trace hierarchy.
+	ParentUID string `json:"parent_uid,omitempty"`
+	// Service (optional): Identifies the service or component that generates the span, helping trace its path through the distributed system.
+	Service *Service `json:"service,omitempty"`
+	// Start Time (required): The start timestamp of the span, essential for identifying latency and performance bottlenecks.
+	StartTime int64 `json:"start_time"`
+	// Status Code (optional): Indicates the outcome of the operation in the span, such as success, failure, or error.
+	StatusCode string `json:"status_code,omitempty"`
+	// Unique ID (required): The unique identifier for the span, used in distributed systems and microservices architectures to track and correlate requests across different components of an application.
+	UID string `json:"uid"`
+}
+
+// Sso is the OCSF 1.5.0 object "SSO". The Single Sign-On (SSO) object provides a structure for normalizing SSO attributes, configuration, and/or settings from Identity Providers.
+type Sso struct {
+	// Auth Protocol (optional): The authorization protocol as defined by the caption of auth_protocol_id.
+	AuthProtocol string `json:"auth_protocol,omitempty"`
+	// Auth Protocol ID (optional): The normalized identifier of the authentication protocol used by the SSO resource.
+	AuthProtocolID int `json:"auth_protocol_id,omitempty"`
+	// SAML Certificate (recommended): Digital Signature associated with the SSO resource, e.g., SAML X.509 certificate details.
+	Certificate *Certificate `json:"certificate,omitempty"`
+	// Created Time (optional): When the SSO resource was created.
+	CreatedTime int64 `json:"created_time,omitempty"`
+	// SSO Session Duration (optional): The duration (in minutes) for an SSO session, after which re-authentication is required.
+	DurationMins int `json:"duration_mins,omitempty"`
+	// SSO Idle Timeout (optional): Duration (in minutes) of allowed inactivity before Single Sign-On (SSO) session expiration.
+	IdleTimeout int `json:"idle_timeout,omitempty"`
+	// SSO Login Endpoint (optional): URL for initiating an SSO login request.
+	LoginEndpoint string `json:"login_endpoint,omitempty"`
+	// SSO Logout Endpoint (optional): URL for initiating an SSO logout request, allowing sessions to be terminated across applications.
+	LogoutEndpoint string `json:"logout_endpoint,omitempty"`
+	// SSO Metadata Endpoint (optional): URL where metadata about the SSO configuration is available (e.g., for SAML configurations).
+	MetadataEndpoint string `json:"metadata_endpoint,omitempty"`
+	// Modified Time (optional): The most recent time when the SSO resource was updated.
+	ModifiedTime int64 `json:"modified_time,omitempty"`
+	// Name (recommended): The name of the SSO resource.
+	Name string `json:"name,omitempty"`
+	// Supported Protocol (optional): The supported protocol for the SSO resource.
+	ProtocolName string `json:"protocol_name,omitempty"`
+	// Scopes (optional): Scopes define the specific permissions or actions that the client is allowed to perform on behalf of the user.
+	Scopes []string `json:"scopes,omitempty"`
+	// Unique ID (recommended): A unique identifier for a SSO resource.
+	UID string `json:"uid,omitempty"`
+	// Service Provider (optional): Name of the vendor or service provider implementing SSO.
+	VendorName string `json:"vendor_name,omitempty"`
+}
+
+// SsoAuthProtocolID values.
+const (
+	SsoAuthProtocolIDUnknown             = 0  // Unknown
+	SsoAuthProtocolIDNTLM                = 1  // NTLM
+	SsoAuthProtocolIDKerberos            = 2  // Kerberos
+	SsoAuthProtocolIDDigest              = 3  // Digest
+	SsoAuthProtocolIDOpenID              = 4  // OpenID
+	SsoAuthProtocolIDSAML                = 5  // SAML
+	SsoAuthProtocolIDOAUTH20             = 6  // OAUTH 2.0
+	SsoAuthProtocolIDPAP                 = 7  // PAP
+	SsoAuthProtocolIDCHAP                = 8  // CHAP
+	SsoAuthProtocolIDEAP                 = 9  // EAP
+	SsoAuthProtocolIDRADIUS              = 10 // RADIUS
+	SsoAuthProtocolIDBasicAuthentication = 11 // Basic Authentication
+	SsoAuthProtocolIDLDAP                = 12 // LDAP
+	SsoAuthProtocolIDOther               = 99 // Other
+)
+
+// StartupItem is the OCSF 1.5.0 object "Startup Item". The startup item object describes an application component that has associated startup criteria and configurations.
+//
+// Constraint just_one: driver, job, process, win_service.
+type StartupItem struct {
+	// Kernel Driver (optional): The startup item kernel driver resource.
+	Driver *KernelDriver `json:"driver,omitempty"`
+	// Job (optional): The startup item job resource.
+	Job *Job `json:"job,omitempty"`
+	// Name (required): The unique name of the startup item.
+	Name string `json:"name"`
+	// Process (optional): The startup item process resource.
+	Process *Process `json:"process,omitempty"`
+	// Run Mode IDs (optional): The list of normalized identifiers that describe the startup items' properties when it is running.
+	RunModeIds []int `json:"run_mode_ids,omitempty"`
+	// Run Modes (optional): The list of run_modes, normalized to the captions of the run_mode_id values.
+	RunModes []string `json:"run_modes,omitempty"`
+	// Run State (optional): The run state of the startup item.
+	RunState string `json:"run_state,omitempty"`
+	// Run State ID (recommended): The run state ID of the startup item.
+	RunStateID int `json:"run_state_id,omitempty"`
+	// Start Type (optional): The start type of the startup item.
+	StartType string `json:"start_type,omitempty"`
+	// Start Type ID (required): The start type ID of the startup item.
+	StartTypeID int `json:"start_type_id"`
+	// Type (optional): The startup item type.
+	Type string `json:"type,omitempty"`
+	// Type ID (recommended): The startup item type identifier.
+	TypeID int `json:"type_id,omitempty"`
+	// Windows Service (optional): The startup item Windows service resource.
+	WinService *WinWinService `json:"win_service,omitempty"`
+}
+
+// StartupItemRunStateID values.
+const (
+	StartupItemRunStateIDUnknown         = 0  // Unknown
+	StartupItemRunStateIDStopped         = 1  // Stopped
+	StartupItemRunStateIDStartPending    = 2  // Start Pending
+	StartupItemRunStateIDStopPending     = 3  // Stop Pending
+	StartupItemRunStateIDRunning         = 4  // Running
+	StartupItemRunStateIDContinuePending = 5  // Continue Pending
+	StartupItemRunStateIDPausePending    = 6  // Pause Pending
+	StartupItemRunStateIDPaused          = 7  // Paused
+	StartupItemRunStateIDRestartPending  = 8  // Restart Pending
+	StartupItemRunStateIDOther           = 99 // Other
+)
+
+// StartupItemStartTypeID values.
+const (
+	StartupItemStartTypeIDUnknown           = 0  // Unknown
+	StartupItemStartTypeIDAuto              = 1  // Auto
+	StartupItemStartTypeIDBoot              = 2  // Boot
+	StartupItemStartTypeIDOnDemand          = 3  // On Demand
+	StartupItemStartTypeIDDisabled          = 4  // Disabled
+	StartupItemStartTypeIDAllLogins         = 5  // All Logins
+	StartupItemStartTypeIDSpecificUserLogin = 6  // Specific User Login
+	StartupItemStartTypeIDScheduled         = 7  // Scheduled
+	StartupItemStartTypeIDSystemChanged     = 8  // System Changed
+	StartupItemStartTypeIDOther             = 99 // Other
+)
+
+// StartupItemTypeID values.
+const (
+	StartupItemTypeIDUnknown             = 0  // Unknown
+	StartupItemTypeIDKernelModeDriver    = 1  // Kernel Mode Driver
+	StartupItemTypeIDUserModeDriver      = 2  // User Mode Driver
+	StartupItemTypeIDService             = 3  // Service
+	StartupItemTypeIDUserModeApplication = 4  // User Mode Application
+	StartupItemTypeIDAutoload            = 5  // Autoload
+	StartupItemTypeIDSystemExtension     = 6  // System Extension
+	StartupItemTypeIDKernelExtension     = 7  // Kernel Extension
+	StartupItemTypeIDScheduledJobTask    = 8  // Scheduled Job, Task
+	StartupItemTypeIDOther               = 99 // Other
+)
+
+// SubTechnique is the OCSF 1.5.0 object "MITRE Sub-technique". The MITRE Sub-technique object describes the ATT&CK® or ATLAS™ Sub-technique ID and/or name associated to an attack.
+//
+// Constraint at_least_one: name, uid.
+type SubTechnique struct {
+	// Name (recommended): The name of the attack sub-technique.
+	Name string `json:"name,omitempty"`
+	// Source URL (optional): The versioned permalink of the attack sub-technique.
+	SrcURL string `json:"src_url,omitempty"`
+	// Unique ID (recommended): The unique identifier of the attack sub-technique.
+	UID string `json:"uid,omitempty"`
+}
+
+// Table is the OCSF 1.5.0 object "Table". The table object represents a table within a structured relational database or datastore, which contains columns and rows of data that are able to be create, updated, deleted and queried.
+//
+// Constraint at_least_one: name, uid.
+type Table struct {
+	// Created Time (optional): The time when the table was known to have been created.
+	CreatedTime int64 `json:"created_time,omitempty"`
+	// Description (optional): The description of the table.
+	Desc string `json:"desc,omitempty"`
+	// Groups (optional): The group names to which the table belongs.
+	Groups []Group `json:"groups,omitempty"`
+	// Modified Time (optional): The most recent time when any changes, updates, or modifications were made within the table.
+	ModifiedTime int64 `json:"modified_time,omitempty"`
+	// Name (recommended): The table name, ordinarily as assigned by a database administrator.
+	Name string `json:"name,omitempty"`
+	// Size (optional): The size of the data table in bytes.
+	Size int64 `json:"size,omitempty"`
+	// Unique ID (recommended): The unique identifier of the table.
+	UID string `json:"uid,omitempty"`
+}
+
+// Tactic is the OCSF 1.5.0 object "MITRE Tactic". The MITRE Tactic object describes the ATT&CK® or ATLAS™ Tactic ID and/or name that is associated to an attack.
+//
+// Constraint at_least_one: name, uid.
+type Tactic struct {
+	// Name (recommended): The Tactic name that is associated with the attack technique.
+	Name string `json:"name,omitempty"`
+	// Source URL (optional): The versioned permalink of the Tactic.
+	SrcURL string `json:"src_url,omitempty"`
+	// Unique ID (recommended): The Tactic ID that is associated with the attack technique.
+	UID string `json:"uid,omitempty"`
+}
+
+// Technique is the OCSF 1.5.0 object "MITRE Technique". The MITRE Technique object describes the ATT&CK® or ATLAS™ Technique ID and/or name associated to an attack.
+//
+// Constraint at_least_one: name, uid.
+type Technique struct {
+	// Name (recommended): The name of the attack technique.
+	Name string `json:"name,omitempty"`
+	// Source URL (optional): The versioned permalink of the attack technique.
+	SrcURL string `json:"src_url,omitempty"`
+	// Unique ID (recommended): The unique identifier of the attack technique.
+	UID string `json:"uid,omitempty"`
+}
+
+// ThreatActor is the OCSF 1.5.0 object "Threat Actor". Threat actor is responsible for the observed malicious activity.
+type ThreatActor struct {
+	// Name (required): The name of the threat actor.
+	Name string `json:"name"`
+	// Threat Actor Type (optional): The classification of the threat actor based on their motivations, capabilities, or affiliations.
+	Type string `json:"type,omitempty"`
+	// Threat Actor Type ID (recommended): The normalized datastore resource type identifier.
+	TypeID int `json:"type_id,omitempty"`
+}
+
+// ThreatActorTypeID values.
+const (
+	ThreatActorTypeIDUnknown       = 0  // Unknown
+	ThreatActorTypeIDNationState   = 1  // Nation-state
+	ThreatActorTypeIDCybercriminal = 2  // Cybercriminal
+	ThreatActorTypeIDHacktivists   = 3  // Hacktivists
+	ThreatActorTypeIDInsider       = 4  // Insider
+	ThreatActorTypeIDOther         = 99 // Other
+)
+
+// Ticket is the OCSF 1.5.0 object "Ticket". The Ticket object represents ticket in the customer's IT Service Management (ITSM) systems like ServiceNow, Jira, etc.
+//
+// Constraint at_least_one: src_url, uid.
+type Ticket struct {
+	// Source URL (recommended): The url of a ticket in the ticket system.
+	SrcURL string `json:"src_url,omitempty"`
+	// Ticket Status (optional): The status of the ticket normalized to the caption of the status_id value.
+	Status string `json:"status,omitempty"`
+	// Status Details (optional): A list of contextual descriptions of the status, status_id values.
+	StatusDetails []string `json:"status_details,omitempty"`
+	// Ticket Status ID (optional): The normalized identifier for the ticket status.
+	StatusID int `json:"status_id,omitempty"`
+	// Title (optional): The title of the ticket.
+	Title string `json:"title,omitempty"`
+	// Ticket Type (optional): The linked ticket type determines whether the ticket is internal or in an external ticketing system.
+	Type string `json:"type,omitempty"`
+	// Ticket Type ID (optional): The normalized identifier for the ticket type.
+	TypeID int `json:"type_id,omitempty"`
+	// Unique ID (recommended): Unique identifier of the ticket.
+	UID string `json:"uid,omitempty"`
+}
+
+// TicketStatusID values.
+const (
+	TicketStatusIDUnknown    = 0  // Unknown
+	TicketStatusIDNew        = 1  // New
+	TicketStatusIDInProgress = 2  // In Progress
+	TicketStatusIDNotified   = 3  // Notified
+	TicketStatusIDOnHold     = 4  // On Hold
+	TicketStatusIDResolved   = 5  // Resolved
+	TicketStatusIDClosed     = 6  // Closed
+	TicketStatusIDCanceled   = 7  // Canceled
+	TicketStatusIDReopened   = 8  // Reopened
+	TicketStatusIDOther      = 99 // Other
+)
+
+// TicketTypeID values.
+const (
+	TicketTypeIDUnknown  = 0  // Unknown
+	TicketTypeIDInternal = 1  // Internal
+	TicketTypeIDExternal = 2  // External
+	TicketTypeIDOther    = 99 // Other
+)
+
+// Timespan is the OCSF 1.5.0 object "Time Span". The Time Span object represents different time period durations.
+//
+// Constraint at_least_one: duration, duration_days, duration_hours, duration_mins, duration_months, duration_secs, duration_weeks, duration_years, end_time, start_time.
+type Timespan struct {
+	// Duration Milliseconds (recommended): The duration of the time span in milliseconds.
+	Duration int64 `json:"duration,omitempty"`
+	// Duration Days (recommended): The duration of the time span in days.
+	DurationDays int `json:"duration_days,omitempty"`
+	// Duration Hours (recommended): The duration of the time span in hours.
+	DurationHours int `json:"duration_hours,omitempty"`
+	// Duration Minutes (recommended): The duration of the time span in minutes.
+	DurationMins int `json:"duration_mins,omitempty"`
+	// Duration Months (recommended): The duration of the time span in months.
+	DurationMonths int `json:"duration_months,omitempty"`
+	// Duration Seconds (recommended): The duration of the time span in seconds.
+	DurationSecs int `json:"duration_secs,omitempty"`
+	// Duration Weeks (recommended): The duration of the time span in weeks.
+	DurationWeeks int `json:"duration_weeks,omitempty"`
+	// Duration Years (recommended): The duration of the time span in years.
+	DurationYears int `json:"duration_years,omitempty"`
+	// End Time (recommended): The end time or conclusion of the timespan's interval.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Start Time (recommended): The start time or beginning of the timespan's interval.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Time Span Type (optional): The type of time span duration the object represents.
+	Type string `json:"type,omitempty"`
+	// Time Span Type ID (recommended): The normalized identifier for the time span duration type.
+	TypeID int `json:"type_id,omitempty"`
+}
+
+// TimespanTypeID values.
+const (
+	TimespanTypeIDUnknown      = 0  // Unknown
+	TimespanTypeIDMilliseconds = 1  // Milliseconds
+	TimespanTypeIDSeconds      = 2  // Seconds
+	TimespanTypeIDMinutes      = 3  // Minutes
+	TimespanTypeIDHours        = 4  // Hours
+	TimespanTypeIDDays         = 5  // Days
+	TimespanTypeIDWeeks        = 6  // Weeks
+	TimespanTypeIDMonths       = 7  // Months
+	TimespanTypeIDYears        = 8  // Years
+	TimespanTypeIDTimeInterval = 9  // Time Interval
+	TimespanTypeIDOther        = 99 // Other
+)
+
+// TLS is the OCSF 1.5.0 object "Transport Layer Security (TLS)". The Transport Layer Security (TLS) object describes the negotiated TLS protocol used for secure communications over an establish network connection.
+type TLS struct {
+	// Client TLS Alert (optional): The integer value of TLS alert if present.
+	Alert int `json:"alert,omitempty"`
+	// Certificate (recommended): The certificate object containing information about the digital certificate.
+	Certificate *Certificate `json:"certificate,omitempty"`
+	// Certificate Chain (recommended): The Chain of Certificate Serial Numbers field provides a chain of Certificate Issuer Serial Numbers leading to the Root Certificate Issuer.
+	CertificateChain []string `json:"certificate_chain,omitempty"`
+	// Cipher Suite (recommended): The negotiated cipher suite.
+	Cipher string `json:"cipher,omitempty"`
+	// Client Cipher Suites (recommended): The client cipher suites that were exchanged during the TLS handshake negotiation.
+	ClientCiphers []string `json:"client_ciphers,omitempty"`
+	// Handshake Duration (optional): The amount of total time for the TLS handshake to complete after the TCP connection is established, including client-side delays, in milliseconds.
+	HandshakeDur int `json:"handshake_dur,omitempty"`
+	// JA3 Hash (recommended): The MD5 hash of a JA3 string.
+	Ja3Hash *Fingerprint `json:"ja3_hash,omitempty"`
+	// JA3S Hash (recommended): The MD5 hash of a JA3S string.
+	Ja3sHash *Fingerprint `json:"ja3s_hash,omitempty"`
+	// Key Length (optional): The length of the encryption key.
+	KeyLength int `json:"key_length,omitempty"`
+	// Server Cipher Suites (optional): The server cipher suites that were exchanged during the TLS handshake negotiation.
+	ServerCiphers []string `json:"server_ciphers,omitempty"`
+	// Server Name Indication (recommended): The Server Name Indication (SNI) extension sent by the client.
+	Sni string `json:"sni,omitempty"`
+	// TLS Extension List (optional): The list of TLS extensions.
+	TLSExtensionList []TLSExtension `json:"tls_extension_list,omitempty"`
+	// Version (required): The TLS protocol version.
+	Version string `json:"version"`
+}
+
+// TLSExtension is the OCSF 1.5.0 object "TLS Extension". The TLS Extension object describes additional attributes that extend the base Transport Layer Security (TLS) object.
+type TLSExtension struct {
+	// Data (recommended): The data contains information specific to the particular extension type.
+	Data any `json:"data,omitempty"`
+	// Type (optional): The TLS extension type.
+	Type string `json:"type,omitempty"`
+	// Type ID (required): The TLS extension type identifier.
+	TypeID int `json:"type_id"`
+}
+
+// TLSExtensionTypeID values.
+const (
+	TLSExtensionTypeIDServerName                          = 0  // server_name
+	TLSExtensionTypeIDMaximumFragmentLength               = 1  // maximum_fragment_length
+	TLSExtensionTypeIDStatusRequest                       = 5  // status_request
+	TLSExtensionTypeIDSupportedGroups                     = 10 // supported_groups
+	TLSExtensionTypeIDSignatureAlgorithms                 = 13 // signature_algorithms
+	TLSExtensionTypeIDUseSrtp                             = 14 // use_srtp
+	TLSExtensionTypeIDHeartbeat                           = 15 // heartbeat
+	TLSExtensionTypeIDApplicationLayerProtocolNegotiation = 16 // application_layer_protocol_negotiation
+	TLSExtensionTypeIDSignedCertificateTimestamp          = 18 // signed_certificate_timestamp
+	TLSExtensionTypeIDClientCertificateType               = 19 // client_certificate_type
+	TLSExtensionTypeIDServerCertificateType               = 20 // server_certificate_type
+	TLSExtensionTypeIDPadding                             = 21 // padding
+	TLSExtensionTypeIDPreSharedKey                        = 41 // pre_shared_key
+	TLSExtensionTypeIDEarlyData                           = 42 // early_data
+	TLSExtensionTypeIDSupportedVersions                   = 43 // supported_versions
+	TLSExtensionTypeIDCookie                              = 44 // cookie
+	TLSExtensionTypeIDPskKeyExchangeModes                 = 45 // psk_key_exchange_modes
+	TLSExtensionTypeIDCertificateAuthorities              = 47 // certificate_authorities
+	TLSExtensionTypeIDOidFilters                          = 48 // oid_filters
+	TLSExtensionTypeIDPostHandshakeAuth                   = 49 // post_handshake_auth
+	TLSExtensionTypeIDSignatureAlgorithmsCert             = 50 // signature_algorithms_cert
+	TLSExtensionTypeIDKeyShare                            = 51 // key_share
+	TLSExtensionTypeIDOther                               = 99 // Other
+)
+
+// Trace is the OCSF 1.5.0 object "Trace". The trace object contains information about a distributed trace, which is crucial for observability.
+type Trace struct {
+	// Duration Milliseconds (optional): The total time, in milliseconds, that the trace covers, calculated as the difference between start_time and end_time.
+	Duration int64 `json:"duration,omitempty"`
+	// End Time (optional): The end timestamp of the trace, essential for identifying latency and performance bottlenecks.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Flags (optional): The flags associated with the trace, used to indicate specific properties or behaviors, such as whether the trace is sampled or if it has special handling.
+	Flags []string `json:"flags,omitempty"`
+	// Service (optional): Identifies the service or component generating the trace, helping to track and correlate the flow of requests through various parts of a distributed system.
+	Service *Service `json:"service,omitempty"`
+	// Span (optional): Represents a single unit of work or operation within a distributed trace.
+	Span *Span `json:"span,omitempty"`
+	// Start Time (optional): The start timestamp of the trace, essential for identifying latency and performance bottlenecks.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Unique ID (required): The unique identifier of the trace used in distributed systems and microservices architecture to track and correlate requests across various components of an application.
+	UID string `json:"uid"`
+}
+
+// Trait is the OCSF 1.5.0 object "Trait". Describes a characteristic or feature of an entity that was observed.
+//
+// Constraint at_least_one: name, uid.
+type Trait struct {
+	// Category (optional): The high-level grouping or classification this trait belongs to.
+	Category string `json:"category,omitempty"`
+	// Name (recommended): The name of the trait.
+	Name string `json:"name,omitempty"`
+	// Type (optional): The type of the trait.
+	Type string `json:"type,omitempty"`
+	// Unique ID (recommended): The unique identifier of the trait.
+	UID string `json:"uid,omitempty"`
+	// Values (optional): The values of the trait.
+	Values []string `json:"values,omitempty"`
+}
+
+// TransformationInfo is the OCSF 1.5.0 object "Transformation Info". The transformation_info object represents the mapping or transformation used.
+//
+// Constraint at_least_one: name, uid.
+type TransformationInfo struct {
+	// Language (optional): The transformation language used to transform the data.
+	Lang string `json:"lang,omitempty"`
+	// Name (recommended): The name of the transformation or mapping.
+	Name string `json:"name,omitempty"`
+	// Product (optional): The product or instance used to make the transformation
+	Product *Product `json:"product,omitempty"`
+	// Event Time (recommended): Time of the transformation.
+	Time int64 `json:"time,omitempty"`
+	// Unique ID (optional): The unique identifier of the mapping or transformation.
+	UID string `json:"uid,omitempty"`
+	// URL String (recommended): The Uniform Resource Locator String where the mapping or transformation exists.
+	URLString string `json:"url_string,omitempty"`
+}
+
+// UnmannedAerialSystem is the OCSF 1.5.0 object "Unmanned Aerial System". The Unmanned Aerial System object describes the characteristics, Position Location Information (PLI), and other metadata of Unmanned Aerial Systems (UAS) and other unmanned and drone systems used in Remote ID.
+//
+// Constraint at_least_one: name, serial_number, uid, uid_alt.
+type UnmannedAerialSystem struct {
+	// UAS Hardware Information (optional): The endpoint hardware information.
+	HwInfo *DeviceHwInfo `json:"hw_info,omitempty"`
+	// UAS Position Location Information (recommended): The detailed geographical location usually associated with an IP address.
+	Location *Location `json:"location,omitempty"`
+	// Model (optional): The model name of the aircraft or unmanned system.
+	Model string `json:"model,omitempty"`
+	// Name (optional): The name of the unmanned system as reported by tracking or sensing hardware.
+	Name string `json:"name,omitempty"`
+	// Serial Number (recommended): The serial number of the unmanned system.
+	SerialNumber string `json:"serial_number,omitempty"`
+	// Speed (optional): Ground speed of flight.
+	Speed string `json:"speed,omitempty"`
+	// Speed Accuracy (optional): Provides quality/containment on horizontal ground speed.
+	SpeedAccuracy string `json:"speed_accuracy,omitempty"`
+	// Track Direction (optional): Direction of flight expressed as a “True North-based” ground track angle.
+	TrackDirection string `json:"track_direction,omitempty"`
+	// Type (optional): The type of the UAS.
+	Type string `json:"type,omitempty"`
+	// Type ID (recommended): The UAS type identifier.
+	TypeID int `json:"type_id,omitempty"`
+	// UAS ID (recommended): The primary identification identifier for an unmanned system.
+	UID string `json:"uid,omitempty"`
+	// UAS Alternate ID (recommended): A secondary identification identifier for an unmanned system.
+	UIDAlt string `json:"uid_alt,omitempty"`
+	// UTM UUID (recommended): The Unmanned Aircraft System Traffic Management (UTM) provided universal unique ID (UUID) traceable to a non-obfuscated ID where this UTM UUID acts as a 'session id' to protect exposure of operationally sensitive information.
+	UUID string `json:"uuid,omitempty"`
+	// Vertical Speed (optional): Vertical speed upward relative to the WGS-84 datum, measured in meters per second.
+	VerticalSpeed string `json:"vertical_speed,omitempty"`
+}
+
+// UnmannedAerialSystemTypeID values.
+const (
+	UnmannedAerialSystemTypeIDUnknownUndeclared       = 0  // Unknown/Undeclared
+	UnmannedAerialSystemTypeIDAirplane                = 1  // Airplane
+	UnmannedAerialSystemTypeIDHelicopter              = 2  // Helicopter
+	UnmannedAerialSystemTypeIDGyroplane               = 3  // Gyroplane
+	UnmannedAerialSystemTypeIDHybridLift              = 4  // Hybrid Lift
+	UnmannedAerialSystemTypeIDOrnithopter             = 5  // Ornithopter
+	UnmannedAerialSystemTypeIDGlider                  = 6  // Glider
+	UnmannedAerialSystemTypeIDKite                    = 7  // Kite
+	UnmannedAerialSystemTypeIDFreeBalloon             = 8  // Free Balloon
+	UnmannedAerialSystemTypeIDCaptiveBalloon          = 9  // Captive Balloon
+	UnmannedAerialSystemTypeIDAirship                 = 10 // Airship
+	UnmannedAerialSystemTypeIDFreeFallParachute       = 11 // Free Fall/Parachute
+	UnmannedAerialSystemTypeIDRocket                  = 12 // Rocket
+	UnmannedAerialSystemTypeIDTetheredPoweredAircraft = 13 // Tethered Powered Aircraft
+	UnmannedAerialSystemTypeIDGroundObstacle          = 14 // Ground Obstacle
+	UnmannedAerialSystemTypeIDOther                   = 99 // Other
+)
+
+// UnmannedSystemOperatingArea is the OCSF 1.5.0 object "Unmanned System Operating Area". The Unmanned System Operating Area object describes details about a precise area of operations for a UAS flight or mission.
+//
+// Constraint at_least_one: city, country, postal_code, region.
+type UnmannedSystemOperatingArea struct {
+	// Aerial Height (optional): Expressed as either height above takeoff location or height above ground level (AGL) for a UAS current location.
+	AerialHeight string `json:"aerial_height,omitempty"`
+	// Altitude Ceiling (optional): Maximum altitude (WGS-84 HAE) for a group or an Intent-Based Network Participant.
+	AltitudeCeiling string `json:"altitude_ceiling,omitempty"`
+	// Altitude Floor (optional): Minimum altitude (WGS-84 HAE) for a group or an Intent-Based Network Participant.
+	AltitudeFloor string `json:"altitude_floor,omitempty"`
+	// City (recommended): The name of the city.
+	City string `json:"city,omitempty"`
+	// Continent (recommended): The name of the continent.
+	Continent string `json:"continent,omitempty"`
+	// Count (recommended): Indicates the number of UAS in the operating area.
+	Count int `json:"count,omitempty"`
+	// Country (recommended): The ISO 3166-1 Alpha-2 country code.Note: The two letter country code should be capitalized.
+	Country string `json:"country,omitempty"`
+	// Description (optional): The description of the geographical location.
+	Desc string `json:"desc,omitempty"`
+	// End Time (optional): The date and time at which a group or an Intent-Based Network Participant operation ends.
+	EndTime int64 `json:"end_time,omitempty"`
+	// Geodetic Altitude (optional): The aircraft distance above or below the ellipsoid as measured along a line that passes through the aircraft and is normal to the surface of the WGS-84 ellipsoid.
+	GeodeticAltitude string `json:"geodetic_altitude,omitempty"`
+	// Geodetic Vertical Accuracy (optional): Provides quality/containment on geodetic altitude.
+	GeodeticVerticalAccuracy string `json:"geodetic_vertical_accuracy,omitempty"`
+	// Geohash (optional): Geohash of the geo-coordinates (latitude and longitude).Geohashing is a geocoding system used to encode geographic coordinates in decimal degrees, to a single string.
+	Geohash string `json:"geohash,omitempty"`
+	// Horizontal Accuracy (optional): Provides quality/containment on horizontal position.
+	HorizontalAccuracy string `json:"horizontal_accuracy,omitempty"`
+	// On Premises (optional): The indication of whether the location is on premises.
+	IsOnPremises bool `json:"is_on_premises,omitempty"`
+	// Latitude (optional): The geographical Latitude coordinate represented in Decimal Degrees (DD).
+	Lat float64 `json:"lat,omitempty"`
+	// Operating Polygon (recommended): A list of Position Location Information (PLI) (latitude/longitude pairs) defining the area where a group or Intent-Based Network Participant operation is taking place.
+	Locations []Location `json:"locations,omitempty"`
+	// Longitude (optional): The geographical Longitude coordinate represented in Decimal Degrees (DD).
+	Long float64 `json:"long,omitempty"`
+	// Postal Code (optional): The postal code of the location.
+	PostalCode string `json:"postal_code,omitempty"`
+	// Pressure Altitude (optional): The uncorrected barometric pressure altitude (based on reference standard 29.92 inHg, 1013.25 mb) provides a reference for algorithms that utilize 'altitude deltas' between aircraft.
+	PressureAltitude string `json:"pressure_altitude,omitempty"`
+	// Provider (optional): The provider of the geographical location data.
+	Provider string `json:"provider,omitempty"`
+	// Operating Area Radius (optional): Farthest horizontal distance from the reported location at which any UA in a group may be located (meters).
+	Radius string `json:"radius,omitempty"`
+	// Region (optional): The alphanumeric code that identifies the principal subdivision (e.g.
+	Region string `json:"region,omitempty"`
+	// Start Time (optional): The date and time at which a group or an Intent-Based Network Participant operation starts.
+	StartTime int64 `json:"start_time,omitempty"`
+	// Type (optional): The type of operating area.
+	Type string `json:"type,omitempty"`
+	// Type ID (recommended): The operating area type identifier.
+	TypeID int `json:"type_id,omitempty"`
+}
+
+// UnmannedSystemOperatingAreaTypeID values.
+const (
+	UnmannedSystemOperatingAreaTypeIDUnknownUndeclared = 0  // Unknown/Undeclared
+	UnmannedSystemOperatingAreaTypeIDTakeoffLocation   = 1  // Takeoff Location
+	UnmannedSystemOperatingAreaTypeIDFixedLocation     = 2  // Fixed Location
+	UnmannedSystemOperatingAreaTypeIDDynamicLocation   = 3  // Dynamic Location
+	UnmannedSystemOperatingAreaTypeIDOther             = 99 // Other
+)
+
+// URL is the OCSF 1.5.0 object "Uniform Resource Locator". The Uniform Resource Locator (URL) object describes the characteristics of a URL.
+//
+// Constraint at_least_one: url_string, path.
+type URL struct {
+	// Website Categorization (optional): The Website categorization names, as defined by category_ids enum values.
+	Categories []string `json:"categories,omitempty"`
+	// Website Categorization IDs (recommended): The Website categorization identifiers.
+	CategoryIds []int `json:"category_ids,omitempty"`
+	// Domain (optional): The domain portion of the URL.
+	Domain string `json:"domain,omitempty"`
+	// Hostname (recommended): The URL host as extracted from the URL.
+	Hostname string `json:"hostname,omitempty"`
+	// Path (recommended): The URL path as extracted from the URL.
+	Path string `json:"path,omitempty"`
+	// Port (recommended): The URL port.
+	Port int `json:"port,omitempty"`
+	// HTTP Query String (recommended): The query portion of the URL.
+	QueryString string `json:"query_string,omitempty"`
+	// Resource Type (optional): The context in which a resource was retrieved in a web request.
+	ResourceType string `json:"resource_type,omitempty"`
+	// Scheme (recommended): The scheme portion of the URL.
+	Scheme string `json:"scheme,omitempty"`
+	// Subdomain (optional): The subdomain portion of the URL.
+	Subdomain string `json:"subdomain,omitempty"`
+	// URL String (recommended): The URL string.
+	URLString string `json:"url_string,omitempty"`
+}
+
 // User is the OCSF 1.5.0 object "User". The User object describes the characteristics of a user/person or a security principal.
 //
 // Constraint at_least_one: account, name, uid.
-//
-// Not generated (object not in gen.yaml): account (account), groups (group), ldap_person (ldap_person), org (organization).
 type User struct {
+	// Account (optional): The user's account or the account associated with the user.
+	Account *Account `json:"account,omitempty"`
 	// User Credential ID (optional): The unique identifier of the user's credential.
 	CredentialUID string `json:"credential_uid,omitempty"`
 	// Display Name (optional): The display name of the user, as reported by the product.
@@ -1172,10 +15995,16 @@ type User struct {
 	ForwardAddr string `json:"forward_addr,omitempty"`
 	// Full Name (optional): The full name of the user, as reported by the product.
 	FullName string `json:"full_name,omitempty"`
+	// Groups (optional): The administrative groups to which the user belongs.
+	Groups []Group `json:"groups,omitempty"`
 	// MFA Assigned (recommended): The user has a multi-factor or secondary-factor device assigned.
 	HasMFA bool `json:"has_mfa,omitempty"`
+	// LDAP Person (optional): The additional LDAP attributes that describe a person.
+	LDAPPerson *LDAPPerson `json:"ldap_person,omitempty"`
 	// Name (recommended): The username.
 	Name string `json:"name,omitempty"`
+	// Organization (optional): Organization and org unit related to the user.
+	Org *Organization `json:"org,omitempty"`
 	// Telephone Number (optional): The telephone number of the user.
 	PhoneNumber string `json:"phone_number,omitempty"`
 	// Risk Level (optional): The risk level, normalized to the caption of the risk_level_id value.
@@ -1211,4 +16040,359 @@ const (
 	UserTypeIDAdmin   = 2  // Admin
 	UserTypeIDSystem  = 3  // System
 	UserTypeIDOther   = 99 // Other
+)
+
+// VendorAttributes is the OCSF 1.5.0 object "Vendor Attributes". The Vendor Attributes object can be used to represent values of attributes populated by the Vendor/Finding Provider.
+type VendorAttributes struct {
+	// Severity (optional): The finding severity, as reported by the Vendor (Finding Provider).
+	Severity string `json:"severity,omitempty"`
+	// Severity ID (optional): The finding severity ID, as reported by the Vendor (Finding Provider).
+	SeverityID int `json:"severity_id,omitempty"`
+}
+
+// VendorAttributesSeverityID values.
+const (
+	VendorAttributesSeverityIDUnknown       = 0  // Unknown
+	VendorAttributesSeverityIDInformational = 1  // Informational
+	VendorAttributesSeverityIDLow           = 2  // Low
+	VendorAttributesSeverityIDMedium        = 3  // Medium
+	VendorAttributesSeverityIDHigh          = 4  // High
+	VendorAttributesSeverityIDCritical      = 5  // Critical
+	VendorAttributesSeverityIDFatal         = 6  // Fatal
+	VendorAttributesSeverityIDOther         = 99 // Other
+)
+
+// Vulnerability is the OCSF 1.5.0 object "Vulnerability Details". The vulnerability is an unintended characteristic of a computing component or system configuration that multiplies the risk of an adverse event or a loss occurring either due to accidental exposure, deliberate attack, or conflict with new system components.
+//
+// Constraint just_one: advisory, cve, cwe.
+type Vulnerability struct {
+	// Security Advisory (optional): Detail about the security advisory, that is used to publicly disclose cybersecurity vulnerabilities by a vendor.
+	Advisory *Advisory `json:"advisory,omitempty"`
+	// Affected Code (optional): List of Affected Code objects that describe details about code blocks identified as vulnerable.
+	AffectedCode []AffectedCode `json:"affected_code,omitempty"`
+	// Affected Software Packages (optional): List of software packages identified as affected by a vulnerability/vulnerabilities.
+	AffectedPackages []AffectedPackage `json:"affected_packages,omitempty"`
+	// Category (optional): The category of a vulnerability or weakness, as reported by the source tool, such as Container Security or Open Source Security.
+	Category string `json:"category,omitempty"`
+	// CVE (recommended): Describes the Common Vulnerabilities and Exposures (CVE) details related to the vulnerability.
+	CVE *CVE `json:"cve,omitempty"`
+	// CWE (recommended): Describes the Common Weakness Enumeration (CWE) details related to the vulnerability.
+	CWE *CWE `json:"cwe,omitempty"`
+	// Dependency Chain (optional): Information about the chain of dependencies related to the issue as reported by an Application Security or Vulnerability Management tool.
+	DependencyChain string `json:"dependency_chain,omitempty"`
+	// Description (optional): The description of the vulnerability.
+	Desc string `json:"desc,omitempty"`
+	// Exploit Last Seen Time (optional): The time when the exploit was most recently observed.
+	ExploitLastSeenTime int64 `json:"exploit_last_seen_time,omitempty"`
+	// Exploit URL (optional): The URL of the exploit code or Proof-of-Concept (PoC).
+	ExploitRefURL string `json:"exploit_ref_url,omitempty"`
+	// Exploit Requirement (optional): The requirement description related to any constraints around exploit execution.
+	ExploitRequirement string `json:"exploit_requirement,omitempty"`
+	// Exploit Type (optional): The categorization or type of Exploit.
+	ExploitType string `json:"exploit_type,omitempty"`
+	// First Seen (optional): The time when the vulnerability was first observed.
+	FirstSeenTime int64 `json:"first_seen_time,omitempty"`
+	// Fix Coverage (optional): The fix coverage, normalized to the caption of the fix_coverage_id value.
+	FixCoverage string `json:"fix_coverage,omitempty"`
+	// Fix Coverage ID (optional): The normalized identifier for fix coverage, applicable to this vulnerability.
+	FixCoverageID int `json:"fix_coverage_id,omitempty"`
+	// Exploit Availability (optional): Indicates if an exploit or a PoC (proof-of-concept) is available for the reported vulnerability.
+	IsExploitAvailable bool `json:"is_exploit_available,omitempty"`
+	// Fix Availability (optional): Indicates if a fix is available for the reported vulnerability.
+	IsFixAvailable bool `json:"is_fix_available,omitempty"`
+	// Last Seen (optional): The time when the vulnerability was most recently observed.
+	LastSeenTime int64 `json:"last_seen_time,omitempty"`
+	// References (recommended): A list of reference URLs with additional information about the vulnerability.
+	References []string `json:"references,omitempty"`
+	// Related Vulnerability IDs (optional): List of vulnerability IDs (e.g.
+	RelatedVulnerabilities []string `json:"related_vulnerabilities,omitempty"`
+	// Remediation Guidance (optional): The remediation recommendations on how to mitigate the identified vulnerability.
+	Remediation *Remediation `json:"remediation,omitempty"`
+	// Severity (optional): The vendor assigned severity of the vulnerability.
+	Severity string `json:"severity,omitempty"`
+	// Title (optional): A title or a brief phrase summarizing the discovered vulnerability.
+	Title string `json:"title,omitempty"`
+	// Vendor Name (optional): The name of the vendor that identified the vulnerability.
+	VendorName string `json:"vendor_name,omitempty"`
+}
+
+// VulnerabilityFixCoverageID values.
+const (
+	VulnerabilityFixCoverageIDUnknown  = 0  // Unknown
+	VulnerabilityFixCoverageIDComplete = 1  // Complete
+	VulnerabilityFixCoverageIDPartial  = 2  // Partial
+	VulnerabilityFixCoverageIDNone     = 3  // None
+	VulnerabilityFixCoverageIDOther    = 99 // Other
+)
+
+// WebResource is the OCSF 1.5.0 object "Web Resource". The Web Resource object describes characteristics of a web resource that was affected by the activity/event.
+//
+// Constraint at_least_one: name, uid.
+type WebResource struct {
+	// Created Time (optional): The time when the resource was created.
+	CreatedTime int64 `json:"created_time,omitempty"`
+	// Data (optional): Details of the web resource, e.g, file details, search results or application-defined resource.
+	Data any `json:"data,omitempty"`
+	// Description (optional): Description of the web resource.
+	Desc string `json:"desc,omitempty"`
+	// Labels (optional): The list of labels associated to the resource.
+	Labels []string `json:"labels,omitempty"`
+	// Modified Time (optional): The time when the resource was last modified.
+	ModifiedTime int64 `json:"modified_time,omitempty"`
+	// Name (recommended): The name of the web resource.
+	Name string `json:"name,omitempty"`
+	// Tags (optional): The list of tags; {key:value} pairs associated to the resource.
+	Tags []KeyValueObject `json:"tags,omitempty"`
+	// Type (optional): The web resource type as defined by the event source.
+	Type string `json:"type,omitempty"`
+	// Unique ID (recommended): The unique identifier of the web resource.
+	UID string `json:"uid,omitempty"`
+	// Alternate ID (optional): The alternative unique identifier of the resource.
+	UIDAlt string `json:"uid_alt,omitempty"`
+	// URL String (recommended): The URL pointing towards the source of the web resource.
+	URLString string `json:"url_string,omitempty"`
+}
+
+// Whois is the OCSF 1.5.0 object "WHOIS". The resources of a WHOIS record for a given domain.
+type Whois struct {
+	// Autonomous System (optional): The autonomous system information associated with a domain.
+	AutonomousSystem *AutonomousSystem `json:"autonomous_system,omitempty"`
+	// Registered At (recommended): When the domain was registered or WHOIS entry was created.
+	CreatedTime int64 `json:"created_time,omitempty"`
+	// DNSSEC Status (optional): The normalized value of dnssec_status_id.
+	DnssecStatus string `json:"dnssec_status,omitempty"`
+	// DNSSEC Status ID (recommended): Describes the normalized status of DNS Security Extensions (DNSSEC) for a domain.
+	DnssecStatusID int `json:"dnssec_status_id,omitempty"`
+	// Domain (recommended): The domain name corresponding to the WHOIS record.
+	Domain string `json:"domain,omitempty"`
+	// Domain Contacts (recommended): An array of Domain Contact objects.
+	DomainContacts []DomainContact `json:"domain_contacts,omitempty"`
+	// Registrar Abuse Email Address (optional): The email address for the registrar's abuse contact
+	EmailAddr string `json:"email_addr,omitempty"`
+	// ISP Name (optional): The name of the Internet Service Provider (ISP).
+	Isp string `json:"isp,omitempty"`
+	// ISP Org (optional): The organization name of the Internet Service Provider (ISP).
+	IspOrg string `json:"isp_org,omitempty"`
+	// Last Updated At (recommended): When the WHOIS record was last updated or seen at.
+	LastSeenTime int64 `json:"last_seen_time,omitempty"`
+	// Name Servers (recommended): A collection of name servers related to a domain registration or other record.
+	NameServers []string `json:"name_servers,omitempty"`
+	// Registrar Abuse Phone Number (optional): The phone number for the registrar's abuse contact
+	PhoneNumber string `json:"phone_number,omitempty"`
+	// Domain Registrar (recommended): The domain registrar.
+	Registrar string `json:"registrar,omitempty"`
+	// Domain Status (recommended): The status of a domain and its ability to be transferred, e.g., clientTransferProhibited.
+	Status string `json:"status,omitempty"`
+	// Subdomains (optional): An array of subdomain strings.
+	Subdomains []string `json:"subdomains,omitempty"`
+	// Subnet Block (optional): The IP address block (CIDR) associated with a domain.
+	Subnet string `json:"subnet,omitempty"`
+}
+
+// WhoisDnssecStatusID values.
+const (
+	WhoisDnssecStatusIDUnknown  = 0  // Unknown
+	WhoisDnssecStatusIDSigned   = 1  // Signed
+	WhoisDnssecStatusIDUnsigned = 2  // Unsigned
+	WhoisDnssecStatusIDOther    = 99 // Other
+)
+
+// WinRegKey is the OCSF 1.5.0 object "Registry Key". The registry key object describes a Windows registry key.
+type WinRegKey struct {
+	// System (optional): The indication of whether the object is part of the operating system.
+	IsSystem bool `json:"is_system,omitempty"`
+	// Modified Time (optional): The time when the registry key was last modified.
+	ModifiedTime int64 `json:"modified_time,omitempty"`
+	// Path (required): The full path to the registry key.
+	Path string `json:"path"`
+	// Security Descriptor (optional): The security descriptor of the registry key.
+	SecurityDescriptor string `json:"security_descriptor,omitempty"`
+}
+
+// WinRegValue is the OCSF 1.5.0 object "Registry Value". The registry value object describes a Windows registry value.
+type WinRegValue struct {
+	// Data (optional): The data of the registry value.
+	Data any `json:"data,omitempty"`
+	// Default Value (optional): The indication of whether the value is from a default value name.
+	IsDefault bool `json:"is_default,omitempty"`
+	// System (optional): The indication of whether the object is part of the operating system.
+	IsSystem bool `json:"is_system,omitempty"`
+	// Modified Time (optional): The time when the registry value was last modified.
+	ModifiedTime int64 `json:"modified_time,omitempty"`
+	// Name (required): The name of the registry value.
+	Name string `json:"name"`
+	// Path (required): The full path to the registry key, where the value is located.
+	Path string `json:"path"`
+	// Type (optional): A string representation of the value type as specified in Registry Value Types.
+	Type string `json:"type,omitempty"`
+	// Type ID (recommended): The value type ID.
+	TypeID int `json:"type_id,omitempty"`
+}
+
+// WinRegValueTypeID values.
+const (
+	WinRegValueTypeIDUnknown              = 0  // Unknown
+	WinRegValueTypeIDREGBINARY            = 1  // REG_BINARY
+	WinRegValueTypeIDREGDWORD             = 2  // REG_DWORD
+	WinRegValueTypeIDREGDWORDBIGENDIAN    = 3  // REG_DWORD_BIG_ENDIAN
+	WinRegValueTypeIDREGEXPANDSZ          = 4  // REG_EXPAND_SZ
+	WinRegValueTypeIDREGLINK              = 5  // REG_LINK
+	WinRegValueTypeIDREGMULTISZ           = 6  // REG_MULTI_SZ
+	WinRegValueTypeIDREGNONE              = 7  // REG_NONE
+	WinRegValueTypeIDREGQWORD             = 8  // REG_QWORD
+	WinRegValueTypeIDREGQWORDLITTLEENDIAN = 9  // REG_QWORD_LITTLE_ENDIAN
+	WinRegValueTypeIDREGSZ                = 10 // REG_SZ
+	WinRegValueTypeIDOther                = 99 // Other
+)
+
+// WinWinResource is the OCSF 1.5.0 object "Windows Resource". The Windows resource object describes a resource object managed by Windows, such as mutant or timer.
+//
+// Constraint at_least_one: name, uid.
+type WinWinResource struct {
+	// Created Time (optional): The time when the resource was created.
+	CreatedTime int64 `json:"created_time,omitempty"`
+	// Data (optional): Additional data describing the resource.
+	Data any `json:"data,omitempty"`
+	// Details (optional): The string detailing the attributes of the resource object.
+	Details string `json:"details,omitempty"`
+	// Labels (optional): The list of labels associated to the resource.
+	Labels []string `json:"labels,omitempty"`
+	// Modified Time (optional): The time when the resource was last modified.
+	ModifiedTime int64 `json:"modified_time,omitempty"`
+	// Name (recommended): The name of the resource object.
+	Name string `json:"name,omitempty"`
+	// Service Name (optional): The Windows service acting as the object server for the resource object, such as Security or Security Account Manager.
+	SvcName string `json:"svc_name,omitempty"`
+	// Tags (optional): The list of tags; {key:value} pairs associated to the resource.
+	Tags []KeyValueObject `json:"tags,omitempty"`
+	// Type (optional): The type of the Windows resource object.
+	Type string `json:"type,omitempty"`
+	// Type ID (required): The normalized type identifier of the Windows resource object accessed.
+	TypeID int `json:"type_id"`
+	// Unique ID (recommended): The Windows provided handle identifier for the resource object
+	UID string `json:"uid,omitempty"`
+	// Alternate ID (optional): The alternative unique identifier of the resource.
+	UIDAlt string `json:"uid_alt,omitempty"`
+}
+
+// WinWinResourceTypeID values.
+const (
+	WinWinResourceTypeIDUnknown                 = 0  // Unknown
+	WinWinResourceTypeIDDirectory               = 1  // Directory
+	WinWinResourceTypeIDEvent                   = 2  // Event
+	WinWinResourceTypeIDTimer                   = 3  // Timer
+	WinWinResourceTypeIDDevice                  = 4  // Device
+	WinWinResourceTypeIDMutant                  = 5  // Mutant
+	WinWinResourceTypeIDType                    = 6  // Type
+	WinWinResourceTypeIDFile                    = 7  // File
+	WinWinResourceTypeIDToken                   = 8  // Token
+	WinWinResourceTypeIDThread                  = 9  // Thread
+	WinWinResourceTypeIDSection                 = 10 // Section
+	WinWinResourceTypeIDWindowStation           = 11 // WindowStation
+	WinWinResourceTypeIDDebugObject             = 12 // DebugObject
+	WinWinResourceTypeIDFilterCommunicationPort = 13 // FilterCommunicationPort
+	WinWinResourceTypeIDEventPair               = 14 // EventPair
+	WinWinResourceTypeIDDriver                  = 15 // Driver
+	WinWinResourceTypeIDIoCompletion            = 16 // IoCompletion
+	WinWinResourceTypeIDController              = 17 // Controller
+	WinWinResourceTypeIDSymbolicLink            = 18 // SymbolicLink
+	WinWinResourceTypeIDWmiGuid                 = 19 // WmiGuid
+	WinWinResourceTypeIDProcess                 = 20 // Process
+	WinWinResourceTypeIDProfile                 = 21 // Profile
+	WinWinResourceTypeIDDesktop                 = 22 // Desktop
+	WinWinResourceTypeIDKeyedEvent              = 23 // KeyedEvent
+	WinWinResourceTypeIDAdapter                 = 24 // Adapter
+	WinWinResourceTypeIDKey                     = 25 // Key
+	WinWinResourceTypeIDWaitablePort            = 26 // WaitablePort
+	WinWinResourceTypeIDCallback                = 27 // Callback
+	WinWinResourceTypeIDSemaphore               = 28 // Semaphore
+	WinWinResourceTypeIDJob                     = 29 // Job
+	WinWinResourceTypeIDPort                    = 30 // Port
+	WinWinResourceTypeIDFilterConnectionPort    = 31 // FilterConnectionPort
+	WinWinResourceTypeIDALPCPort                = 32 // ALPC Port
+	WinWinResourceTypeIDSAMALIAS                = 33 // SAM_ALIAS
+	WinWinResourceTypeIDSAMGROUP                = 34 // SAM_GROUP
+	WinWinResourceTypeIDSAMUSER                 = 35 // SAM_USER
+	WinWinResourceTypeIDSAMDOMAIN               = 36 // SAM_DOMAIN
+	WinWinResourceTypeIDSAMSERVER               = 37 // SAM_SERVER
+	WinWinResourceTypeIDOther                   = 99 // Other
+)
+
+// WinWinService is the OCSF 1.5.0 object "Windows Service". The Windows Service object describes a Windows service.
+//
+// Constraint at_least_one: cmd_line, service_category_id, service_dependencies, service_error_control_id, service_start_name, service_start_type_id, service_type_id.
+type WinWinService struct {
+	// Command Line (recommended): The full command line used to launch the service.
+	CmdLine string `json:"cmd_line,omitempty"`
+	// Labels (optional): The list of labels associated with the service.
+	Labels []string `json:"labels,omitempty"`
+	// Load Order Group (recommended): The name of the load ordering group of which this service is a member.
+	LoadOrderGroup string `json:"load_order_group,omitempty"`
+	// Name (required): The unique name of the service.
+	Name string `json:"name"`
+	// Service Category (optional): The service category, normalized to the caption of the service_category_id value.
+	ServiceCategory string `json:"service_category,omitempty"`
+	// Service Category ID (recommended): The normalized identifier of the service category.
+	ServiceCategoryID int `json:"service_category_id,omitempty"`
+	// Service Dependencies (recommended): The names of other services upon which this service has a dependency.
+	ServiceDependencies []string `json:"service_dependencies,omitempty"`
+	// Service Error Control (optional): The service error control, normalized to the caption of the service_error_control_id value.
+	ServiceErrorControl string `json:"service_error_control,omitempty"`
+	// Service Error Control ID (recommended): The normalized identifier of the service error control.
+	ServiceErrorControlID int `json:"service_error_control_id,omitempty"`
+	// Service Start Name (recommended): For a user mode service, this attribute represents the name of the account under which the service is run.
+	ServiceStartName string `json:"service_start_name,omitempty"`
+	// Service Start Type (optional): The service start type, normalized to the caption of the service_start_type_id value.
+	ServiceStartType string `json:"service_start_type,omitempty"`
+	// Service Start Type ID (recommended): The normalized identifier of the service start type.
+	ServiceStartTypeID int `json:"service_start_type_id,omitempty"`
+	// Service Type (optional): The service type, normalized to the caption of the service_type_id value.
+	ServiceType string `json:"service_type,omitempty"`
+	// Service Type ID (recommended): The normalized identifier of the service type.
+	ServiceTypeID int `json:"service_type_id,omitempty"`
+	// Tags (optional): The list of tags; {key:value} pairs associated to the service.
+	Tags []KeyValueObject `json:"tags,omitempty"`
+	// Unique ID (recommended): The unique identifier of the service.
+	UID string `json:"uid,omitempty"`
+	// Version (recommended): The version of the service.
+	Version string `json:"version,omitempty"`
+}
+
+// WinWinServiceServiceCategoryID values.
+const (
+	WinWinServiceServiceCategoryIDUnknown    = 0  // Unknown
+	WinWinServiceServiceCategoryIDKernelMode = 1  // Kernel Mode
+	WinWinServiceServiceCategoryIDUserMode   = 2  // User Mode
+	WinWinServiceServiceCategoryIDOther      = 99 // Other
+)
+
+// WinWinServiceServiceErrorControlID values.
+const (
+	WinWinServiceServiceErrorControlIDUnknown  = 0  // Unknown
+	WinWinServiceServiceErrorControlIDIgnore   = 1  // Ignore
+	WinWinServiceServiceErrorControlIDNormal   = 2  // Normal
+	WinWinServiceServiceErrorControlIDSevere   = 3  // Severe
+	WinWinServiceServiceErrorControlIDCritical = 4  // Critical
+	WinWinServiceServiceErrorControlIDOther    = 99 // Other
+)
+
+// WinWinServiceServiceStartTypeID values.
+const (
+	WinWinServiceServiceStartTypeIDUnknown  = 0  // Unknown
+	WinWinServiceServiceStartTypeIDBoot     = 1  // Boot
+	WinWinServiceServiceStartTypeIDSystem   = 2  // System
+	WinWinServiceServiceStartTypeIDAuto     = 3  // Auto
+	WinWinServiceServiceStartTypeIDDemand   = 4  // Demand
+	WinWinServiceServiceStartTypeIDDisabled = 5  // Disabled
+	WinWinServiceServiceStartTypeIDOther    = 99 // Other
+)
+
+// WinWinServiceServiceTypeID values.
+const (
+	WinWinServiceServiceTypeIDUnknown          = 0  // Unknown
+	WinWinServiceServiceTypeIDKernelDriver     = 1  // Kernel Driver
+	WinWinServiceServiceTypeIDFileSystemDriver = 2  // File System Driver
+	WinWinServiceServiceTypeIDOwnProcess       = 3  // Own Process
+	WinWinServiceServiceTypeIDShareProcess     = 4  // Share Process
+	WinWinServiceServiceTypeIDOther            = 99 // Other
 )
